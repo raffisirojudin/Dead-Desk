@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dead Desk: Sortir Jiwa</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Special+Elite&family=VT323&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --bg:#1c1108;
+  --desk:#2a1a08;
+  --felt:#1a2a12;
+  --paper:#f7f0dc;
+  --paper2:#ede5c8;
+  --ink:#1e1205;
+  --ink-faded:#6b5535;
+  --red-line:rgba(180,50,50,0.35);
+  --blue-line:rgba(50,80,180,0.18);
+  --stamp-heaven:#1a4a9b;
+  --stamp-hell:#9b1a1a;
+  --gold:#c9a84c;
+  --gold-dim:#7a6020;
+  --green:#3a8a3a;
+  --shadow:rgba(0,0,0,0.6);
+}
+
+html,body{height:100%;overflow:hidden;}
+
+body{
+  background:var(--desk);
+  font-family:'Special Elite',cursive;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+
+/* Felt desk surface */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 100%, #0e1a08 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 50% 110%, #1a2a12 0%, transparent 50%);
+  pointer-events:none;
+}
+
+/* Lamp glow from top */
+body::after{
+  content:'';
+  position:fixed;
+  top:-200px;left:50%;transform:translateX(-50%);
+  width:900px;height:600px;
+  background:radial-gradient(ellipse, rgba(255,210,80,0.1) 0%, transparent 65%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── LAYOUT ── */
+#scene{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:860px;
+  height:100vh;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  grid-template-columns:1fr;
+  padding:16px 20px 14px;
+  gap:10px;
+}
+
+/* ── TOP BAR ── */
+#topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:8px 16px;
+  background:rgba(0,0,0,0.45);
+  border:1px solid #3a2808;
+  border-radius:3px;
+}
+
+.hud-item{
+  font-family:'VT323',monospace;
+  font-size:20px;
+  color:var(--gold);
+  letter-spacing:2px;
+  text-shadow:0 0 8px rgba(200,168,75,0.5);
+}
+
+#title-hud{
+  font-size:18px;
+  color:#5a4020;
+  letter-spacing:4px;
+}
+
+/* ── MAIN AREA ── */
+#main{
+  display:grid;
+  grid-template-columns:200px 1fr;
+  gap:16px;
+  align-items:start;
+  min-height:0;
+}
+
+/* ── GHOST DOLL PANEL ── */
+#ghost-panel{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+}
+
+#ghost-doll{
+  position:relative;
+  width:160px;
+  height:220px;
+}
+
+#ghost-doll svg{
+  width:100%;
+  height:100%;
+  filter:drop-shadow(0 8px 24px rgba(150,255,180,0.25));
+  animation:ghostFloat 3s ease-in-out infinite;
+}
+
+@keyframes ghostFloat{
+  0%,100%{transform:translateY(0) rotate(-1deg);}
+  50%{transform:translateY(-10px) rotate(1deg);}
+}
+
+#ghost-name-tag{
+  background:var(--paper);
+  border:1px solid var(--ink-faded);
+  padding:4px 12px;
+  font-family:'Caveat',cursive;
+  font-size:17px;
+  font-weight:700;
+  color:var(--ink);
+  text-align:center;
+  border-radius:2px;
+  box-shadow:2px 2px 0 var(--paper2),4px 4px 0 rgba(0,0,0,0.2);
+  max-width:160px;
+  word-break:break-word;
+}
+
+#sin-badge{
+  padding:3px 10px;
+  border-radius:20px;
+  font-family:'Caveat',cursive;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:0.5px;
+  text-align:center;
+}
+#sin-badge.bohong{background:#3a0808;color:#ff8888;border:1px solid #7a2020;}
+#sin-badge.berbagi{background:#083a10;color:#88ff99;border:1px solid #207a2a;}
+
+/* ── FORM PAPER ── */
+#form-wrap{
+  position:relative;
+}
+
+#form-paper{
+  background:var(--paper);
+  padding:20px 24px 20px 52px;
+  border-radius:1px;
+  position:relative;
+  box-shadow:
+    3px 3px 0 var(--paper2),
+    6px 6px 0 rgba(0,0,0,0.25),
+    0 12px 32px rgba(0,0,0,0.4);
+  transform:rotate(0.4deg);
+  animation:paperIn 0.35s ease;
+  max-height:calc(100vh - 180px);
+  overflow:hidden;
+}
+
+@keyframes paperIn{
+  from{opacity:0;transform:rotate(0.4deg) translateY(-12px);}
+  to{opacity:1;transform:rotate(0.4deg) translateY(0);}
+}
+
+/* Ruled lines */
+#form-paper::before{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    transparent, transparent 29px,
+    var(--blue-line) 29px, var(--blue-line) 30px
+  );
+  pointer-events:none;
+}
+
+/* Red margin */
+#form-paper::after{
+  content:'';
+  position:absolute;
+  top:0;left:40px;bottom:0;
+  width:1.5px;
+  background:var(--red-line);
+  pointer-events:none;
+}
+
+/* Hole punches */
+.hole{
+  position:absolute;
+  left:14px;
+  width:18px;height:18px;
+  border-radius:50%;
+  background:var(--desk);
+  border:1px solid #8a7050;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,0.5);
+}
+.hole:nth-child(1){top:30px;}
+.hole:nth-child(2){top:50%;transform:translateY(-50%);}
+.hole:nth-child(3){bottom:30px;}
+
+.form-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  border-bottom:1.5px solid #c0a870;
+  padding-bottom:8px;
+  margin-bottom:10px;
+  position:relative;
+  z-index:1;
+}
+
+.form-header-left h2{
+  font-family:'VT323',monospace;
+  font-size:20px;
+  color:var(--ink);
+  letter-spacing:2px;
+  line-height:1.2;
+}
+
+.form-header-left p{
+  font-size:10px;
+  color:var(--ink-faded);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-top:2px;
+}
+
+.ref-box{
+  text-align:right;
+  font-family:'VT323',monospace;
+  font-size:13px;
+  color:var(--ink-faded);
+  line-height:1.5;
+}
+
+/* ── FORM FIELDS ── */
+.form-section{
+  margin-bottom:8px;
+  position:relative;
+  z-index:1;
+}
+
+.section-title{
+  font-size:9px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--ink-faded);
+  border-bottom:1px solid #d0b880;
+  padding-bottom:2px;
+  margin-bottom:6px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4px 16px;
+}
+
+.form-grid.full{
+  grid-template-columns:1fr;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+}
+
+.field-label{
+  font-size:9px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--ink-faded);
+}
+
+.field-value{
+  font-family:'Caveat',cursive;
+  font-size:17px;
+  font-weight:600;
+  color:var(--ink);
+  border-bottom:1px solid #c0a870;
+  padding-bottom:1px;
+  line-height:1.3;
+  min-height:22px;
+}
+
+.field-value.highlight{
+  font-size:19px;
+  font-weight:700;
+}
+
+/* Checkboxes row */
+.check-row{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.check-item{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-family:'Caveat',cursive;
+  font-size:15px;
+  color:var(--ink);
+}
+
+.checkbox{
+  width:14px;height:14px;
+  border:1.5px solid var(--ink-faded);
+  border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;
+  flex-shrink:0;
+}
+.checkbox.checked{
+  background:var(--ink);
+  color:var(--paper);
+}
+
+/* ── STAMP ── */
+#stamp{
+  position:absolute;
+  top:18px;right:18px;
+  width:76px;height:76px;
+  border:3px solid transparent;
+  border-radius:3px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-family:'VT323',monospace;
+  font-size:12px;
+  line-height:1.2;
+  letter-spacing:1px;
+  text-align:center;
+  transform:rotate(12deg);
+  opacity:0;
+  transition:opacity 0.25s;
+  z-index:10;
+  pointer-events:none;
+}
+
+#stamp.show-heaven{
+  border-color:var(--stamp-heaven);
+  color:var(--stamp-heaven);
+  opacity:1;
+  background:rgba(26,74,155,0.06);
+}
+#stamp.show-hell{
+  border-color:var(--stamp-hell);
+  color:var(--stamp-hell);
+  opacity:1;
+  background:rgba(155,26,26,0.06);
+}
+
+#stamp .stamp-icon{font-size:22px;line-height:1;}
+
+/* ── FEEDBACK TICKER ── */
+#feedback{
+  font-family:'VT323',monospace;
+  font-size:18px;
+  letter-spacing:2px;
+  text-align:center;
+  height:24px;
+  transition:color 0.2s;
+}
+#feedback.correct{color:#60cc60;text-shadow:0 0 6px rgba(80,200,80,0.5);}
+#feedback.wrong  {color:#cc4444;text-shadow:0 0 6px rgba(200,60,60,0.5);}
+
+/* ── BUTTONS ── */
+#sort-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.sort-btn{
+  padding:14px;
+  font-family:'VT323',monospace;
+  font-size:24px;
+  letter-spacing:3px;
+  border:none;
+  border-radius:3px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  transition:transform 0.1s,box-shadow 0.1s,filter 0.1s;
+  position:relative;
+  overflow:hidden;
+}
+
+.sort-btn::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(rgba(255,255,255,0.08),transparent);
+  pointer-events:none;
+}
+
+.sort-btn:hover{filter:brightness(1.15);}
+.sort-btn:active{transform:translateY(3px);box-shadow:none!important;}
+
+#btn-heaven{
+  background:linear-gradient(170deg,#2556c0,#162e7a);
+  color:#cce0ff;
+  box-shadow:0 4px 0 #0a1a50,0 6px 16px rgba(30,60,200,0.35);
+  text-shadow:0 0 10px rgba(160,200,255,0.6);
+}
+
+#btn-hell{
+  background:linear-gradient(170deg,#c02525,#7a1616);
+  color:#ffd0c0;
+  box-shadow:0 4px 0 #500a0a,0 6px 16px rgba(200,30,30,0.35);
+  text-shadow:0 0 10px rgba(255,180,160,0.6);
+}
+
+.btn-icon{font-size:22px;}
+
+/* ── QUEUE BAR ── */
+#queue-bar{
+  display:flex;
+  justify-content:center;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+.queue-dot{
+  width:8px;height:8px;
+  border-radius:50%;
+  background:#3a2a10;
+  border:1px solid #5a4020;
+  transition:background 0.3s;
+}
+.queue-dot.done{background:#5a4020;}
+.queue-dot.current{background:var(--gold);border-color:var(--gold);box-shadow:0 0 4px var(--gold);}
+.queue-dot.pending{background:#2a1a05;border-color:#3a2808;}
+
+/* ── GAME OVER ── */
+#game-over-screen{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(10,5,0,0.92);
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:16px;
+  animation:fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+#game-over-screen.show{display:flex;}
+
+.go-skull{
+  font-size:80px;
+  animation:pulse 1.5s ease-in-out infinite;
+  filter:drop-shadow(0 0 20px rgba(200,50,50,0.5));
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1)rotate(-5deg);}
+  50%{transform:scale(1.08)rotate(5deg);}
+}
+
+#go-title{
+  font-family:'VT323',monospace;
+  font-size:64px;
+  color:#cc2222;
+  letter-spacing:8px;
+  text-shadow:0 0 24px rgba(200,30,30,0.7);
+  text-align:center;
+}
+
+#go-score{
+  font-family:'VT323',monospace;
+  font-size:36px;
+  color:var(--gold);
+  letter-spacing:4px;
+}
+
+.go-flavour{
+  font-size:13px;
+  color:#5a4020;
+  text-align:center;
+  line-height:1.7;
+  max-width:380px;
+  letter-spacing:1px;
+}
+
+#btn-restart{
+  margin-top:8px;
+  padding:14px 44px;
+  font-family:'VT323',monospace;
+  font-size:28px;
+  letter-spacing:4px;
+  background:linear-gradient(170deg,#c9a84c,#7a6020);
+  color:#1a0f00;
+  border:none;
+  border-radius:3px;
+  cursor:pointer;
+  box-shadow:0 4px 0 #3a2808,0 6px 16px rgba(200,168,75,0.3);
+  transition:transform 0.1s,filter 0.1s;
+}
+#btn-restart:hover{filter:brightness(1.1);}
+#btn-restart:active{transform:translateY(3px);box-shadow:none;}
+
+/* ══ PANEL BARANG & INTEROGASI ══ */
+
+/* Tab buttons di bawah ghost panel */
+#ghost-tabs{
+  display:flex;
+  gap:4px;
+  width:100%;
+  margin-top:6px;
+}
+.ghost-tab{
+  flex:1;
+  padding:5px 4px;
+  font-family:'VT323',monospace;
+  font-size:13px;
+  letter-spacing:1px;
+  background:#1a1208;
+  color:#5a4020;
+  border:1px solid #3a2808;
+  border-radius:3px;
+  cursor:pointer;
+  text-align:center;
+  transition:all 0.15s;
+}
+.ghost-tab:hover{color:var(--gold);border-color:#5a4020;}
+.ghost-tab.active{background:#2a1a08;color:var(--gold);border-color:var(--gold);}
+
+/* Side panel (barang & interogasi) */
+#side-panel{
+  display:none;
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:var(--paper);
+  border-radius:1px;
+  z-index:5;
+  flex-direction:column;
+  animation:paperIn 0.2s ease;
+  overflow:hidden;
+}
+#side-panel.show{display:flex;}
+
+#side-panel-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 14px 8px;
+  border-bottom:1.5px solid #c0a870;
+  background:var(--paper2);
+}
+#side-panel-title{
+  font-family:'VT323',monospace;
+  font-size:18px;
+  color:var(--ink);
+  letter-spacing:2px;
+}
+#side-panel-close{
+  font-family:'VT323',monospace;
+  font-size:16px;
+  color:#8a6030;
+  background:none;
+  border:1px solid #c0a870;
+  border-radius:2px;
+  padding:2px 8px;
+  cursor:pointer;
+}
+#side-panel-close:hover{color:var(--ink);border-color:var(--ink-faded);}
+#side-panel-body{
+  padding:12px 16px;
+  overflow-y:auto;
+  flex:1;
+  position:relative;
+}
+#side-panel-body::before{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    transparent,transparent 29px,
+    var(--blue-line) 29px,var(--blue-line) 30px
+  );
+  pointer-events:none;
+}
+
+/* ── INVENTORY ── */
+.item-card{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:8px 0;
+  border-bottom:1px dashed #d0b880;
+  cursor:pointer;
+  transition:background 0.15s;
+  position:relative;
+  z-index:1;
+}
+.item-card:last-child{border-bottom:none;}
+.item-card:hover .item-icon{transform:scale(1.15);}
+.item-icon{
+  font-size:26px;
+  flex-shrink:0;
+  transition:transform 0.15s;
+  user-select:none;
+}
+.item-info{flex:1;}
+.item-name{
+  font-family:'Caveat',cursive;
+  font-size:16px;
+  font-weight:700;
+  color:var(--ink);
+  line-height:1.2;
+}
+.item-tap{
+  font-size:10px;
+  color:var(--ink-faded);
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-top:2px;
+}
+.item-hint{
+  display:none;
+  font-family:'Caveat',cursive;
+  font-size:14px;
+  color:#4a3010;
+  background:#fffbe8;
+  border-left:3px solid var(--gold);
+  padding:6px 8px;
+  margin-top:6px;
+  border-radius:0 3px 3px 0;
+  line-height:1.4;
+}
+.item-hint.show{display:block;}
+
+/* ── INTEROGASI ── */
+.dialog-question-btn{
+  width:100%;
+  text-align:left;
+  padding:8px 10px;
+  margin-bottom:6px;
+  font-family:'Caveat',cursive;
+  font-size:15px;
+  color:var(--ink);
+  background:var(--paper2);
+  border:1px solid #c0a870;
+  border-radius:3px;
+  cursor:pointer;
+  line-height:1.3;
+  transition:border-color 0.15s,background 0.15s;
+  position:relative;
+  z-index:1;
+}
+.dialog-question-btn:hover{border-color:#8a6030;background:#f0e0c0;}
+.dialog-question-btn.asked{
+  background:#e8f0e8;
+  border-color:#608858;
+  color:#3a5a3a;
+  cursor:default;
+}
+.dialog-question-btn::before{content:'❓ ';}
+.dialog-question-btn.asked::before{content:'✅ ';}
+
+.dialog-answer-box{
+  display:none;
+  font-family:'Caveat',cursive;
+  font-size:14px;
+  color:#2a1800;
+  background:#fffbe8;
+  border-left:3px solid #8a6030;
+  padding:6px 10px;
+  margin-top:-2px;
+  margin-bottom:8px;
+  border-radius:0 3px 3px 0;
+  line-height:1.5;
+  position:relative;z-index:1;
+}
+.dialog-answer-box.show{display:block;}
+.dialog-speaker{
+  font-size:10px;
+  color:var(--ink-faded);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:3px;
+}
+
+/* ══ END PANEL CSS ══ */
+
+/* ══ LOADING SCREEN CSS ══ */
+#loading-screen{
+  position:fixed;inset:0;z-index:999;
+  background:#0a0702;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  transition:opacity 0.6s ease;
+}
+#loading-screen.fade-out{opacity:0;pointer-events:none;}
+
+#ls-room{
+  position:relative;
+  width:380px;height:280px;
+  transform-origin:center 45%;
+}
+
+#ls-room.do-zoom{
+  animation:lsZoomIn 1.2s cubic-bezier(0.4,0,0.8,1) forwards;
+}
+
+@keyframes lsZoomIn{
+  0%{transform:scale(1);opacity:1;}
+  100%{transform:scale(14);opacity:0;}
+}
+
+/* Monitor */
+#ls-monitor{
+  position:absolute;
+  top:10px;left:50%;transform:translateX(-50%);
+  width:200px;
+}
+#ls-bezel{
+  background:linear-gradient(160deg,#2a2218,#1a1208);
+  border:4px solid #3a2e1a;
+  border-radius:8px 8px 4px 4px;
+  padding:8px;
+  box-shadow:0 0 0 2px #0a0800,inset 0 2px 4px rgba(255,255,255,0.05);
+}
+#ls-crt{
+  background:#050e05;
+  border-radius:4px;
+  width:180px;height:130px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:inset 0 0 30px rgba(0,255,80,0.08);
+}
+#ls-scanlines{
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    transparent,transparent 2px,
+    rgba(0,0,0,0.25) 2px,rgba(0,0,0,0.25) 4px
+  );
+  pointer-events:none;z-index:2;
+}
+#ls-boot-text{
+  position:absolute;inset:0;
+  padding:8px 10px;
+  font-family:'VT323',monospace;
+  font-size:11px;
+  color:#00cc44;
+  line-height:1.6;
+  z-index:1;
+  white-space:pre;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+}
+#ls-stand{
+  width:20px;height:28px;
+  background:linear-gradient(90deg,#2a2218,#3a3020);
+  margin:0 auto;
+  clip-path:polygon(30% 0,70% 0,100% 100%,0 100%);
+}
+#ls-base{
+  width:80px;height:8px;
+  background:linear-gradient(180deg,#3a3020,#2a2010);
+  margin:0 auto;
+  border-radius:4px;
+}
+
+/* Desk items */
+#ls-keyboard{
+  position:absolute;
+  bottom:30px;left:50%;transform:translateX(-40%);
+  background:#1a1408;
+  border:2px solid #2a2010;
+  border-radius:4px;
+  padding:6px 10px;
+  display:flex;gap:4px;flex-wrap:wrap;width:140px;
+  box-shadow:0 3px 0 #0a0800;
+}
+.ls-key{
+  width:14px;height:12px;
+  background:#2a2010;
+  border-radius:2px;
+  border-bottom:2px solid #0a0800;
+}
+.ls-key.wide{width:60px;}
+
+#ls-mouse{
+  position:absolute;
+  bottom:34px;right:48px;
+  width:22px;height:34px;
+  background:linear-gradient(160deg,#2a2218,#1a1208);
+  border:2px solid #3a3020;
+  border-radius:10px 10px 8px 8px;
+}
+#ls-mouse::after{
+  content:'';
+  position:absolute;
+  top:6px;left:50%;transform:translateX(-50%);
+  width:2px;height:12px;
+  background:#3a3020;
+  border-radius:1px;
+}
+
+#ls-coffee{
+  position:absolute;
+  bottom:28px;left:30px;
+  width:28px;height:32px;
+  background:linear-gradient(180deg,#6a3010,#4a1808);
+  border-radius:3px 3px 5px 5px;
+  border:2px solid #3a1808;
+}
+#ls-coffee::before{
+  content:'';
+  position:absolute;
+  top:4px;left:50%;transform:translateX(-50%);
+  width:18px;height:8px;
+  background:#2a0e04;
+  border-radius:50%;
+}
+#ls-coffee::after{
+  content:'';
+  position:absolute;
+  top:8px;right:-8px;
+  width:8px;height:14px;
+  border:2px solid #4a1808;
+  border-radius:0 6px 6px 0;
+  border-left:none;
+}
+
+#ls-paper-stack{
+  position:absolute;
+  bottom:28px;right:30px;
+  width:34px;height:5px;
+  background:#f5ead6;
+  box-shadow:0 -3px 0 #ede5c8,0 -6px 0 #e0d5b8;
+  border-radius:1px;
+}
+
+/* ══ END LOADING SCREEN CSS ══ */
+
+/* ══ RESPONSIVE MOBILE ══ */
+@media (max-width: 600px) {
+
+  html,body{ overflow:auto; height:auto; }
+
+  #scene{
+    height:auto;
+    min-height:100dvh;
+    padding:10px 12px 16px;
+    gap:8px;
+    grid-template-rows:auto auto auto;
+  }
+
+  /* HUD lebih kecil */
+  #topbar{ padding:6px 10px; }
+  .hud-item{ font-size:15px; letter-spacing:1px; }
+  #title-hud{ font-size:13px; letter-spacing:2px; }
+
+  /* Main: stack vertikal, ghost di atas form */
+  #main{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+
+  /* Ghost panel: horizontal row di mobile */
+  #ghost-panel{
+    flex-direction:row;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:8px;
+    background:rgba(0,0,0,0.25);
+    border:1px solid #3a2808;
+    border-radius:4px;
+  }
+
+  #ghost-doll{
+    width:90px;
+    height:124px;
+    flex-shrink:0;
+  }
+
+  /* Info samping ghost */
+  #ghost-info-col{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    flex:1;
+    min-width:120px;
+  }
+
+  #ghost-name-tag{
+    font-size:15px;
+    max-width:100%;
+    padding:3px 8px;
+  }
+
+  #sin-badge{ font-size:12px; }
+
+  #ghost-tabs{
+    width:100%;
+    margin-top:0;
+  }
+  .ghost-tab{ font-size:12px; padding:4px 2px; }
+
+  /* Form paper */
+  #form-paper{
+    padding:14px 14px 14px 38px;
+    max-height:none;
+    transform:none;
+    animation:none;
+  }
+
+  @keyframes paperIn{
+    from{opacity:0;transform:translateY(-8px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  .form-header h2{ font-size:14px; letter-spacing:1px; }
+  .form-header p { font-size:9px; }
+  .ref-box       { font-size:11px; }
+  .section-title { font-size:8px; letter-spacing:2px; }
+
+  .form-grid{ grid-template-columns:1fr; gap:4px; }
+  .field-label{ font-size:8px; }
+  .field-value{ font-size:15px; }
+  .field-value.highlight{ font-size:17px; }
+
+  .check-row{ gap:8px; }
+  .check-item{ font-size:13px; }
+
+  /* Hole punches lebih kecil */
+  .hole{ width:13px; height:13px; left:10px; }
+  #form-paper::after{ left:30px; }
+
+  /* Stamp */
+  #stamp{ width:58px; height:58px; font-size:10px; top:12px; right:12px; }
+
+  /* Buttons */
+  #sort-buttons{ gap:8px; }
+  .sort-btn{ font-size:20px; padding:12px 8px; }
+  .btn-icon{ font-size:18px; }
+
+  /* Feedback */
+  #feedback{ font-size:15px; }
+
+  /* Queue dots */
+  .queue-dot{ width:7px; height:7px; }
+
+  /* Side panel */
+  #side-panel-title{ font-size:15px; }
+  .item-name{ font-size:15px; }
+  .item-hint{ font-size:13px; }
+  .dialog-question-btn{ font-size:14px; }
+  .dialog-answer-box{ font-size:13px; }
+
+  /* Game over */
+  #go-title{ font-size:44px; letter-spacing:4px; }
+  #go-score{ font-size:26px; }
+  .go-skull{ font-size:60px; }
+  .go-flavour{ font-size:12px; }
+  #btn-restart{ font-size:22px; padding:12px 28px; }
+
+  /* Loading screen monitor lebih kecil */
+  #ls-room{ width:280px; height:200px; }
+  #ls-monitor{ width:150px; }
+  #ls-crt{ width:134px; height:96px; }
+  #ls-boot-text{ font-size:9px; }
+  #ls-keyboard{ width:110px; bottom:20px; }
+  .ls-key{ width:11px; height:10px; }
+  .ls-key.wide{ width:46px; }
+  #ls-mouse{ bottom:24px; right:34px; width:18px; height:26px; }
+  #ls-coffee{ bottom:20px; left:20px; width:22px; height:26px; }
+}
+
+/* Untuk layar sangat sempit (320px) */
+@media (max-width: 360px) {
+  .hud-item{ font-size:13px; }
+  #ghost-doll{ width:76px; height:104px; }
+  .sort-btn{ font-size:18px; padding:10px 6px; }
+}
+/* ══ END RESPONSIVE ══ */
+
+@keyframes shake{
+  0%,100%{transform:rotate(0.4deg) translateX(0);}
+  20%{transform:rotate(0.4deg) translateX(-7px);}
+  40%{transform:rotate(0.4deg) translateX(7px);}
+  60%{transform:rotate(0.4deg) translateX(-4px);}
+  80%{transform:rotate(0.4deg) translateX(4px);}
+}
+@media (max-width:600px){
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    20%{transform:translateX(-6px);}
+    40%{transform:translateX(6px);}
+    60%{transform:translateX(-4px);}
+    80%{transform:translateX(4px);}
+  }
+  #form-paper.shake{animation:shake 0.4s ease;}
+  #game-over-screen{padding:20px;}
+}
+#form-paper.shake{animation:shake 0.4s ease;}
+
+/* Correct flash */
+@keyframes flashGreen{
+  0%{filter:brightness(1);}
+  40%{filter:brightness(1.3) saturate(1.5);}
+  100%{filter:brightness(1);}
+}
+#form-paper.flash-correct{animation:flashGreen 0.4s ease;}
+</style>
+</head>
+<body>
+
+<!-- ══ LOADING SCREEN ══ -->
+<div id="loading-screen">
+  <div id="ls-room">
+    <div id="ls-monitor">
+      <div id="ls-bezel">
+        <div id="ls-crt">
+          <div id="ls-scanlines"></div>
+          <div id="ls-boot-text"></div>
+        </div>
+      </div>
+      <div id="ls-stand"></div>
+      <div id="ls-base"></div>
+    </div>
+    <div id="ls-keyboard">
+      <div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div>
+      <div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div>
+      <div class="ls-key wide"></div>
+    </div>
+    <div id="ls-mouse"></div>
+    <div id="ls-coffee"></div>
+    <div id="ls-paper-stack"></div>
+  </div>
+</div>
+
+<div id="scene">
+
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <div class="hud-item">SKOR: <span id="score-val">0</span></div>
+    <div class="hud-item" id="title-hud">☠ DEAD DESK ☠</div>
+    <div class="hud-item">NYAWA: <span id="lives-val">❤️❤️❤️</span></div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main">
+
+    <!-- GHOST DOLL -->
+    <div id="ghost-panel">
+      <div id="ghost-doll">
+        <svg id="ghost-svg" viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div id="ghost-info-col">
+        <div id="ghost-name-tag">—</div>
+        <div id="sin-badge" class="bohong">—</div>
+        <!-- Tab buttons -->
+        <div id="ghost-tabs">
+          <button class="ghost-tab active" onclick="switchTab('biodata')">📋 Biodata</button>
+          <button class="ghost-tab" onclick="switchTab('barang')">🎒 Barang</button>
+          <button class="ghost-tab" onclick="switchTab('tanya')">💬 Tanya</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div id="form-wrap">
+      <div id="form-paper">
+        <!-- Holes -->
+        <div class="hole"></div>
+        <div class="hole"></div>
+        <div class="hole"></div>
+
+        <!-- Header -->
+        <div class="form-header">
+          <div class="form-header-left">
+            <h2>FORMULIR REGISTRASI JIWA</h2>
+            <p>Departemen Sortir Alam Baka — Divisi Penempatan</p>
+          </div>
+          <div class="ref-box">
+            Ref. No. <strong id="ref-no">#001</strong><br>
+            Tgl. Masuk: <span id="tgl-masuk">—</span>
+          </div>
+        </div>
+
+        <!-- Identitas -->
+        <div class="form-section">
+          <div class="section-title">§ 1 — Identitas Almarhum/Almarhumah</div>
+          <div class="form-grid">
+            <div class="field">
+              <span class="field-label">Nama Lengkap</span>
+              <span class="field-value highlight" id="f-nama">—</span>
+            </div>
+            <div class="field">
+              <span class="field-label">Alias / Julukan</span>
+              <span class="field-value" id="f-alias">—</span>
+            </div>
+            <div class="field">
+              <span class="field-label">Umur Saat Meninggal</span>
+              <span class="field-value" id="f-umur">—</span>
+            </div>
+            <div class="field">
+              <span class="field-label">Penyebab Meninggal</span>
+              <span class="field-value" id="f-sebab">—</span>
+            </div>
+            <div class="field">
+              <span class="field-label">Asal Daerah</span>
+              <span class="field-value" id="f-asal">—</span>
+            </div>
+            <div class="field">
+              <span class="field-label">Pekerjaan Terakhir</span>
+              <span class="field-value" id="f-pekerjaan">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rekam Dosa -->
+        <div class="form-section">
+          <div class="section-title">§ 2 — Rekam Kebiasaan Hidup</div>
+          <div class="form-grid">
+            <div class="field">
+              <span class="field-label">Dosa Utama</span>
+              <span class="field-value highlight" id="f-dosa">—</span>
+            </div>
+            <div class="field">
+              <span class="field-label">Kebiasaan Lain</span>
+              <span class="field-value" id="f-kebiasaan">—</span>
+            </div>
+          </div>
+          <div style="margin-top:6px;">
+            <div class="field-label" style="margin-bottom:4px;">Penilaian Karma</div>
+            <div class="check-row" id="karma-checks"></div>
+          </div>
+        </div>
+
+        <!-- Keterangan -->
+        <div class="form-section">
+          <div class="section-title">§ 3 — Keterangan Petugas</div>
+          <div class="form-grid full">
+            <div class="field">
+              <span class="field-label">Catatan Tambahan</span>
+              <span class="field-value" id="f-catatan" style="font-size:14px;line-height:1.4;">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Panel Overlay (Barang & Interogasi) -->
+        <div id="side-panel">
+          <div id="side-panel-header">
+            <span id="side-panel-title">—</span>
+            <button id="side-panel-close" onclick="switchTab('biodata')">✕ TUTUP</button>
+          </div>
+          <div id="side-panel-body"></div>
+        </div>
+
+        <!-- Stamp -->
+        <div id="stamp">
+          <span class="stamp-icon" id="stamp-icon"></span>
+          <span id="stamp-text"></span>
+        </div>
+      </div><!-- /form-paper -->
+    </div><!-- /form-wrap -->
+
+  </div><!-- /main -->
+
+  <!-- BOTTOM -->
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div id="feedback"></div>
+    <div id="sort-buttons">
+      <button class="sort-btn" id="btn-heaven" onclick="sort('Surga')">
+        <span class="btn-icon">☁️</span> SURGA
+      </button>
+      <button class="sort-btn" id="btn-hell" onclick="sort('Neraka')">
+        <span class="btn-icon">🔥</span> NERAKA
+      </button>
+    </div>
+    <div id="queue-bar"></div>
+  </div>
+
+</div><!-- /scene -->
+
+<!-- GAME OVER -->
+<div id="game-over-screen">
+  <div class="go-skull">💀</div>
+  <div id="go-title">GAME OVER</div>
+  <div id="go-score">Skor Akhir: <span id="go-score-val">0</span></div>
+  <p class="go-flavour">
+    Kamu dipecat dari Departemen Sortir Alam Baka.<br>
+    Ribuan jiwa terlantar di lobi menunggu kejelasan nasibnya.<br>
+    Semoga kamu tidak menyusul mereka terlalu cepat.
+  </p>
+  <button id="btn-restart" onclick="restartGame()">🔄 DAFTAR ULANG</button>
+</div>
+
+<script>
+// ─── GHOST DATABASE ──────────────────────────────────────────────────────────
+// dialog: {jujur} = jawaban hantu baik (jujur), {bohong} = jawaban hantu buruk (berbohong)
+// barang: [{icon, nama, hint}] hint = petunjuk tersembunyi dari barang
+const ghosts = [
+  {
+    nama:"Budi Santoso", alias:"Si Budi Mulut Manis", umur:54, sebab:"Tersedak Bakso",
+    asal:"Kebumen, Jawa Tengah", pekerjaan:"Pedagang Keliling",
+    dosa:"Suka Berbohong", kebiasaan:"Hobi melebih-lebihkan cerita di warung kopi",
+    karma:["Rajin Sholat","Jarang Mandi","Suka Ngutang"], catatan:"Pernah menipu 3 tetangga soal arisan.",
+    warna:{body:"#c8e8d0",aksen:"#5a9a6a",mata:"#1a4a2a",pipi:"#f0c0a0"},
+    barang:[
+      {icon:"📒",nama:"Buku Catatan Hutang",hint:"Berisi 47 nama orang yang belum melunasi hutang — tapi semua nama ditulis tangan dengan tinta yang berbeda-beda. Mencurigakan."},
+      {icon:"🧧",nama:"Amplop Arisan Kosong",hint:"Amplop bertulisan 'MENANG ARISAN' tapi isinya kosong. Ada noda tip-ex di sudutnya."},
+      {icon:"🚬",nama:"Rokok Kretek Setengah Bungkus",hint:"Biasa saja. Tidak ada yang mencurigakan di sini."},
+    ],
+    dialog:[
+      {pertanyaan:"Apakah kamu pernah menipu orang lain?", jujur:"Saya... ya, saya pernah bohong soal arisan. Saya malu.", bohong:"Saya? Menipu? Tidak pernah! Saya pedagang jujur sejati!"},
+      {pertanyaan:"Apa yang kamu lakukan tiap hari semasa hidup?", jujur:"Jualan keliling, kadang ngopi. Tapi mulut saya memang suka nambah-nambahin cerita.", bohong:"Saya berdagang dengan penuh kejujuran dan membantu tetangga setiap hari!"},
+    ]
+  },
+  {
+    nama:"Siti Rahayu", alias:"Mbak Siti Dermawan", umur:67, sebab:"Usia Tua",
+    asal:"Solo, Jawa Tengah", pekerjaan:"Guru SD (Purn.)",
+    dosa:"Suka Berbagi", kebiasaan:"Tiap Jumat bagi-bagi nasi bungkus gratis",
+    karma:["Sabar","Murah Hati","Rajin Mengaji"], catatan:"Mendirikan yayasan anak yatim di usia 40.",
+    warna:{body:"#e8d8c8",aksen:"#a87850",mata:"#3a2010",pipi:"#f8c0a8"},
+    barang:[
+      {icon:"📚",nama:"Buku Rapor Murid Lama",hint:"Penuh coretan nilai merah yang diubah jadi biru — bukan karena curang, tapi karena beliau bimbingi muridnya sampai lulus."},
+      {icon:"🍱",nama:"Rantang Nasi Kosong",hint:"Rantang ini sudah lecek dan penuh goresan. Jelas sering dipakai untuk membawa makanan ke orang lain."},
+      {icon:"📿",nama:"Tasbih Kayu",hint:"Butiran tasbihnya aus di beberapa titik. Tanda sering digunakan dengan tulus."},
+    ],
+    dialog:[
+      {pertanyaan:"Apa yang paling kamu banggakan semasa hidup?", jujur:"Anak-anak didik saya. Banyak yang jadi orang sukses sekarang. Itu cukup buat saya.", bohong:""},
+      {pertanyaan:"Apakah kamu pernah berbuat jahat?", jujur:"Pernah marah ke murid nakal, tapi saya selalu minta maaf keesokan harinya.", bohong:""},
+    ]
+  },
+  {
+    nama:"Pak Karno", alias:"Kang Karno Bluffing", umur:43, sebab:"Kecelakaan Motor",
+    asal:"Brebes, Jawa Tengah", pekerjaan:"Calo Tiket",
+    dosa:"Suka Berbohong", kebiasaan:"Menjual tiket palsu konser dangdut",
+    karma:["Perokok Berat","Anti Antri","Hobi Gosip"], catatan:"Pernah ditangkap polisi 2x, lolos 2x.",
+    warna:{body:"#d0c8c0",aksen:"#706050",mata:"#2a1808",pipi:"#d0a888"},
+    barang:[
+      {icon:"🎟️",nama:"Tiket Konser Palsu",hint:"Terasa tipis dan warnanya luntur kalau dijilat. Nomor seri tidak masuk akal: '000000001'."},
+      {icon:"📱",nama:"HP Dua Kartu",hint:"Ada dua slot SIM. Kontak tersimpan hanya dengan inisial dan banyak nomor yang sudah diblokir."},
+      {icon:"🧴",nama:"Parfum Murah Baunya Menyengat",hint:"Mungkin untuk menutupi bau rokok. Atau menutupi diri."},
+    ],
+    dialog:[
+      {pertanyaan:"Kamu kerja apa semasa hidup?", jujur:"Calo tiket. Tapi yang palsu juga iya, kadang-kadang... sering.", bohong:"Saya pekerja seni! Membantu distribusi tiket ke masyarakat yang kesulitan!"},
+      {pertanyaan:"Pernah ditangkap polisi?", jujur:"Dua kali. Tapi saya selalu bisa keluar. Kenal orangnya.", bohong:"Tidak pernah! Saya warga negara yang taat hukum!"},
+    ]
+  },
+  {
+    nama:"Mbak Dewi", alias:"Dewi Bunga Desa", umur:29, sebab:"Demam Berdarah",
+    asal:"Yogyakarta", pekerjaan:"Perawat",
+    dosa:"Suka Berbagi", kebiasaan:"Donor darah tiap 3 bulan, sukarela ke pelosok",
+    karma:["Empati Tinggi","Suka Kucing","Vegetarian"], catatan:"Merawat ibunya hingga nafas terakhir.",
+    warna:{body:"#f0e0d8",aksen:"#c07888",mata:"#3a1820",pipi:"#f8b8c0"},
+    barang:[
+      {icon:"🩸",nama:"Kartu Donor Darah",hint:"Sudah penuh stempel. 18 kali donor. Kartu ini hampir robek di lipatannya karena sering dibuka."},
+      {icon:"💊",nama:"Kotak P3K Mini",hint:"Isinya lengkap dan rapi. Ada catatan kecil: 'untuk siapapun yang butuh'."},
+      {icon:"🐾",nama:"Foto Kucing Kampung",hint:"Foto lusuh seekor kucing oranye. Di belakangnya tertulis 'Jangan lupa makan ya, Kopi.'"},
+    ],
+    dialog:[
+      {pertanyaan:"Kamu seorang perawat — apa motivasimu?", jujur:"Ibu saya sakit lama. Saya tahu rasanya sendirian di rumah sakit tanpa yang menemani.", bohong:""},
+      {pertanyaan:"Apakah kamu pernah menyakiti orang lain?", jujur:"Tidak sengaja pernah. Tapi saya selalu berusaha memperbaikinya.", bohong:""},
+    ]
+  },
+  {
+    nama:"Agus Prabowo", alias:"Agus PHP King", umur:38, sebab:"Stres Kerja",
+    asal:"Bandung, Jawa Barat", pekerjaan:"Sales Asuransi",
+    dosa:"Suka Berbohong", kebiasaan:"Menjual produk dengan klaim palsu",
+    karma:["Rajin Gym","Sering Lembur","Pelit Tips"], catatan:"Berhasil menipu 47 nasabah lansia.",
+    warna:{body:"#c8d0d8",aksen:"#506070",mata:"#182030",pipi:"#d0b0a0"},
+    barang:[
+      {icon:"💼",nama:"Tas Kulit Murah Mirip Mahal",hint:"Kelihatan mewah dari jauh, tapi jahitannya sudah copot. Logonya sedikit miring."},
+      {icon:"📋",nama:"Brosur Asuransi Dicoret-coret",hint:"Ada klaim yang sudah dicoret dan diganti dengan angka lebih besar menggunakan spidol merah."},
+      {icon:"🏆",nama:"Piala 'Sales Terbaik' Plastik",hint:"Tertulis 'Sales Terbaik Bulan Ini' tapi bulannya dikosongkan. Jelas diproduksi massal."},
+    ],
+    dialog:[
+      {pertanyaan:"Produk asuransimu apakah benar-benar menguntungkan nasabah?", jujur:"Sejujurnya... tidak. Saya sudah tahu dari awal klaim-klaimnya tidak masuk akal.", bohong:"Tentu saja! Produk saya terbaik! Nasabah saya pasti untung semua!"},
+      {pertanyaan:"Kamu merasa bersalah atas pekerjaanmu?", jujur:"Iya. Terutama yang lansia. Mereka percaya saya.", bohong:"Tidak ada yang perlu disesali. Bisnis ya bisnis!"},
+    ]
+  },
+  {
+    nama:"Ibu Lastri", alias:"Bu Lastri Warung", umur:71, sebab:"Diabetes",
+    asal:"Surabaya, Jawa Timur", pekerjaan:"Pemilik Warung Makan",
+    dosa:"Suka Berbagi", kebiasaan:"Sering kasih makan gratis ke tukang becak",
+    karma:["Cerewet Tapi Baik","Kuat Bekerja","Penyayang Cucu"], catatan:"Warungnya jadi tempat ngadem anak jalanan.",
+    warna:{body:"#e8c8b0",aksen:"#b07840",mata:"#3a1808",pipi:"#f0b890"},
+    barang:[
+      {icon:"🍛",nama:"Centong Nasi Kayu Tua",hint:"Sudah hitam di ujungnya karena panas. Dipakai sejak 1978 kata tulisan di gagangnya."},
+      {icon:"📓",nama:"Buku Hutang Warung",hint:"Penuh nama orang — tapi semua dicoret dengan tulisan 'lunas gratis'. Hampir tidak ada yang bayar."},
+      {icon:"🧣",nama:"Kain Lap Usang",hint:"Ini lap meja yang sudah sangat tua. Tapi dilipat rapi. Tanda orang yang menjaga barangnya dengan hormat."},
+    ],
+    dialog:[
+      {pertanyaan:"Warungmu terkenal karena apa?", jujur:"Porsinya besar dan kalau tidak ada uang ya boleh hutang dulu, atau gratis saja.", bohong:""},
+      {pertanyaan:"Kamu cerewet, apakah kamu orang baik?", jujur:"Haha, iya saya cerewet. Tapi cerewet karena sayang. Tanya saja tetangga saya.", bohong:""},
+    ]
+  },
+  {
+    nama:"Tono bin Tono", alias:"Tono Duplikat", umur:47, sebab:"Tersambar Petir",
+    asal:"Pamekasan, Madura", pekerjaan:"Pembuat KTP Palsu",
+    dosa:"Suka Berbohong", kebiasaan:"Memalsukan dokumen, surat, dan ijazah",
+    karma:["Cerdas Tapi Nakal","Soksokan Dermawan","Anti KPK"], catatan:"Tercatat 14 identitas berbeda di sistem negara.",
+    warna:{body:"#c0c8b0",aksen:"#607050",mata:"#202810",pipi:"#c8b090"},
+    barang:[
+      {icon:"🪪",nama:"KTP (x3 berbeda nama)",hint:"Tiga KTP. Tiga nama berbeda. Tiga foto yang semuanya wajah yang sama."},
+      {icon:"🖨️",nama:"Cartridge Tinta Hampir Habis",hint:"Warnanya persis warna tinta dokumen resmi pemerintah. Kebetulan yang sangat mencurigakan."},
+      {icon:"📎",nama:"Klip Kertas Emas",hint:"Klip biasa. Tapi dipakai untuk menjepit berkas yang tampaknya resmi — padahal kertas HVS biasa."},
+    ],
+    dialog:[
+      {pertanyaan:"Siapa nama aslimu?", jujur:"Tono. Cuma Tono. Yang lain itu... pekerjaan.", bohong:"Saya bisa jawab dengan 14 nama berbeda kalau Anda mau!"},
+      {pertanyaan:"Apakah kamu pernah membantu orang?", jujur:"Pernah bantu orang yang butuh dokumen karena birokrasi terlalu rumit. Tapi caranya salah.", bohong:"Saya pahlawan rakyat kecil! Membantu yang tidak bisa urus administrasi!"},
+    ]
+  },
+  {
+    nama:"Ningsih Wulan", alias:"Ning Bulan Berbagi", umur:55, sebab:"Kanker",
+    asal:"Semarang, Jawa Tengah", pekerjaan:"Apoteker",
+    dosa:"Suka Berbagi", kebiasaan:"Berikan obat gratis ke warga miskin",
+    karma:["Disiplin","Penyayang","Suka Tanaman"], catatan:"Mendanai beasiswa 20 anak kurang mampu.",
+    warna:{body:"#d8e8d0",aksen:"#608858",mata:"#182810",pipi:"#e8c0a8"},
+    barang:[
+      {icon:"💉",nama:"Suntikan Kosong (Steril)",hint:"Bersih dan terbungkus rapi. Bukan untuk disalahgunakan — ini stok apotek yang belum sempat dipakai."},
+      {icon:"🌿",nama:"Tanaman Lidah Buaya Kecil",hint:"Masih segar. Ada label kecil: 'untuk luka bakar ringan, gratis, ambil saja'."},
+      {icon:"📜",nama:"Sertifikat Beasiswa",hint:"Sertifikat atas nama orang lain — tapi di sudut ada tanda tangan Ningsih sebagai donatur."},
+    ],
+    dialog:[
+      {pertanyaan:"Kamu memberi obat gratis — bukankah itu merugikan bisnis?", jujur:"Iya rugi. Tapi kalau tidak ada yang bantu, siapa lagi? Saya punya ilmunya.", bohong:""},
+      {pertanyaan:"Apa yang kamu sesali?", jujur:"Tidak sempat menyelesaikan program beasiswa yang ke-21. Sakit keburu datang.", bohong:""},
+    ]
+  },
+  {
+    nama:"Pak Harto Jr.", alias:"Junior Manipulasi", umur:62, sebab:"Serangan Jantung",
+    asal:"Jakarta Selatan", pekerjaan:"Kontraktor",
+    dosa:"Suka Berbohong", kebiasaan:"Korupsi anggaran proyek jalan dan gedung",
+    karma:["Kaya Raya","Punya Rumah 5","Jarang ke Masjid"], catatan:"Proyek jembatannya ambruk seminggu setelah diresmikan.",
+    warna:{body:"#c8c0b8",aksen:"#686058",mata:"#281808",pipi:"#d0a888"},
+    barang:[
+      {icon:"🏗️",nama:"Cetak Biru Proyek Jembatan",hint:"Ada coretan di bagian 'Ketebalan Baja': angka asli '12mm' diubah jadi '4mm'. Selisihnya masuk kantong siapa?"},
+      {icon:"💳",nama:"Kartu Kredit Platinum (4 buah)",hint:"Empat kartu, empat bank berbeda. Semua atas nama PT yang berbeda pula."},
+      {icon:"⌚",nama:"Jam Tangan Mewah",hint:"Merek Swiss, harga ratusan juta. Tapi dibeli dari anggaran 'operasional proyek'."},
+    ],
+    dialog:[
+      {pertanyaan:"Proyek jembatanmu ambruk — apa komentarmu?", jujur:"Itu... salah saya. Saya potong anggaran material. Saya tahu risikonya.", bohong:"Itu force majeure! Bencana alam! Bukan salah konstruksi kami!"},
+      {pertanyaan:"Kamu kaya — dari mana sumber kekayaanmu?", jujur:"Sebagian besar dari proyek pemerintah. Dan saya tidak selalu jujur soal anggarannya.", bohong:"Kerja keras selama 30 tahun! Murni hasil keringat sendiri!"},
+    ]
+  },
+  {
+    nama:"Sri Mulyati", alias:"Bu Sri Teladan", umur:60, sebab:"Stroke",
+    asal:"Purwokerto, Jawa Tengah", pekerjaan:"Bidan Desa",
+    dosa:"Suka Berbagi", kebiasaan:"Bantu persalinan gratis selama 30 tahun",
+    karma:["Tangguh","Rendah Hati","Suka Memasak"], catatan:"Lahirkan lebih dari 2000 bayi tanpa kecelakaan.",
+    warna:{body:"#e0d8c8",aksen:"#907850",mata:"#302010",pipi:"#f0c0a0"},
+    barang:[
+      {icon:"🩺",nama:"Stetoskop Tua",hint:"Sudah retak di bagian earpiece tapi masih berfungsi. Ditambal dengan lakban biru."},
+      {icon:"📔",nama:"Buku Catatan Kelahiran",hint:"Berisi 2.847 nama bayi yang dilahirkan. Setiap nama ditulis dengan tangan yang sama — tangan Sri."},
+      {icon:"🧤",nama:"Sarung Tangan Lateks Bersih",hint:"Terlipat rapi di plastik. Bahkan di akhir hidupnya, dia masih siap membantu."},
+    ],
+    dialog:[
+      {pertanyaan:"2000 lebih bayi — tidak pernah ada yang bermasalah?", jujur:"Alhamdulillah tidak. Saya selalu berdoa sebelum setiap persalinan.", bohong:""},
+      {pertanyaan:"Apakah kamu pernah minta bayaran?", jujur:"Kalau mereka mampu, ya saya terima. Kalau tidak, ya tidak apa-apa. Bayinya tetap dilahirkan.", bohong:""},
+    ]
+  },
+  {
+    nama:"Gatot Mukidi", alias:"Gatot Sotoy", umur:35, sebab:"Jatuh dari Pohon Kelapa",
+    asal:"Magelang, Jawa Tengah", pekerjaan:"Influencer",
+    dosa:"Suka Berbohong", kebiasaan:"Sebarkan hoaks medis ke 500rb followers",
+    karma:["Narsis","Suka Selfie","Takut Jarum Suntik"], catatan:"Sempat viral soal 'obat corona dari bawang putih'.",
+    warna:{body:"#c8d8e0",aksen:"#507888",mata:"#182838",pipi:"#c8a890"},
+    barang:[
+      {icon:"📸",nama:"Ring Light Portable",hint:"Masih ada bekas lipstik di cermin ring light. Dipakai untuk banyak orang ternyata."},
+      {icon:"🧄",nama:"Bawang Putih Diblender",hint:"Dimasukkan ke botol berlabel 'OBAT COVID-19 ALAMI — TERBUKTI SECARA SAINS'. Tidak ada referensinya."},
+      {icon:"💊",nama:"Suplemen Endorse Tak Bermerek",hint:"Tidak ada nomor BPOM. Tidak ada komposisi. Ada logo 'Recommended by Gatot Sotoy'."},
+    ],
+    dialog:[
+      {pertanyaan:"Apakah bawang putih benar-benar obat COVID?", jujur:"Tidak. Saya tahu itu tidak benar. Tapi videonya viral, saya dapat endorse.", bohong:"100% terbukti! Ratusan orang sembuh karena video saya!"},
+      {pertanyaan:"Kamu bertanggung jawab atas kontenmu?", jujur:"Seharusnya iya. Saya menyesal sudah menyebarkan informasi yang salah.", bohong:"Saya hanya berbagi informasi! Orang bebas percaya atau tidak!"},
+    ]
+  },
+  {
+    nama:"Endang Pertiwi", alias:"Mbak Endang Tulus", umur:48, sebab:"Tenggelam (menyelamatkan anak)",
+    asal:"Malang, Jawa Timur", pekerjaan:"Guru Ngaji",
+    dosa:"Suka Berbagi", kebiasaan:"Ajar ngaji gratis, bantu anak yatim piatu",
+    karma:["Pemberani","Tulus","Tidak Pernah Mengeluh"], catatan:"Meninggal saat menyelamatkan muridnya yang tenggelam.",
+    warna:{body:"#d8e0f0",aksen:"#507098",mata:"#182040",pipi:"#e8c0b8"},
+    barang:[
+      {icon:"📖",nama:"Al-Quran Lusuh Berpenanda",hint:"Hampir setiap halaman ada coretan pensil kecil — catatan pelajaran untuk murid-murid."},
+      {icon:"🪢",nama:"Tali Pelampung Putus",hint:"Tali ini putus di tengah. Tanda tarikan keras. Dipakai untuk menyelamatkan seseorang."},
+      {icon:"👟",nama:"Sepatu Basah",hint:"Masih basah. Belum sempat kering."},
+    ],
+    dialog:[
+      {pertanyaan:"Kamu meninggal saat menyelamatkan anak — apa yang kamu rasakan?", jujur:"Saya tidak sempat berpikir apa-apa. Refleks saja. Itu murid saya.", bohong:""},
+      {pertanyaan:"Apakah kamu menyesal?", jujur:"Tidak. Kalau diulangi, saya akan lakukan hal yang sama.", bohong:""},
+    ]
+  },
+  {
+    nama:"Wiyono Kopral", alias:"Pak Wiyono Tegas", umur:58, sebab:"Luka Lama Perang",
+    asal:"Lampung", pekerjaan:"Mantan Tentara / Debt Collector",
+    dosa:"Suka Berbohong", kebiasaan:"Mengintimidasi warga dengan jabatan palsu",
+    karma:["Pemberani (untuk hal salah)","Perokok","Suka Tinju"], catatan:"Pensiun lalu jadi preman berseragam tidak resmi.",
+    warna:{body:"#b8b0a8",aksen:"#504840",mata:"#201808",pipi:"#c0a080"},
+    barang:[
+      {icon:"🎖️",nama:"Medali Militer (Palsu)",hint:"Logamnya terlalu ringan. Cat emasnya mengelupas di tepi. Bukan dari dinas resmi."},
+      {icon:"📣",nama:"Megafon Kecil",hint:"Dipakai untuk teriak di depan rumah orang yang dianggap berutang. Efektif tapi menakutkan."},
+      {icon:"👊",nama:"Sarung Tinju Usang",hint:"Ada noda cokelat tua yang bukan dari latihan tinju biasa."},
+    ],
+    dialog:[
+      {pertanyaan:"Kamu masih pakai seragam militer setelah pensiun?", jujur:"Iya. Itu cara saya supaya orang takut. Lebih mudah kerja kalau orang takut.", bohong:"Saya menggunakannya dengan bangga sebagai veteran!"},
+      {pertanyaan:"Debt collector — kamu pernah menyakiti orang?", jujur:"Pernah. Terlalu sering. Saya tidak bangga dengan itu.", bohong:"Saya hanya menjalankan tugas! Tidak ada yang tersakiti!"},
+    ]
+  },
+  {
+    nama:"Mbok Jamu", alias:"Simbah Jamu Ajaib", umur:82, sebab:"Usia Tua (Damai)",
+    asal:"Salatiga, Jawa Tengah", pekerjaan:"Penjual Jamu Gendong",
+    dosa:"Suka Berbagi", kebiasaan:"Bagi jamu gratis ke yang sakit tidak mampu",
+    karma:["Bijak","Kuat Fisik","Hafal Ratusan Ramuan"], catatan:"Tidak pernah absen berjualan 50 tahun, hujan maupun terik.",
+    warna:{body:"#e0c8a0",aksen:"#907830",mata:"#302010",pipi:"#f0b888"},
+    barang:[
+      {icon:"🫙",nama:"Botol Jamu Kunyit Asam",hint:"Masih ada sisa jamu di dalamnya. Harum. Ada tulisan kecil di label: 'gratis kalau sakit'."},
+      {icon:"🎒",nama:"Bakul Gendong Bambu",hint:"Sudah retak di beberapa sudut tapi diperkuat dengan tali rafia. Menemani 50 tahun perjalanan."},
+      {icon:"🌺",nama:"Bunga Kamboja Kering",hint:"Diselipkan di sela-sela bakul. Mbok Jamu selalu membawa bunga ini katanya untuk pengingat akan kematian."},
+    ],
+    dialog:[
+      {pertanyaan:"50 tahun jualan jamu — tidak pernah absen?", jujur:"Tidak pernah. Hujan ya tetap berangkat. Panas ya tetap berangkat. Sudah jadi jalan hidup.", bohong:""},
+      {pertanyaan:"Apa rahasiamu panjang umur dan kuat?", jujur:"Jamu saya sendiri. Dan tidak pernah menyimpan dendam. Itu yang paling manjur.", bohong:""},
+    ]
+  },
+  {
+    nama:"Dalang Surya", alias:"Ki Surya Bohong", umur:66, sebab:"Keracunan Makanan",
+    asal:"Cirebon, Jawa Barat", pekerjaan:"Dalang / Seniman",
+    dosa:"Suka Berbohong", kebiasaan:"Mengklaim karya orang lain, manipulasi dana seni",
+    karma:["Berbakat","Licik","Pandai Bicara"], catatan:"Menggugat seniman junior yang mengungguli karya aslinya.",
+    warna:{body:"#c0b8d0",aksen:"#605878",mata:"#201828",pipi:"#c8a898"},
+    barang:[
+      {icon:"🪆",nama:"Wayang Kulit (Milik Orang Lain)",hint:"Di bagian bawah wayang ada inisial 'RS' — bukan 'DS'. Ini punya Rudi Santoso, pengrajin yang digugat."},
+      {icon:"📰",nama:"Kliping Artikel 'Maestro Wayang'",hint:"Artikel yang memuji Dalang Surya. Tapi kalau dibaca teliti, semua karya yang disebut bukan miliknya."},
+      {icon:"🍢",nama:"Tusuk Sate Sisa Makan",hint:"Penyebab kematiannya. Keracunan sate di acara pesta yang dia hadiri sendirian malam itu."},
+    ],
+    dialog:[
+      {pertanyaan:"Apakah semua karya wayangmu benar-benar milikmu?", jujur:"Tidak. Banyak yang saya klaim dari murid-murid saya. Saya tidak bangga dengan itu.", bohong:"Semua karya saya original! Saya maestro! Yang lain hanya meniru saya!"},
+      {pertanyaan:"Kamu menggugat seniman junior — mengapa?", jujur:"Karena dia lebih baik dari saya. Dan saya takut tersaingi.", bohong:"Karena dia mencuri teknik saya! Saya yang mengajarinya!"},
+    ]
+  },
+];
+
+// ─── SVG GHOST DOLL GENERATOR ────────────────────────────────────────────────
+// Each ghost gets a stable variant seed based on its name
+function nameHash(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
+  return h;
+}
+
+function buildGhostSVG(ghost) {
+  const w = ghost.warna;
+  const isBad = ghost.dosa === "Suka Berbohong";
+  const seed = nameHash(ghost.nama);
+
+  // ── BODY SHAPE (3 variants) ──
+  const bodyVariant = seed % 3;
+  const bodyPaths = [
+    // Chubby round
+    `M28 118 Q22 162 28 192 L132 192 Q138 162 132 118 Q122 55 80 48 Q38 55 28 118 Z`,
+    // Tall slim
+    `M35 122 Q30 162 34 192 L126 192 Q130 162 125 122 Q116 62 80 52 Q44 62 35 122 Z`,
+    // Wide squat
+    `M22 130 Q18 165 24 192 L136 192 Q142 165 138 130 Q126 68 80 58 Q34 68 22 130 Z`,
+  ];
+  const bodyPath = bodyPaths[bodyVariant];
+
+  // ── FACE POSITION based on body ──
+  const faceY = [0, 2, -4][bodyVariant];
+
+  // ── EYES (4 variants) ──
+  const eyeVariant = seed % 4;
+  const eyes = {
+    // Normal round
+    0: (m) => `
+      <ellipse cx="62" cy="${91+faceY}" rx="7.5" ry="${isBad?7:8}" fill="${m}"/>
+      <ellipse cx="98" cy="${91+faceY}" rx="7.5" ry="${isBad?7:8}" fill="${m}"/>
+      <ellipse cx="64" cy="${89+faceY}" rx="3" ry="3" fill="white"/>
+      <ellipse cx="100" cy="${89+faceY}" rx="3" ry="3" fill="white"/>
+      <ellipse cx="65" cy="${88+faceY}" rx="1.2" ry="1.2" fill="${m}"/>
+      <ellipse cx="101" cy="${88+faceY}" rx="1.2" ry="1.2" fill="${m}"/>`,
+    // Oval tall
+    1: (m) => `
+      <ellipse cx="62" cy="${91+faceY}" rx="6" ry="${isBad?9:10}" fill="${m}"/>
+      <ellipse cx="98" cy="${91+faceY}" rx="6" ry="${isBad?9:10}" fill="${m}"/>
+      <ellipse cx="63.5" cy="${88+faceY}" rx="2.5" ry="3.5" fill="white"/>
+      <ellipse cx="99.5" cy="${88+faceY}" rx="2.5" ry="3.5" fill="white"/>`,
+    // Sleepy half-closed
+    2: (m) => `
+      <ellipse cx="62" cy="${93+faceY}" rx="8" ry="5.5" fill="${m}"/>
+      <ellipse cx="98" cy="${93+faceY}" rx="8" ry="5.5" fill="${m}"/>
+      <path d="M54 ${88+faceY} Q62 ${85+faceY} 70 ${88+faceY}" fill="${m}" stroke="${m}" stroke-width="1"/>
+      <path d="M90 ${88+faceY} Q98 ${85+faceY} 106 ${88+faceY}" fill="${m}" stroke="${m}" stroke-width="1"/>
+      <ellipse cx="64" cy="${92+faceY}" rx="2.5" ry="2" fill="white"/>
+      <ellipse cx="100" cy="${92+faceY}" rx="2.5" ry="2" fill="white"/>`,
+    // Star sparkle eyes (good only) / X eyes (bad)
+    3: (m) => isBad
+      ? `<text x="54" y="${97+faceY}" font-size="14" fill="${m}" font-family="sans-serif">✕</text>
+         <text x="89" y="${97+faceY}" font-size="14" fill="${m}" font-family="sans-serif">✕</text>`
+      : `<text x="54" y="${97+faceY}" font-size="14" fill="${m}" font-family="sans-serif">★</text>
+         <text x="89" y="${97+faceY}" font-size="14" fill="${m}" font-family="sans-serif">★</text>`,
+  };
+
+  // ── BROWS ──
+  const browVariant = seed % 3;
+  const brows = {
+    0: isBad  // slanted evil / gentle arch
+      ? `<path d="M53 ${80+faceY} Q61 ${74+faceY} 69 ${80+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+         <path d="M91 ${80+faceY} Q99 ${74+faceY} 107 ${80+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`
+      : `<path d="M54 ${81+faceY} Q62 ${77+faceY} 70 ${81+faceY}" stroke="${w.mata}" stroke-width="2" fill="none" stroke-linecap="round"/>
+         <path d="M90 ${81+faceY} Q98 ${77+faceY} 106 ${81+faceY}" stroke="${w.mata}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+    1: isBad  // thick block brows
+      ? `<rect x="53" y="${76+faceY}" width="17" height="4" rx="2" fill="${w.mata}" transform="rotate(-8,61,78)"/>
+         <rect x="90" y="${76+faceY}" width="17" height="4" rx="2" fill="${w.mata}" transform="rotate(8,99,78)"/>`
+      : `<rect x="54" y="${78+faceY}" width="16" height="3" rx="2" fill="${w.mata}" opacity="0.7"/>
+         <rect x="90" y="${78+faceY}" width="16" height="3" rx="2" fill="${w.mata}" opacity="0.7"/>`,
+    2: isBad  // one raised brow
+      ? `<path d="M53 ${82+faceY} Q61 ${74+faceY} 69 ${79+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+         <path d="M91 ${79+faceY} Q99 ${74+faceY} 107 ${82+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`
+      : `<path d="M54 ${79+faceY} Q62 ${76+faceY} 70 ${80+faceY}" stroke="${w.mata}" stroke-width="2" fill="none" stroke-linecap="round"/>
+         <path d="M90 ${80+faceY} Q98 ${76+faceY} 106 ${79+faceY}" stroke="${w.mata}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+  };
+
+  // ── MOUTH (4 variants) ──
+  const mouthVariant = seed % 4;
+  const mouths = {
+    0: isBad
+      ? `<path d="M67 ${111+faceY} Q80 ${104+faceY} 93 ${111+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`
+      : `<path d="M67 ${108+faceY} Q80 ${119+faceY} 93 ${108+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`,
+    1: isBad
+      ? `<path d="M68 ${112+faceY} L92 ${108+faceY}" stroke="${w.mata}" stroke-width="2.5" stroke-linecap="round"/>
+         <path d="M68 ${116+faceY} L74 ${112+faceY}" stroke="${w.mata}" stroke-width="1.5" stroke-linecap="round"/>`
+      : `<ellipse cx="80" cy="${112+faceY}" rx="10" ry="6" fill="${w.pipi}" opacity="0.5"/>
+         <path d="M70 ${110+faceY} Q80 ${118+faceY} 90 ${110+faceY}" stroke="${w.mata}" stroke-width="2" fill="none"/>`,
+    2: isBad
+      ? `<path d="M68 ${110+faceY} Q74 ${115+faceY} 80 ${110+faceY} Q86 ${115+faceY} 92 ${110+faceY}" stroke="${w.mata}" stroke-width="2" fill="none"/>`
+      : `<circle cx="80" cy="${112+faceY}" r="7" fill="${w.mata}" opacity="0.15"/>
+         <path d="M73 ${112+faceY} Q80 ${120+faceY} 87 ${112+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none"/>
+         <circle cx="72" cy="${111+faceY}" r="2" fill="${w.pipi}" opacity="0.6"/>
+         <circle cx="88" cy="${111+faceY}" r="2" fill="${w.pipi}" opacity="0.6"/>`,
+    3: isBad
+      ? `<rect x="68" y="${108+faceY}" width="24" height="7" rx="3" fill="${w.mata}" opacity="0.85"/>
+         <line x1="74" y1="${108+faceY}" x2="74" y2="${115+faceY}" stroke="${w.body}" stroke-width="1.5"/>
+         <line x1="80" y1="${108+faceY}" x2="80" y2="${115+faceY}" stroke="${w.body}" stroke-width="1.5"/>
+         <line x1="86" y1="${108+faceY}" x2="86" y2="${115+faceY}" stroke="${w.body}" stroke-width="1.5"/>`
+      : `<path d="M68 ${108+faceY} Q80 ${122+faceY} 92 ${108+faceY}" stroke="${w.mata}" stroke-width="3" fill="none" stroke-linecap="round"/>
+         <path d="M72 ${115+faceY} Q80 ${122+faceY} 88 ${115+faceY}" fill="${w.pipi}" opacity="0.3"/>`,
+  };
+
+  // ── CHEEKS ──
+  const cheekVariant = seed % 3;
+  const cheeks = {
+    0: `<ellipse cx="50" cy="${101+faceY}" rx="10" ry="7" fill="${w.pipi}" opacity="0.35"/>
+        <ellipse cx="110" cy="${101+faceY}" rx="10" ry="7" fill="${w.pipi}" opacity="0.35"/>`,
+    1: `<circle cx="50" cy="${102+faceY}" r="8" fill="${w.pipi}" opacity="0.3"/>
+        <circle cx="110" cy="${102+faceY}" r="8" fill="${w.pipi}" opacity="0.3"/>
+        <circle cx="47" cy="${99+faceY}" r="2" fill="${w.pipi}" opacity="0.4"/>
+        <circle cx="107" cy="${99+faceY}" r="2" fill="${w.pipi}" opacity="0.4"/>`,
+    2: `<path d="M42 ${99+faceY} Q50 ${106+faceY} 58 ${99+faceY}" fill="${w.pipi}" opacity="0.4"/>
+        <path d="M102 ${99+faceY} Q110 ${106+faceY} 118 ${99+faceY}" fill="${w.pipi}" opacity="0.4"/>`,
+  };
+
+  // ── ARMS (3 variants) ──
+  const armVariant = seed % 3;
+  const arms = {
+    // Short stubby
+    0: `<path d="M28 132 Q10 148 14 166 Q18 176 28 170" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>
+        <path d="M132 132 Q150 148 146 166 Q142 176 132 170" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`,
+    // Long droopy
+    1: `<path d="M30 128 Q6 150 10 178 Q14 190 26 184" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>
+        <path d="M130 128 Q154 150 150 178 Q146 190 134 184" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`,
+    // Raised one arm (pointing / waving)
+    2: isBad
+      ? `<path d="M30 130 Q8 110 12 90 Q16 78 26 82" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>
+         <path d="M130 132 Q152 148 148 168 Q144 178 134 172" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`
+      : `<path d="M28 130 Q10 148 14 166 Q18 176 28 170" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>
+         <path d="M132 128 Q154 108 150 88 Q146 76 136 80" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`,
+  };
+
+  // ── ACCESSORIES ──
+  const badAccVariant = seed % 4;
+  const goodAccVariant = seed % 4;
+
+  const badAccessories = {
+    // Classic horns
+    0: `<polygon points="63,35 57,12 73,32" fill="#c03030" opacity="0.9"/>
+        <polygon points="97,35 91,12 107,32" fill="#c03030" opacity="0.9"/>
+        <polygon points="63,35 57,12 73,32" fill="#ff6060" opacity="0.3"/>`,
+    // Crown of thorns
+    1: `<path d="M52 42 Q60 28 68 42 Q72 28 80 42 Q88 28 96 42 Q104 28 108 42" stroke="#5a2020" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="60" cy="35" r="3" fill="#8b1a1a"/>
+        <circle cx="80" cy="30" r="3" fill="#8b1a1a"/>
+        <circle cx="100" cy="35" r="3" fill="#8b1a1a"/>`,
+    // Demon mask
+    2: `<polygon points="63,36 58,16 74,34" fill="#9b2020" opacity="0.85"/>
+        <polygon points="97,36 86,16 102,34" fill="#9b2020" opacity="0.85"/>
+        <path d="M60 46 Q80 38 100 46" stroke="#6a1010" stroke-width="2" fill="none" opacity="0.6"/>`,
+    // Skull crown
+    3: `<ellipse cx="80" cy="32" rx="22" ry="10" fill="#2a0808" stroke="#6a2020" stroke-width="1.5"/>
+        <circle cx="73" cy="30" r="4" fill="#1a0000"/>
+        <circle cx="87" cy="30" r="4" fill="#1a0000"/>
+        <path d="M75 36 L75 40 M80 37 L80 41 M85 36 L85 40" stroke="#6a2020" stroke-width="1.5"/>`,
+  };
+
+  const goodAccessories = {
+    // Classic halo
+    0: `<ellipse cx="80" cy="24" rx="28" ry="8" fill="none" stroke="${w.aksen}" stroke-width="4" opacity="0.85"/>
+        <ellipse cx="80" cy="24" rx="28" ry="8" fill="none" stroke="#fff4a0" stroke-width="1.5" opacity="0.6"/>`,
+    // Flower crown
+    1: `${[55,65,75,85,95,105].map((x,i)=>`
+        <circle cx="${x}" cy="${28+Math.sin(i)*4}" r="5" fill="${['#ff9999','#ffcc88','#aaffaa','#88ccff','#ffaaff','#ffffaa'][i]}" opacity="0.9"/>
+        <circle cx="${x}" cy="${28+Math.sin(i)*4}" r="2" fill="white" opacity="0.7"/>`).join('')}
+        <path d="M52 30 Q80 20 108 30" stroke="#70a050" stroke-width="2" fill="none" opacity="0.5"/>`,
+    // Angel wings tiny
+    2: `<path d="M30 70 Q10 55 18 38 Q28 25 40 40 Q46 50 38 62" fill="white" opacity="0.7"/>
+        <path d="M130 70 Q150 55 142 38 Q132 25 120 40 Q114 50 122 62" fill="white" opacity="0.7"/>
+        <ellipse cx="80" cy="24" rx="22" ry="6" fill="none" stroke="#ffe080" stroke-width="3" opacity="0.8"/>`,
+    // Star sparkles
+    3: `<text x="52" y="30" font-size="12" fill="#ffe080" opacity="0.9">✦</text>
+        <text x="96" y="26" font-size="10" fill="#ffe080" opacity="0.8">✦</text>
+        <text x="74" y="18" font-size="14" fill="#fff4a0" opacity="0.95">★</text>
+        <ellipse cx="80" cy="26" rx="24" ry="7" fill="none" stroke="#c9a84c" stroke-width="2.5" opacity="0.7"/>`,
+  };
+
+  const accessory = isBad ? badAccessories[badAccVariant] : goodAccessories[goodAccVariant];
+
+  // ── TAIL / BOTTOM (3 variants) ──
+  const tailVariant = seed % 3;
+  const tails = {
+    0: isBad
+      ? `<path d="M50 192 Q40 208 56 213 Q66 217 66 207 Q68 217 80 220 Q92 217 94 207 Q94 217 104 213 Q120 208 110 192 Z" fill="${w.body}" opacity="0.9"/>
+         <path d="M50 192 Q40 208 56 213" fill="none" stroke="${w.aksen}" stroke-width="1.5" opacity="0.4"/>
+         <path d="M94 207 Q94 217 104 213 Q120 208 110 192" fill="none" stroke="${w.aksen}" stroke-width="1.5" opacity="0.4"/>`
+      : `<path d="M52 192 Q48 212 64 217 Q74 220 74 210 Q76 220 88 218 Q98 216 94 206 Q104 214 112 202 Q108 187 98 187 L62 187 Z" fill="${w.body}" opacity="0.9"/>
+         <ellipse cx="80" cy="187" rx="4" ry="6" fill="${w.aksen}" opacity="0.3"/>`,
+    1: isBad
+      ? `<path d="M45 192 Q32 210 50 218 Q62 222 64 210 Q70 224 80 222 Q90 224 96 210 Q98 222 110 218 Q128 210 115 192 Z" fill="${w.body}" opacity="0.9"/>
+         <path d="M64 210 Q70 224 80 222 Q90 224 96 210" fill="none" stroke="${w.aksen}" stroke-width="1" opacity="0.4"/>`
+      : `<path d="M50 192 Q46 214 60 218 Q70 222 72 212 Q74 222 80 224 Q86 222 88 212 Q90 222 100 218 Q114 214 110 192 Z" fill="${w.body}" opacity="0.9"/>
+         <path d="M72 212 Q74 222 80 224 Q86 222 88 212" fill="none" stroke="${w.aksen}" stroke-width="1.5" opacity="0.4"/>`,
+    2: isBad
+      ? `<path d="M48 192 Q42 212 58 218 Q70 222 72 208 Q76 222 80 224 Q84 222 88 208 Q90 222 102 218 Q118 212 112 192 Z" fill="${w.body}" opacity="0.9"/>
+         <line x1="80" y1="192" x2="80" y2="224" stroke="${w.aksen}" stroke-width="1" opacity="0.25"/>`
+      : `<path d="M54 192 Q50 210 62 216 Q74 220 76 210 Q78 220 80 222 Q82 220 84 210 Q86 220 98 216 Q110 210 106 192 Z" fill="${w.body}" opacity="0.9"/>
+         <ellipse cx="65" cy="208" rx="3" ry="4" fill="${w.aksen}" opacity="0.2"/>
+         <ellipse cx="95" cy="208" rx="3" ry="4" fill="${w.aksen}" opacity="0.2"/>`,
+  };
+
+  // ── BODY EXTRAS (patches, spots, patterns) ──
+  const extraVariant = seed % 4;
+  const extras = {
+    0: ``, // plain
+    1: `<!-- polka dots -->
+        <circle cx="65" cy="148" r="4" fill="${w.aksen}" opacity="0.2"/>
+        <circle cx="88" cy="162" r="3" fill="${w.aksen}" opacity="0.2"/>
+        <circle cx="75" cy="174" r="3.5" fill="${w.aksen}" opacity="0.15"/>`,
+    2: `<!-- vertical stripe -->
+        <path d="M78 125 L78 188" stroke="${w.aksen}" stroke-width="5" opacity="0.12"/>
+        <path d="M86 125 L86 188" stroke="${w.aksen}" stroke-width="3" opacity="0.08"/>`,
+    3: `<!-- patch badge -->
+        <rect x="64" y="148" width="32" height="20" rx="4" fill="${w.aksen}" opacity="0.18"/>
+        <rect x="66" y="150" width="28" height="16" rx="3" fill="none" stroke="${w.aksen}" stroke-width="1" opacity="0.3"/>`,
+  };
+
+  return `<svg viewBox="0 0 160 224" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg${seed%9}" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="${w.body}" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glo${seed%9}">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Aura glow -->
+  <ellipse cx="80" cy="135" rx="58" ry="78" fill="${w.body}" opacity="0.18" filter="url(#glo${seed%9})"/>
+
+  ${accessory}
+
+  <!-- Body -->
+  <path d="${bodyPath}" fill="${w.body}" opacity="0.92"/>
+  <path d="${bodyPath}" fill="url(#bg${seed%9})"/>
+  <path d="${bodyPath}" fill="none" stroke="${w.aksen}" stroke-width="1.5" opacity="0.45"/>
+
+  ${extras[extraVariant]}
+
+  ${arms[armVariant]}
+
+  <!-- Cheeks -->
+  ${cheeks[cheekVariant]}
+
+  <!-- Brows -->
+  ${brows[browVariant]}
+
+  <!-- Eyes -->
+  ${eyes[eyeVariant](w.mata)}
+
+  <!-- Mouth -->
+  ${mouths[mouthVariant]}
+
+  <!-- Wrinkles -->
+  <path d="M62 145 Q66 157 62 168" stroke="${w.aksen}" stroke-width="1" fill="none" opacity="0.25"/>
+  <path d="M80 150 Q84 163 80 175" stroke="${w.aksen}" stroke-width="1" fill="none" opacity="0.25"/>
+  <path d="M98 145 Q94 157 98 168" stroke="${w.aksen}" stroke-width="1" fill="none" opacity="0.25"/>
+
+  ${tails[tailVariant]}
+</svg>`;
+}
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let score = 0, lives = 3, currentGhost = null;
+let queue = [], queueIndex = 0;
+const QUEUE_SIZE = 10;
+
+// ─── AUDIO ───────────────────────────────────────────────────────────────────
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+function tone(freq, type, dur, vol=0.3, delay=0) {
+  const o = ctx.createOscillator(), g = ctx.createGain();
+  o.connect(g); g.connect(ctx.destination);
+  o.type = type;
+  o.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+  g.gain.setValueAtTime(vol, ctx.currentTime + delay);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + dur);
+  o.start(ctx.currentTime + delay);
+  o.stop(ctx.currentTime + delay + dur + 0.05);
+}
+
+function playSoundCorrect() {
+  tone(660,'sine',0.12,0.25);
+  tone(880,'sine',0.15,0.2,0.08);
+  tone(1100,'sine',0.12,0.15,0.16);
+}
+function playSoundWrong() {
+  tone(200,'sawtooth',0.2,0.4);
+  tone(150,'sawtooth',0.25,0.4,0.15);
+  tone(120,'square',0.3,0.35,0.3);
+}
+function playSoundGameOver() {
+  tone(220,'sawtooth',0.4,0.5);
+  tone(180,'sawtooth',0.5,0.5,0.35);
+  tone(140,'square',0.7,0.5,0.7);
+  tone(100,'sawtooth',0.9,0.4,1.1);
+}
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function shuffle(arr) {
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function randomDate() {
+  const d=Math.floor(Math.random()*28)+1;
+  const m=["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"][Math.floor(Math.random()*12)];
+  const y=Math.floor(Math.random()*5)+2020;
+  return `${String(d).padStart(2,'0')} ${m} ${y}`;
+}
+
+function getDestination(dosa) {
+  return dosa === "Suka Berbagi" ? "Surga" : "Neraka";
+}
+
+// ─── UI ──────────────────────────────────────────────────────────────────────
+function updateHUD() {
+  document.getElementById('score-val').textContent = score;
+  const h = '❤️'.repeat(Math.max(lives,0)) + '🖤'.repeat(Math.max(3-lives,0));
+  document.getElementById('lives-val').textContent = h;
+}
+
+function setFeedback(msg, cls) {
+  const el = document.getElementById('feedback');
+  el.textContent = msg; el.className = cls;
+}
+
+function renderQueue() {
+  const bar = document.getElementById('queue-bar');
+  bar.innerHTML = '';
+  for (let i = 0; i < QUEUE_SIZE; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'queue-dot ' + (i < queueIndex ? 'done' : i === queueIndex ? 'current' : 'pending');
+    bar.appendChild(dot);
+  }
+}
+
+function renderGhost() {
+  const g = currentGhost;
+
+  // SVG doll
+  const svgContainer = document.getElementById('ghost-doll');
+  svgContainer.innerHTML = buildGhostSVG(g);
+
+  // Name tag
+  document.getElementById('ghost-name-tag').textContent = g.nama;
+
+  // Sin badge
+  const badge = document.getElementById('sin-badge');
+  badge.textContent = g.dosa === 'Suka Berbohong' ? '⚠ '+g.dosa : '✦ '+g.dosa;
+  badge.className = g.dosa === 'Suka Berbohong' ? 'bohong' : 'berbagi';
+
+  // Form fields
+  document.getElementById('ref-no').textContent = '#' + String(queueIndex).padStart(3,'0');
+  document.getElementById('tgl-masuk').textContent = randomDate();
+  document.getElementById('f-nama').textContent = g.nama;
+  document.getElementById('f-alias').textContent = '"' + g.alias + '"';
+  document.getElementById('f-umur').textContent = g.umur + ' tahun';
+  document.getElementById('f-sebab').textContent = g.sebab;
+  document.getElementById('f-asal').textContent = g.asal;
+  document.getElementById('f-pekerjaan').textContent = g.pekerjaan;
+  document.getElementById('f-dosa').textContent = g.dosa;
+  document.getElementById('f-kebiasaan').textContent = g.kebiasaan;
+  document.getElementById('f-catatan').textContent = g.catatan;
+
+  // Karma checkboxes
+  const kc = document.getElementById('karma-checks');
+  kc.innerHTML = '';
+  g.karma.forEach(k => {
+    kc.innerHTML += `<div class="check-item"><div class="checkbox checked">✓</div>${k}</div>`;
+  });
+
+  // Clear stamp & feedback
+  const stamp = document.getElementById('stamp');
+  stamp.className = '';
+  document.getElementById('stamp-icon').textContent = '';
+  document.getElementById('stamp-text').textContent = '';
+  setFeedback('', '');
+  resetTabs();
+
+  // Re-trigger paper animation
+  const paper = document.getElementById('form-paper');
+  paper.style.animation = 'none';
+  void paper.offsetWidth;
+  paper.style.animation = '';
+
+  renderQueue();
+}
+
+// ─── GAME LOGIC ──────────────────────────────────────────────────────────────
+function buildQueue() {
+  queue = shuffle(ghosts).slice(0, QUEUE_SIZE);
+  queueIndex = 0;
+}
+
+function nextGhost() {
+  if (queueIndex >= queue.length) buildQueue();
+  currentGhost = queue[queueIndex];
+  renderGhost();
+}
+
+function sort(pilihan) {
+  if (!currentGhost) return;
+  if (ctx.state === 'suspended') ctx.resume();
+
+  const seharusnya = getDestination(currentGhost.dosa);
+  const stamp = document.getElementById('stamp');
+  const paper = document.getElementById('form-paper');
+
+  if (pilihan === 'Surga') {
+    stamp.className = 'show-heaven';
+    document.getElementById('stamp-icon').textContent = '☁️';
+    document.getElementById('stamp-text').textContent = 'SURGA\nAPPROVED';
+  } else {
+    stamp.className = 'show-hell';
+    document.getElementById('stamp-icon').textContent = '🔥';
+    document.getElementById('stamp-text').textContent = 'NERAKA\nAPPROVED';
+  }
+
+  if (pilihan === seharusnya) {
+    score++;
+    updateHUD();
+    setFeedback('✅ BENAR — Jiwa tersortir dengan tepat.', 'correct');
+    playSoundCorrect();
+    paper.classList.remove('flash-correct', 'shake');
+    void paper.offsetWidth;
+    paper.classList.add('flash-correct');
+    queueIndex++;
+    setTimeout(nextGhost, 950);
+  } else {
+    lives--;
+    updateHUD();
+    setFeedback(`❌ SALAH — Seharusnya: ${seharusnya}.`, 'wrong');
+    playSoundWrong();
+    paper.classList.remove('flash-correct', 'shake');
+    void paper.offsetWidth;
+    paper.classList.add('shake');
+
+    if (lives <= 0) {
+      setTimeout(triggerGameOver, 700);
+      return;
+    }
+    queueIndex++;
+    setTimeout(nextGhost, 950);
+  }
+}
+
+function triggerGameOver() {
+  playSoundGameOver();
+  document.getElementById('go-score-val').textContent = score;
+  document.getElementById('game-over-screen').classList.add('show');
+}
+
+function restartGame() {
+  score = 0; lives = 3;
+  document.getElementById('game-over-screen').classList.remove('show');
+  updateHUD();
+  buildQueue();
+  nextGhost();
+}
+
+// ─── TAB & SIDE PANEL ────────────────────────────────────────────────────────
+let activeTab = 'biodata';
+
+function switchTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.ghost-tab').forEach((btn, i) => {
+    btn.classList.toggle('active', ['biodata','barang','tanya'][i] === tab);
+  });
+
+  const panel = document.getElementById('side-panel');
+  const body  = document.getElementById('side-panel-body');
+  const title = document.getElementById('side-panel-title');
+
+  if (tab === 'biodata') {
+    panel.classList.remove('show');
+    return;
+  }
+
+  panel.classList.add('show');
+
+  if (tab === 'barang') {
+    title.textContent = '🎒 BARANG BAWAAN';
+    body.innerHTML = '';
+    (currentGhost.barang || []).forEach(b => {
+      const card = document.createElement('div');
+      card.className = 'item-card';
+      card.innerHTML = `
+        <span class="item-icon">${b.icon}</span>
+        <div class="item-info">
+          <div class="item-name">${b.nama}</div>
+          <div class="item-tap">[ klik untuk periksa ]</div>
+          <div class="item-hint">${b.hint}</div>
+        </div>`;
+      card.addEventListener('click', () => {
+        const hint = card.querySelector('.item-hint');
+        const tap  = card.querySelector('.item-tap');
+        const isOpen = hint.classList.contains('show');
+        // close all others
+        body.querySelectorAll('.item-hint').forEach(h => h.classList.remove('show'));
+        body.querySelectorAll('.item-tap').forEach(t => t.textContent = '[ klik untuk periksa ]');
+        if (!isOpen) {
+          hint.classList.add('show');
+          tap.textContent = '[ tutup ]';
+          tone(440,'sine',0.08,0.15);
+        }
+      });
+      body.appendChild(card);
+    });
+
+  } else if (tab === 'tanya') {
+    title.textContent = '💬 INTEROGASI JIWA';
+    body.innerHTML = `<p style="font-family:'Caveat',cursive;font-size:13px;color:var(--ink-faded);margin-bottom:10px;position:relative;z-index:1;">Pilih pertanyaan untuk diajukan kepada ${currentGhost.nama}:</p>`;
+    const isBad = currentGhost.dosa === 'Suka Berbohong';
+    (currentGhost.dialog || []).forEach((d, idx) => {
+      const wrap = document.createElement('div');
+      const btn  = document.createElement('button');
+      const ans  = document.createElement('div');
+
+      btn.className = 'dialog-question-btn';
+      btn.textContent = d.pertanyaan;
+      ans.className = 'dialog-answer-box';
+
+      // hantu bohong kadang bohong, kadang "slip" jujur (50/50)
+      const slips = Math.random() < 0.35; // 35% chance si penjahat jujur tanpa sadar
+      const jawaban = isBad
+        ? (slips ? `*terdiam sebentar* "${d.jujur}"` : `"${d.bohong}"`)
+        : `"${d.jujur}"`;
+
+      ans.innerHTML = `<div class="dialog-speaker">${currentGhost.nama} berkata:</div>${jawaban}`;
+
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('asked')) return;
+        btn.classList.add('asked');
+        ans.classList.add('show');
+        tone(330,'sine',0.06,0.12);
+        setTimeout(() => tone(440,'sine',0.08,0.1), 80);
+      });
+
+      wrap.appendChild(btn);
+      wrap.appendChild(ans);
+      body.appendChild(wrap);
+    });
+  }
+}
+
+function resetTabs() {
+  activeTab = 'biodata';
+  document.querySelectorAll('.ghost-tab').forEach((btn, i) => {
+    btn.classList.toggle('active', i === 0);
+  });
+  document.getElementById('side-panel').classList.remove('show');
+  document.getElementById('side-panel-body').innerHTML = '';
+}
+
+// ─── LOADING SCREEN ───────────────────────────────────────────────────────────
+(function() {
+  const bootLines = [
+    "DEAD DESK SYSTEMS v6.6.6",
+    "Copyright (C) 1999 Departemen Alam Baka",
+    "──────────────────────────────────────",
+    "",
+    "[ OK ] Menginisialisasi CPU Neraka...",
+    "[ OK ] Memuat database 999.999 jiwa...",
+    "[ OK ] Mengecek stok formulir: 847 lembar",
+    "[ OK ] Menyambungkan ke server Surga...",
+    "[ OK ] Menyambungkan ke server Neraka...",
+    "[ OK ] Memuat meja kerja petugas baru...",
+    "[ OK ] Mengkalibrasi timbangan karma...",
+    "[ OK ] Lampu meja menyala...",
+    "[ OK ] Kopi sudah diseduh...",
+    "",
+    "SISTEM SIAP.",
+    "Selamat datang, Petugas Junior #4471.",
+    "47 jiwa dalam antrean hari ini.",
+    "",
+    "Membuka antarmuka registrasi...",
+    ">>> ZOOM IN <<<",
+  ];
+
+  const bootEl = document.getElementById('ls-boot-text');
+  let lineIdx = 0, charIdx = 0, text = '';
+
+  function typeNext() {
+    if (lineIdx >= bootLines.length) {
+      // Trigger zoom into monitor screen
+      const room = document.getElementById('ls-room');
+      room.classList.add('do-zoom');
+
+      // Hide loading screen exactly when zoom ends, game already visible behind
+      setTimeout(() => {
+        const ls = document.getElementById('loading-screen');
+        ls.style.display = 'none';
+      }, 1200);
+      return;
+    }
+
+    const line = bootLines[lineIdx];
+    if (charIdx < line.length) {
+      text += line[charIdx++];
+      bootEl.textContent = text;
+      const delay = line.startsWith('[') ? 12 : line.startsWith('>') ? 80 : 22;
+      setTimeout(typeNext, delay + Math.random() * 10);
+    } else {
+      text += '\n';
+      bootEl.textContent = text;
+      lineIdx++; charIdx = 0;
+      // Auto-scroll boot text
+      bootEl.scrollTop = bootEl.scrollHeight;
+      const pause = bootLines[lineIdx - 1] === '' ? 40 :
+                    bootLines[lineIdx - 1].startsWith('[') ? 60 : 30;
+      setTimeout(typeNext, pause);
+    }
+  }
+
+  // Remove fade-out on #loading-screen, game is revealed by zoom not by opacity
+  document.getElementById('loading-screen').style.transition = 'none';
+
+  setTimeout(typeNext, 400);
+})();
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+updateHUD();
+buildQueue();
+nextGhost();
+</script>
+</body>
+</html>
