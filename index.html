@@ -6,1087 +6,500 @@
 <title>Dead Desk: Sortir Jiwa</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Special+Elite&family=VT323&display=swap');
-
 *{margin:0;padding:0;box-sizing:border-box;}
-
 :root{
-  --bg:#1c1108;
-  --desk:#2a1a08;
-  --felt:#1a2a12;
-  --paper:#f7f0dc;
-  --paper2:#ede5c8;
-  --ink:#1e1205;
-  --ink-faded:#6b5535;
-  --red-line:rgba(180,50,50,0.35);
-  --blue-line:rgba(50,80,180,0.18);
-  --stamp-heaven:#1a4a9b;
-  --stamp-hell:#9b1a1a;
-  --gold:#c9a84c;
-  --gold-dim:#7a6020;
-  --green:#3a8a3a;
-  --shadow:rgba(0,0,0,0.6);
+  --bg:#1c1108;--desk:#2a1a08;--felt:#1a2a12;--paper:#f7f0dc;--paper2:#ede5c8;
+  --ink:#1e1205;--ink-faded:#6b5535;--red-line:rgba(180,50,50,0.35);
+  --blue-line:rgba(50,80,180,0.18);--stamp-heaven:#1a4a9b;--stamp-hell:#9b1a1a;
+  --gold:#c9a84c;--gold-dim:#7a6020;--green:#3a8a3a;--shadow:rgba(0,0,0,0.6);
 }
-
 html,body{height:100%;overflow:hidden;}
-
-body{
-  background:var(--desk);
-  font-family:'Special Elite',cursive;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-}
-
-/* Felt desk surface */
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background:
-    radial-gradient(ellipse 100% 80% at 50% 100%, #0e1a08 0%, transparent 60%),
-    radial-gradient(ellipse 70% 50% at 50% 110%, #1a2a12 0%, transparent 50%);
-  pointer-events:none;
-}
-
-/* Lamp glow from top */
-body::after{
-  content:'';
-  position:fixed;
-  top:-200px;left:50%;transform:translateX(-50%);
-  width:900px;height:600px;
-  background:radial-gradient(ellipse, rgba(255,210,80,0.1) 0%, transparent 65%);
-  pointer-events:none;
-  z-index:0;
-}
-
-/* ── LAYOUT ── */
-#scene{
-  position:relative;
-  z-index:1;
-  width:100%;
-  max-width:860px;
-  height:100vh;
-  display:grid;
-  grid-template-rows:auto 1fr auto;
-  grid-template-columns:1fr;
-  padding:16px 20px 14px;
-  gap:10px;
-}
-
-/* ── TOP BAR ── */
-#topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:8px 16px;
-  background:rgba(0,0,0,0.45);
-  border:1px solid #3a2808;
-  border-radius:3px;
-}
-
-.hud-item{
-  font-family:'VT323',monospace;
-  font-size:20px;
-  color:var(--gold);
-  letter-spacing:2px;
-  text-shadow:0 0 8px rgba(200,168,75,0.5);
-}
-
-#title-hud{
-  font-size:18px;
-  color:#5a4020;
-  letter-spacing:4px;
-}
-
-/* ── MAIN AREA ── */
-#main{
-  display:grid;
-  grid-template-columns:200px 1fr;
-  gap:16px;
-  align-items:start;
-  min-height:0;
-}
-
-/* ── GHOST DOLL PANEL ── */
-#ghost-panel{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:8px;
-}
-
-#ghost-doll{
-  position:relative;
-  width:160px;
-  height:220px;
-}
-
-#ghost-doll svg{
-  width:100%;
-  height:100%;
-  filter:drop-shadow(0 8px 24px rgba(150,255,180,0.25));
-  animation:ghostFloat 3s ease-in-out infinite;
-}
-
-@keyframes ghostFloat{
-  0%,100%{transform:translateY(0) rotate(-1deg);}
-  50%{transform:translateY(-10px) rotate(1deg);}
-}
-
-#ghost-name-tag{
-  background:var(--paper);
-  border:1px solid var(--ink-faded);
-  padding:4px 12px;
-  font-family:'Caveat',cursive;
-  font-size:17px;
-  font-weight:700;
-  color:var(--ink);
-  text-align:center;
-  border-radius:2px;
-  box-shadow:2px 2px 0 var(--paper2),4px 4px 0 rgba(0,0,0,0.2);
-  max-width:160px;
-  word-break:break-word;
-}
-
-#sin-badge{
-  padding:3px 10px;
-  border-radius:20px;
-  font-family:'Caveat',cursive;
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:0.5px;
-  text-align:center;
-}
+body{background:var(--desk);font-family:'Special Elite',cursive;display:flex;align-items:center;justify-content:center;position:relative;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 100% 80% at 50% 100%,#0e1a08 0%,transparent 60%),radial-gradient(ellipse 70% 50% at 50% 110%,#1a2a12 0%,transparent 50%);pointer-events:none;}
+body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:900px;height:600px;background:radial-gradient(ellipse,rgba(255,210,80,0.1) 0%,transparent 65%);pointer-events:none;z-index:0;}
+#scene{position:relative;z-index:1;width:100%;max-width:860px;height:100vh;display:grid;grid-template-rows:auto 1fr auto;grid-template-columns:1fr;padding:16px 20px 14px;gap:10px;}
+#topbar{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;background:rgba(0,0,0,0.55);border:1px solid #3a2808;border-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,0.4),inset 0 1px 0 rgba(201,168,76,0.1);}
+.hud-item{font-family:'VT323',monospace;font-size:20px;color:var(--gold);letter-spacing:2px;text-shadow:0 0 8px rgba(200,168,75,0.5);}
+#title-hud{font-size:18px;color:#5a4020;letter-spacing:4px;transition:color 0.5s,text-shadow 0.5s;}
+#title-hud.boss-mode{color:#cc2222;text-shadow:0 0 12px rgba(200,30,30,0.8),0 0 24px rgba(200,30,30,0.4);animation:bossFlicker 2s infinite;}
+@keyframes bossFlicker{0%,100%{opacity:1;}92%{opacity:1;}93%{opacity:0.7;}94%{opacity:1;}96%{opacity:0.8;}97%{opacity:1;}}
+#main{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:start;min-height:0;}
+#ghost-panel{display:flex;flex-direction:column;align-items:center;gap:8px;}
+#ghost-doll{position:relative;width:160px;height:220px;transition:filter 0.5s;}
+#ghost-doll.boss-aura{filter:drop-shadow(0 0 16px rgba(255,50,50,0.6)) drop-shadow(0 0 32px rgba(255,50,50,0.3));}
+#ghost-doll svg{width:100%;height:100%;filter:drop-shadow(0 8px 24px rgba(150,255,180,0.25));animation:ghostFloat 3s ease-in-out infinite;}
+#ghost-doll.boss-aura svg{filter:drop-shadow(0 8px 24px rgba(255,80,80,0.5));animation:ghostFloatBoss 2s ease-in-out infinite;}
+@keyframes ghostFloat{0%,100%{transform:translateY(0) rotate(-1deg);}50%{transform:translateY(-10px) rotate(1deg);}}
+@keyframes ghostFloatBoss{0%,100%{transform:translateY(0) rotate(-2deg) scale(1.02);}50%{transform:translateY(-14px) rotate(2deg) scale(1);}}
+#ghost-name-tag{background:var(--paper);border:1px solid var(--ink-faded);padding:4px 12px;font-family:'Caveat',cursive;font-size:17px;font-weight:700;color:var(--ink);text-align:center;border-radius:2px;box-shadow:2px 2px 0 var(--paper2),4px 4px 0 rgba(0,0,0,0.2);max-width:160px;word-break:break-word;transition:background 0.4s,border-color 0.4s;}
+#ghost-name-tag.boss-tag{background:#200808;color:#ff8888;border-color:#8b2020;box-shadow:2px 2px 0 #3a1010,4px 4px 0 rgba(0,0,0,0.4),0 0 12px rgba(200,30,30,0.3);}
+#sin-badge{padding:3px 10px;border-radius:20px;font-family:'Caveat',cursive;font-size:13px;font-weight:700;letter-spacing:0.5px;text-align:center;}
 #sin-badge.bohong{background:#3a0808;color:#ff8888;border:1px solid #7a2020;}
 #sin-badge.berbagi{background:#083a10;color:#88ff99;border:1px solid #207a2a;}
-
-/* ── FORM PAPER ── */
-#form-wrap{
-  position:relative;
-}
-
-#form-paper{
-  background:var(--paper);
-  padding:20px 24px 20px 52px;
-  border-radius:1px;
-  position:relative;
-  box-shadow:
-    3px 3px 0 var(--paper2),
-    6px 6px 0 rgba(0,0,0,0.25),
-    0 12px 32px rgba(0,0,0,0.4);
-  transform:rotate(0.4deg);
-  animation:paperIn 0.35s ease;
-  max-height:calc(100vh - 180px);
-  overflow:hidden;
-}
-
-@keyframes paperIn{
-  from{opacity:0;transform:rotate(0.4deg) translateY(-12px);}
-  to{opacity:1;transform:rotate(0.4deg) translateY(0);}
-}
-
-/* Ruled lines */
-#form-paper::before{
-  content:'';
-  position:absolute;inset:0;
-  background:repeating-linear-gradient(
-    transparent, transparent 29px,
-    var(--blue-line) 29px, var(--blue-line) 30px
-  );
-  pointer-events:none;
-}
-
-/* Red margin */
-#form-paper::after{
-  content:'';
-  position:absolute;
-  top:0;left:40px;bottom:0;
-  width:1.5px;
-  background:var(--red-line);
-  pointer-events:none;
-}
-
-/* Hole punches */
-.hole{
-  position:absolute;
-  left:14px;
-  width:18px;height:18px;
-  border-radius:50%;
-  background:var(--desk);
-  border:1px solid #8a7050;
-  box-shadow:inset 0 1px 3px rgba(0,0,0,0.5);
-}
-.hole:nth-child(1){top:30px;}
-.hole:nth-child(2){top:50%;transform:translateY(-50%);}
-.hole:nth-child(3){bottom:30px;}
-
-.form-header{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  border-bottom:1.5px solid #c0a870;
-  padding-bottom:8px;
-  margin-bottom:10px;
-  position:relative;
-  z-index:1;
-}
-
-.form-header-left h2{
-  font-family:'VT323',monospace;
-  font-size:20px;
-  color:var(--ink);
-  letter-spacing:2px;
-  line-height:1.2;
-}
-
-.form-header-left p{
-  font-size:10px;
-  color:var(--ink-faded);
-  letter-spacing:2px;
-  text-transform:uppercase;
-  margin-top:2px;
-}
-
-.ref-box{
-  text-align:right;
-  font-family:'VT323',monospace;
-  font-size:13px;
-  color:var(--ink-faded);
-  line-height:1.5;
-}
-
-/* ── FORM FIELDS ── */
-.form-section{
-  margin-bottom:8px;
-  position:relative;
-  z-index:1;
-}
-
-.section-title{
-  font-size:9px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:var(--ink-faded);
-  border-bottom:1px solid #d0b880;
-  padding-bottom:2px;
-  margin-bottom:6px;
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:4px 16px;
-}
-
-.form-grid.full{
-  grid-template-columns:1fr;
-}
-
-.field{
-  display:flex;
-  flex-direction:column;
-  gap:1px;
-}
-
-.field-label{
-  font-size:9px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--ink-faded);
-}
-
-.field-value{
-  font-family:'Caveat',cursive;
-  font-size:17px;
-  font-weight:600;
-  color:var(--ink);
-  border-bottom:1px solid #c0a870;
-  padding-bottom:1px;
-  line-height:1.3;
-  min-height:22px;
-}
-
-.field-value.highlight{
-  font-size:19px;
-  font-weight:700;
-}
-
-/* Checkboxes row */
-.check-row{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-.check-item{
-  display:flex;
-  align-items:center;
-  gap:5px;
-  font-family:'Caveat',cursive;
-  font-size:15px;
-  color:var(--ink);
-}
-
-.checkbox{
-  width:14px;height:14px;
-  border:1.5px solid var(--ink-faded);
-  border-radius:2px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;
-  flex-shrink:0;
-}
-.checkbox.checked{
-  background:var(--ink);
-  color:var(--paper);
-}
-
-/* ── STAMP ── */
-#stamp{
-  position:absolute;
-  top:18px;right:18px;
-  width:76px;height:76px;
-  border:3px solid transparent;
-  border-radius:3px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  font-family:'VT323',monospace;
-  font-size:12px;
-  line-height:1.2;
-  letter-spacing:1px;
-  text-align:center;
-  transform:rotate(12deg);
-  opacity:0;
-  transition:opacity 0.25s;
-  z-index:10;
-  pointer-events:none;
-}
-
-#stamp.show-heaven{
-  border-color:var(--stamp-heaven);
-  color:var(--stamp-heaven);
-  opacity:1;
-  background:rgba(26,74,155,0.06);
-}
-#stamp.show-hell{
-  border-color:var(--stamp-hell);
-  color:var(--stamp-hell);
-  opacity:1;
-  background:rgba(155,26,26,0.06);
-}
-
+#sin-badge.boss{background:#1a0000;color:#ff4444;border:1px solid #cc2222;box-shadow:0 0 8px rgba(200,30,30,0.5);animation:bossBadgePulse 1.5s infinite;}
+@keyframes bossBadgePulse{0%,100%{box-shadow:0 0 8px rgba(200,30,30,0.5);}50%{box-shadow:0 0 16px rgba(200,30,30,0.9),0 0 24px rgba(200,30,30,0.3);}}
+#boss-warning{display:none;position:fixed;top:0;left:0;right:0;z-index:200;padding:10px;text-align:center;background:linear-gradient(90deg,transparent,rgba(150,10,10,0.9),transparent);font-family:'VT323',monospace;font-size:24px;color:#ff4444;letter-spacing:6px;text-shadow:0 0 12px rgba(255,50,50,0.8);animation:warningSlide 0.4s ease;pointer-events:none;}
+#boss-warning.show{display:block;}
+@keyframes warningSlide{from{transform:translateY(-100%);}to{transform:translateY(0);}}
+#form-wrap{position:relative;}
+#form-paper{background:var(--paper);padding:20px 24px 20px 52px;border-radius:1px;position:relative;box-shadow:3px 3px 0 var(--paper2),6px 6px 0 rgba(0,0,0,0.25),0 12px 32px rgba(0,0,0,0.4);transform:rotate(0.4deg);animation:paperIn 0.35s ease;max-height:calc(100vh - 180px);overflow:hidden;transition:box-shadow 0.5s;}
+#form-paper.boss-paper{box-shadow:3px 3px 0 #3a1010,6px 6px 0 rgba(0,0,0,0.35),0 12px 32px rgba(0,0,0,0.5),0 0 0 1px rgba(200,30,30,0.3),0 0 24px rgba(200,30,30,0.1);}
+@keyframes paperIn{from{opacity:0;transform:rotate(0.4deg) translateY(-12px);}to{opacity:1;transform:rotate(0.4deg) translateY(0);}}
+#form-paper::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 29px,var(--blue-line) 29px,var(--blue-line) 30px);pointer-events:none;}
+#form-paper::after{content:'';position:absolute;top:0;left:40px;bottom:0;width:1.5px;background:var(--red-line);pointer-events:none;}
+.hole{position:absolute;left:14px;width:18px;height:18px;border-radius:50%;background:var(--desk);border:1px solid #8a7050;box-shadow:inset 0 1px 3px rgba(0,0,0,0.5);}
+.hole:nth-child(1){top:30px;}.hole:nth-child(2){top:50%;transform:translateY(-50%);}.hole:nth-child(3){bottom:30px;}
+.form-header{display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1.5px solid #c0a870;padding-bottom:8px;margin-bottom:10px;position:relative;z-index:1;}
+.form-header-left h2{font-family:'VT323',monospace;font-size:20px;color:var(--ink);letter-spacing:2px;line-height:1.2;}
+.form-header-left p{font-size:10px;color:var(--ink-faded);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+.ref-box{text-align:right;font-family:'VT323',monospace;font-size:13px;color:var(--ink-faded);line-height:1.5;}
+.form-section{margin-bottom:8px;position:relative;z-index:1;}
+.section-title{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--ink-faded);border-bottom:1px solid #d0b880;padding-bottom:2px;margin-bottom:6px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;}
+.form-grid.full{grid-template-columns:1fr;}
+.field{display:flex;flex-direction:column;gap:1px;}
+.field-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-faded);}
+.field-value{font-family:'Caveat',cursive;font-size:17px;font-weight:600;color:var(--ink);border-bottom:1px solid #c0a870;padding-bottom:1px;line-height:1.3;min-height:22px;}
+.field-value.highlight{font-size:19px;font-weight:700;}
+.check-row{display:flex;gap:12px;flex-wrap:wrap;}
+.check-item{display:flex;align-items:center;gap:5px;font-family:'Caveat',cursive;font-size:15px;color:var(--ink);}
+.checkbox{width:14px;height:14px;border:1.5px solid var(--ink-faded);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+.checkbox.checked{background:var(--ink);color:var(--paper);}
+#stamp{position:absolute;top:18px;right:18px;width:76px;height:76px;border:3px solid transparent;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'VT323',monospace;font-size:12px;line-height:1.2;letter-spacing:1px;text-align:center;transform:rotate(12deg);opacity:0;transition:opacity 0.25s;z-index:10;pointer-events:none;}
+#stamp.show-heaven{border-color:var(--stamp-heaven);color:var(--stamp-heaven);opacity:1;background:rgba(26,74,155,0.06);}
+#stamp.show-hell{border-color:var(--stamp-hell);color:var(--stamp-hell);opacity:1;background:rgba(155,26,26,0.06);}
 #stamp .stamp-icon{font-size:22px;line-height:1;}
-
-/* ── FEEDBACK TICKER ── */
-#feedback{
-  font-family:'VT323',monospace;
-  font-size:18px;
-  letter-spacing:2px;
-  text-align:center;
-  height:24px;
-  transition:color 0.2s;
-}
+#feedback{font-family:'VT323',monospace;font-size:18px;letter-spacing:2px;text-align:center;height:24px;transition:color 0.2s;}
 #feedback.correct{color:#60cc60;text-shadow:0 0 6px rgba(80,200,80,0.5);}
-#feedback.wrong  {color:#cc4444;text-shadow:0 0 6px rgba(200,60,60,0.5);}
-
-/* ── BUTTONS ── */
-#sort-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.sort-btn{
-  padding:14px;
-  font-family:'VT323',monospace;
-  font-size:24px;
-  letter-spacing:3px;
-  border:none;
-  border-radius:3px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  transition:transform 0.1s,box-shadow 0.1s,filter 0.1s;
-  position:relative;
-  overflow:hidden;
-}
-
-.sort-btn::before{
-  content:'';
-  position:absolute;inset:0;
-  background:linear-gradient(rgba(255,255,255,0.08),transparent);
-  pointer-events:none;
-}
-
+#feedback.wrong{color:#cc4444;text-shadow:0 0 6px rgba(200,60,60,0.5);}
+#sort-buttons{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.sort-btn{padding:14px;font-family:'VT323',monospace;font-size:24px;letter-spacing:3px;border:none;border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform 0.1s,box-shadow 0.1s,filter 0.1s;position:relative;overflow:hidden;}
+.sort-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,0.08),transparent);pointer-events:none;}
 .sort-btn:hover{filter:brightness(1.15);}
 .sort-btn:active{transform:translateY(3px);box-shadow:none!important;}
-
-#btn-heaven{
-  background:linear-gradient(170deg,#2556c0,#162e7a);
-  color:#cce0ff;
-  box-shadow:0 4px 0 #0a1a50,0 6px 16px rgba(30,60,200,0.35);
-  text-shadow:0 0 10px rgba(160,200,255,0.6);
-}
-
-#btn-hell{
-  background:linear-gradient(170deg,#c02525,#7a1616);
-  color:#ffd0c0;
-  box-shadow:0 4px 0 #500a0a,0 6px 16px rgba(200,30,30,0.35);
-  text-shadow:0 0 10px rgba(255,180,160,0.6);
-}
-
+#btn-heaven{background:linear-gradient(170deg,#2556c0,#162e7a);color:#cce0ff;box-shadow:0 4px 0 #0a1a50,0 6px 16px rgba(30,60,200,0.35);text-shadow:0 0 10px rgba(160,200,255,0.6);}
+#btn-hell{background:linear-gradient(170deg,#c02525,#7a1616);color:#ffd0c0;box-shadow:0 4px 0 #500a0a,0 6px 16px rgba(200,30,30,0.35);text-shadow:0 0 10px rgba(255,180,160,0.6);}
 .btn-icon{font-size:22px;}
-
-/* ── QUEUE BAR ── */
-#queue-bar{
-  display:flex;
-  justify-content:center;
-  gap:5px;
-  flex-wrap:wrap;
-}
-
-.queue-dot{
-  width:8px;height:8px;
-  border-radius:50%;
-  background:#3a2a10;
-  border:1px solid #5a4020;
-  transition:background 0.3s;
-}
+#queue-bar{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;}
+.queue-dot{width:8px;height:8px;border-radius:50%;background:#3a2a10;border:1px solid #5a4020;transition:background 0.3s;}
 .queue-dot.done{background:#5a4020;}
 .queue-dot.current{background:var(--gold);border-color:var(--gold);box-shadow:0 0 4px var(--gold);}
 .queue-dot.pending{background:#2a1a05;border-color:#3a2808;}
-
-/* ── GAME OVER ── */
-#game-over-screen{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:rgba(10,5,0,0.92);
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  gap:16px;
-  animation:fadeIn 0.4s ease;
-}
-
+.queue-dot.boss-dot{width:10px;height:10px;background:#5a1010;border-color:#aa3333;box-shadow:0 0 5px rgba(180,30,30,0.6);transform:rotate(45deg);border-radius:2px;}
+.queue-dot.boss-dot.current{background:#ff2222;border-color:#ff6666;animation:bossDotPulse 1s infinite;}
+@keyframes bossDotPulse{0%,100%{box-shadow:0 0 6px rgba(255,30,30,0.7);}50%{box-shadow:0 0 14px rgba(255,30,30,1);}}
+#game-over-screen{display:none;position:fixed;inset:0;z-index:100;background:rgba(10,5,0,0.92);align-items:center;justify-content:center;flex-direction:column;gap:16px;animation:fadeIn 0.4s ease;}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-
 #game-over-screen.show{display:flex;}
-
-.go-skull{
-  font-size:80px;
-  animation:pulse 1.5s ease-in-out infinite;
-  filter:drop-shadow(0 0 20px rgba(200,50,50,0.5));
-}
-
-@keyframes pulse{
-  0%,100%{transform:scale(1)rotate(-5deg);}
-  50%{transform:scale(1.08)rotate(5deg);}
-}
-
-#go-title{
-  font-family:'VT323',monospace;
-  font-size:64px;
-  color:#cc2222;
-  letter-spacing:8px;
-  text-shadow:0 0 24px rgba(200,30,30,0.7);
-  text-align:center;
-}
-
-#go-score{
-  font-family:'VT323',monospace;
-  font-size:36px;
-  color:var(--gold);
-  letter-spacing:4px;
-}
-
-.go-flavour{
-  font-size:13px;
-  color:#5a4020;
-  text-align:center;
-  line-height:1.7;
-  max-width:380px;
-  letter-spacing:1px;
-}
-
-#btn-restart{
-  margin-top:8px;
-  padding:14px 44px;
-  font-family:'VT323',monospace;
-  font-size:28px;
-  letter-spacing:4px;
-  background:linear-gradient(170deg,#c9a84c,#7a6020);
-  color:#1a0f00;
-  border:none;
-  border-radius:3px;
-  cursor:pointer;
-  box-shadow:0 4px 0 #3a2808,0 6px 16px rgba(200,168,75,0.3);
-  transition:transform 0.1s,filter 0.1s;
-}
+.go-skull{font-size:80px;animation:pulse 1.5s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(200,50,50,0.5));}
+@keyframes pulse{0%,100%{transform:scale(1)rotate(-5deg);}50%{transform:scale(1.08)rotate(5deg);}}
+#go-title{font-family:'VT323',monospace;font-size:64px;color:#cc2222;letter-spacing:8px;text-shadow:0 0 24px rgba(200,30,30,0.7);text-align:center;}
+#go-score{font-family:'VT323',monospace;font-size:36px;color:var(--gold);letter-spacing:4px;}
+.go-flavour{font-size:13px;color:#5a4020;text-align:center;line-height:1.7;max-width:380px;letter-spacing:1px;}
+#btn-restart{margin-top:8px;padding:14px 44px;font-family:'VT323',monospace;font-size:28px;letter-spacing:4px;background:linear-gradient(170deg,#c9a84c,#7a6020);color:#1a0f00;border:none;border-radius:3px;cursor:pointer;box-shadow:0 4px 0 #3a2808,0 6px 16px rgba(200,168,75,0.3);transition:transform 0.1s,filter 0.1s;}
 #btn-restart:hover{filter:brightness(1.1);}
 #btn-restart:active{transform:translateY(3px);box-shadow:none;}
-
-/* ══ PANEL BARANG & INTEROGASI ══ */
-
-/* Tab buttons di bawah ghost panel */
-#ghost-tabs{
-  display:flex;
-  gap:4px;
-  width:100%;
-  margin-top:6px;
-}
-.ghost-tab{
-  flex:1;
-  padding:5px 4px;
-  font-family:'VT323',monospace;
-  font-size:13px;
-  letter-spacing:1px;
-  background:#1a1208;
-  color:#5a4020;
-  border:1px solid #3a2808;
-  border-radius:3px;
-  cursor:pointer;
-  text-align:center;
-  transition:all 0.15s;
-}
+#ghost-tabs{display:flex;gap:4px;width:100%;margin-top:6px;}
+.ghost-tab{flex:1;padding:5px 4px;font-family:'VT323',monospace;font-size:13px;letter-spacing:1px;background:#1a1208;color:#5a4020;border:1px solid #3a2808;border-radius:3px;cursor:pointer;text-align:center;transition:all 0.15s;}
 .ghost-tab:hover{color:var(--gold);border-color:#5a4020;}
 .ghost-tab.active{background:#2a1a08;color:var(--gold);border-color:var(--gold);}
-
-/* Side panel (barang & interogasi) */
-#side-panel{
-  display:none;
-  position:absolute;
-  top:0;left:0;right:0;bottom:0;
-  background:var(--paper);
-  border-radius:1px;
-  z-index:5;
-  flex-direction:column;
-  animation:paperIn 0.2s ease;
-  overflow:hidden;
-}
+#side-panel{display:none;position:absolute;top:0;left:0;right:0;bottom:0;background:var(--paper);border-radius:1px;z-index:5;flex-direction:column;animation:paperIn 0.2s ease;overflow:hidden;}
 #side-panel.show{display:flex;}
-
-#side-panel-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:10px 14px 8px;
-  border-bottom:1.5px solid #c0a870;
-  background:var(--paper2);
-}
-#side-panel-title{
-  font-family:'VT323',monospace;
-  font-size:18px;
-  color:var(--ink);
-  letter-spacing:2px;
-}
-#side-panel-close{
-  font-family:'VT323',monospace;
-  font-size:16px;
-  color:#8a6030;
-  background:none;
-  border:1px solid #c0a870;
-  border-radius:2px;
-  padding:2px 8px;
-  cursor:pointer;
-}
+#side-panel-header{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 8px;border-bottom:1.5px solid #c0a870;background:var(--paper2);}
+#side-panel-title{font-family:'VT323',monospace;font-size:18px;color:var(--ink);letter-spacing:2px;}
+#side-panel-close{font-family:'VT323',monospace;font-size:16px;color:#8a6030;background:none;border:1px solid #c0a870;border-radius:2px;padding:2px 8px;cursor:pointer;}
 #side-panel-close:hover{color:var(--ink);border-color:var(--ink-faded);}
-#side-panel-body{
-  padding:12px 16px;
-  overflow-y:auto;
-  flex:1;
-  position:relative;
-}
-#side-panel-body::before{
-  content:'';
-  position:absolute;inset:0;
-  background:repeating-linear-gradient(
-    transparent,transparent 29px,
-    var(--blue-line) 29px,var(--blue-line) 30px
-  );
-  pointer-events:none;
-}
-
-/* ── INVENTORY ── */
-.item-card{
-  display:flex;
-  align-items:flex-start;
-  gap:10px;
-  padding:8px 0;
-  border-bottom:1px dashed #d0b880;
-  cursor:pointer;
-  transition:background 0.15s;
-  position:relative;
-  z-index:1;
-}
+#side-panel-body{padding:12px 16px;overflow-y:auto;flex:1;position:relative;}
+#side-panel-body::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 29px,var(--blue-line) 29px,var(--blue-line) 30px);pointer-events:none;}
+.item-card{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed #d0b880;cursor:pointer;transition:background 0.15s;position:relative;z-index:1;}
 .item-card:last-child{border-bottom:none;}
 .item-card:hover .item-icon{transform:scale(1.15);}
-.item-icon{
-  font-size:26px;
-  flex-shrink:0;
-  transition:transform 0.15s;
-  user-select:none;
-}
+.item-icon{font-size:26px;flex-shrink:0;transition:transform 0.15s;user-select:none;}
 .item-info{flex:1;}
-.item-name{
-  font-family:'Caveat',cursive;
-  font-size:16px;
-  font-weight:700;
-  color:var(--ink);
-  line-height:1.2;
-}
-.item-tap{
-  font-size:10px;
-  color:var(--ink-faded);
-  letter-spacing:1px;
-  text-transform:uppercase;
-  margin-top:2px;
-}
-.item-hint{
-  display:none;
-  font-family:'Caveat',cursive;
-  font-size:14px;
-  color:#4a3010;
-  background:#fffbe8;
-  border-left:3px solid var(--gold);
-  padding:6px 8px;
-  margin-top:6px;
-  border-radius:0 3px 3px 0;
-  line-height:1.4;
-}
+.item-name{font-family:'Caveat',cursive;font-size:16px;font-weight:700;color:var(--ink);line-height:1.2;}
+.item-tap{font-size:10px;color:var(--ink-faded);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+.item-hint{display:none;font-family:'Caveat',cursive;font-size:14px;color:#4a3010;background:#fffbe8;border-left:3px solid var(--gold);padding:6px 8px;margin-top:6px;border-radius:0 3px 3px 0;line-height:1.4;}
 .item-hint.show{display:block;}
-
-/* ── INTEROGASI ── */
-.dialog-question-btn{
-  width:100%;
-  text-align:left;
-  padding:8px 10px;
-  margin-bottom:6px;
-  font-family:'Caveat',cursive;
-  font-size:15px;
-  color:var(--ink);
-  background:var(--paper2);
-  border:1px solid #c0a870;
-  border-radius:3px;
-  cursor:pointer;
-  line-height:1.3;
-  transition:border-color 0.15s,background 0.15s;
-  position:relative;
-  z-index:1;
-}
+.dialog-question-btn{width:100%;text-align:left;padding:8px 10px;margin-bottom:6px;font-family:'Caveat',cursive;font-size:15px;color:var(--ink);background:var(--paper2);border:1px solid #c0a870;border-radius:3px;cursor:pointer;line-height:1.3;transition:border-color 0.15s,background 0.15s;position:relative;z-index:1;}
 .dialog-question-btn:hover{border-color:#8a6030;background:#f0e0c0;}
-.dialog-question-btn.asked{
-  background:#e8f0e8;
-  border-color:#608858;
-  color:#3a5a3a;
-  cursor:default;
-}
+.dialog-question-btn.asked{background:#e8f0e8;border-color:#608858;color:#3a5a3a;cursor:default;}
 .dialog-question-btn::before{content:'❓ ';}
 .dialog-question-btn.asked::before{content:'✅ ';}
-
-.dialog-answer-box{
-  display:none;
-  font-family:'Caveat',cursive;
-  font-size:14px;
-  color:#2a1800;
-  background:#fffbe8;
-  border-left:3px solid #8a6030;
-  padding:6px 10px;
-  margin-top:-2px;
-  margin-bottom:8px;
-  border-radius:0 3px 3px 0;
-  line-height:1.5;
-  position:relative;z-index:1;
-}
+.dialog-answer-box{display:none;font-family:'Caveat',cursive;font-size:14px;color:#2a1800;background:#fffbe8;border-left:3px solid #8a6030;padding:6px 10px;margin-top:-2px;margin-bottom:8px;border-radius:0 3px 3px 0;line-height:1.5;position:relative;z-index:1;}
 .dialog-answer-box.show{display:block;}
-.dialog-speaker{
-  font-size:10px;
-  color:var(--ink-faded);
-  letter-spacing:2px;
-  text-transform:uppercase;
-  margin-bottom:3px;
-}
-
-/* ══ END PANEL CSS ══ */
-
-/* ══ LOADING SCREEN CSS ══ */
+.dialog-speaker{font-size:10px;color:var(--ink-faded);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;}
+/* LEVEL COMPLETE */
+#level-complete-screen{display:none;position:fixed;inset:0;z-index:150;background:rgba(5,10,5,0.94);align-items:center;justify-content:center;flex-direction:column;gap:16px;animation:fadeIn 0.4s ease;}
+#level-complete-screen.show{display:flex;}
+#lc-icon{font-size:72px;}
+#lc-title{font-family:'VT323',monospace;font-size:52px;color:var(--gold);letter-spacing:6px;text-shadow:0 0 20px rgba(200,168,75,0.7);text-align:center;}
+#lc-sub{font-family:'VT323',monospace;font-size:22px;color:#5a8a5a;letter-spacing:3px;text-align:center;}
+#lc-bonus{font-family:'VT323',monospace;font-size:28px;color:#c9a84c;letter-spacing:2px;}
+#btn-continue{padding:12px 40px;font-family:'VT323',monospace;font-size:26px;letter-spacing:4px;background:linear-gradient(170deg,#2a8a2a,#155015);color:#ccffcc;border:none;border-radius:3px;cursor:pointer;box-shadow:0 4px 0 #0a2a0a,0 6px 16px rgba(50,150,50,0.3);transition:transform 0.1s,filter 0.1s;}
+#btn-continue:hover{filter:brightness(1.1);}
+#btn-continue:active{transform:translateY(3px);box-shadow:none;}
+/* BOSS INTRO */
+#boss-intro-screen{display:none;position:fixed;inset:0;z-index:160;background:rgba(10,0,0,0.96);align-items:center;justify-content:center;flex-direction:column;gap:12px;animation:fadeIn 0.3s ease;}
+#boss-intro-screen.show{display:flex;}
+#bi-label{font-family:'VT323',monospace;font-size:18px;color:#8a2020;letter-spacing:8px;text-transform:uppercase;}
+#bi-title{font-family:'VT323',monospace;font-size:54px;color:#ff3333;letter-spacing:4px;text-shadow:0 0 24px rgba(255,50,50,0.9),0 0 48px rgba(255,50,50,0.4);text-align:center;animation:bossFlicker 2s infinite;}
+#bi-name{font-family:'Caveat',cursive;font-size:28px;color:#ffaaaa;font-weight:700;text-align:center;}
+#bi-desc{font-family:'Special Elite',cursive;font-size:13px;color:#7a3030;text-align:center;max-width:420px;line-height:1.6;letter-spacing:1px;}
+#bi-doll{width:120px;height:160px;filter:drop-shadow(0 0 24px rgba(255,50,50,0.8));animation:ghostFloatBoss 2s ease-in-out infinite;}
+#bi-doll svg{width:100%;height:100%;}
+#btn-fight{margin-top:8px;padding:12px 40px;font-family:'VT323',monospace;font-size:26px;letter-spacing:4px;background:linear-gradient(170deg,#cc2020,#7a1010);color:#ffd0d0;border:none;border-radius:3px;cursor:pointer;box-shadow:0 4px 0 #4a0808,0 6px 16px rgba(200,30,30,0.5);transition:transform 0.1s,filter 0.1s;}
+#btn-fight:hover{filter:brightness(1.15);}
+#btn-fight:active{transform:translateY(3px);box-shadow:none;}
+/* ══ LOADING SCREEN ══ */
 #loading-screen{
   position:fixed;inset:0;z-index:999;
-  background:#0a0702;
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
-  transition:opacity 0.6s ease;
-}
-#loading-screen.fade-out{opacity:0;pointer-events:none;}
+  /* wall colour */
+  background:linear-gradient(180deg, #0d0b10 0%, #0a0908 55%, #080706 100%);}
 
+/* scanline overlay */
+#ls-scanline-overlay{position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,0.05) 0px,rgba(0,0,0,0.05) 1px,transparent 1px,transparent 3px);
+  pointer-events:none;z-index:20;}
+
+/* ambient floor glow */
+#ls-ambient{position:absolute;bottom:0;left:0;right:0;height:260px;
+  background:radial-gradient(ellipse 70% 60% at 50% 100%,rgba(180,140,60,0.09) 0%,transparent 70%);
+  pointer-events:none;z-index:1;}
+
+/* ── ROOM CONTAINER ── */
+/* taller so lamp has room to stand */
 #ls-room{
   position:relative;
-  width:380px;height:280px;
-  transform-origin:center 45%;
-}
+  width:480px;height:340px;
+  transform-origin:50% 58%;
+  z-index:2;}
+#ls-room.do-zoom{animation:lsZoomIn 0.85s cubic-bezier(0.55,0,0.9,1) forwards;}
+@keyframes lsZoomIn{0%{transform:scale(1);opacity:1;}100%{transform:scale(16);opacity:0;}}
 
-#ls-room.do-zoom{
-  animation:lsZoomIn 1.2s cubic-bezier(0.4,0,0.8,1) forwards;
-}
+/* ══ DESK ══
+   Desk sits at bottom of room. All items use bottom-offset from desk-top.
+   desk-top  = bottom:56px  (thickness = 56px → 42px surface + 14px front face)
+   items sit at bottom:(56 + their own offset)
+*/
+#ls-desk-surface{
+  position:absolute;
+  bottom:0;left:-40px;right:-40px;
+  height:56px;
+  /* top surface */
+  background:linear-gradient(180deg,
+    #2a2416 0px, #24201a 3px, #1e1c14 12px, #181610 42px,
+    /* front face darker */ #100e0a 42px, #0c0a08 56px);
+  box-shadow:
+    0 -1px 0 rgba(255,255,255,0.06),   /* top highlight */
+    0 8px 32px rgba(0,0,0,0.8),
+    inset 0 1px 0 rgba(255,255,255,0.04);}
+/* desk top-edge shine */
+#ls-desk-surface::before{content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(200,170,90,0.18),rgba(200,170,90,0.28),rgba(200,170,90,0.18),transparent);}
+/* desk shadow on floor */
+#ls-desk-surface::after{content:'';position:absolute;
+  bottom:-18px;left:20px;right:20px;height:18px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(0,0,0,0.55) 0%,transparent 70%);
+  pointer-events:none;}
 
-@keyframes lsZoomIn{
-  0%{transform:scale(1);opacity:1;}
-  100%{transform:scale(14);opacity:0;}
-}
-
-/* Monitor */
+/* ══ MONITOR ══  sits on desk surface (bottom:56px) */
 #ls-monitor{
   position:absolute;
-  top:10px;left:50%;transform:translateX(-50%);
-  width:200px;
-}
+  bottom:56px;            /* rests on desk top */
+  left:50%;transform:translateX(-50%);
+  width:220px;}
 #ls-bezel{
-  background:linear-gradient(160deg,#2a2218,#1a1208);
-  border:4px solid #3a2e1a;
-  border-radius:8px 8px 4px 4px;
-  padding:8px;
-  box-shadow:0 0 0 2px #0a0800,inset 0 2px 4px rgba(255,255,255,0.05);
-}
-#ls-crt{
-  background:#050e05;
-  border-radius:4px;
-  width:180px;height:130px;
+  background:linear-gradient(155deg,#2e2a1c 0%,#1e1a10 45%,#141008 100%);
+  border:4px solid #28221a;
+  border-top-color:#3c3422;
+  border-left-color:#342e1e;
+  border-right-color:#1e1a10;
+  border-bottom-color:#0e0c08;
+  border-radius:10px 10px 5px 5px;
+  padding:9px 9px 8px;
   position:relative;
-  overflow:hidden;
-  box-shadow:inset 0 0 30px rgba(0,255,80,0.08);
-}
-#ls-scanlines{
-  position:absolute;inset:0;
-  background:repeating-linear-gradient(
-    transparent,transparent 2px,
-    rgba(0,0,0,0.25) 2px,rgba(0,0,0,0.25) 4px
-  );
-  pointer-events:none;z-index:2;
-}
-#ls-boot-text{
-  position:absolute;inset:0;
-  padding:8px 10px;
-  font-family:'VT323',monospace;
-  font-size:11px;
-  color:#00cc44;
-  line-height:1.6;
-  z-index:1;
-  white-space:pre;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-}
-#ls-stand{
-  width:20px;height:28px;
-  background:linear-gradient(90deg,#2a2218,#3a3020);
-  margin:0 auto;
-  clip-path:polygon(30% 0,70% 0,100% 100%,0 100%);
-}
-#ls-base{
-  width:80px;height:8px;
-  background:linear-gradient(180deg,#3a3020,#2a2010);
-  margin:0 auto;
-  border-radius:4px;
-}
+  box-shadow:
+    0 0 0 1px #080600,
+    inset 0 1px 0 rgba(255,255,255,0.07),
+    0 16px 40px rgba(0,0,0,0.95),
+    0 4px 10px rgba(0,0,0,0.7);}
+/* green LED dot */
+#ls-bezel::after{content:'';position:absolute;bottom:7px;left:50%;transform:translateX(-50%);
+  width:5px;height:5px;border-radius:50%;
+  background:radial-gradient(circle,#44cc44,#1a6a1a);
+  box-shadow:0 0 5px rgba(50,220,50,0.7);}
+#ls-crt{
+  background:#020b02;border-radius:3px;
+  width:194px;height:140px;
+  position:relative;overflow:hidden;
+  box-shadow:inset 0 0 24px rgba(0,0,0,0.85),inset 0 0 3px rgba(0,255,60,0.03);}
+/* phosphor glow */
+#ls-crt::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 55% at 50% 35%,rgba(0,230,70,0.08) 0%,transparent 65%);
+  pointer-events:none;z-index:3;}
+/* glass reflection */
+#ls-crt::after{content:'';position:absolute;
+  top:5px;left:9px;width:38px;height:13px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.05) 0%,transparent 100%);
+  border-radius:3px;pointer-events:none;z-index:4;}
+#ls-scanlines{position:absolute;inset:0;
+  background:repeating-linear-gradient(transparent,transparent 2px,rgba(0,0,0,0.22) 2px,rgba(0,0,0,0.22) 4px);
+  pointer-events:none;z-index:2;}
+#ls-boot-text{position:absolute;inset:0;padding:7px 9px;
+  font-family:'VT323',monospace;font-size:11px;color:#00e048;
+  line-height:1.65;z-index:1;white-space:pre;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  text-shadow:0 0 7px rgba(0,230,60,0.8),0 0 16px rgba(0,180,50,0.3);}
+/* neck + foot stand */
+#ls-neck{width:20px;height:26px;
+  background:linear-gradient(90deg,#1a1810,#2c2a1a,#1a1810);
+  margin:0 auto;clip-path:polygon(20% 0,80% 0,100% 100%,0 100%);}
+#ls-stand{width:80px;height:9px;
+  background:linear-gradient(180deg,#30281a,#1c1a10);
+  margin:0 auto;border-radius:5px;
+  box-shadow:0 3px 10px rgba(0,0,0,0.8),0 1px 0 rgba(255,255,255,0.04);}
 
-/* Desk items */
+/* ══ LAMP ══
+   Base at bottom:56px (on desk), arm goes straight up ~130px, head at top.
+   Mimics a real desk lamp standing beside monitor.
+*/
+#ls-lamp{position:absolute;right:32px;bottom:56px;}/* base sits on desk */
+
+/* heavy weighted base */
+#ls-lamp-base{
+  width:30px;height:10px;
+  background:linear-gradient(180deg,#3a3420,#222010,#181608);
+  border-radius:4px 4px 3px 3px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.7),inset 0 1px 0 rgba(255,255,255,0.06);
+  position:relative;}
+/* base shadow on desk */
+#ls-lamp-base::after{content:'';position:absolute;
+  bottom:-6px;left:4px;right:4px;height:6px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(0,0,0,0.5) 0%,transparent 80%);}
+
+/* vertical pole going straight up */
+#ls-lamp-arm{
+  position:absolute;
+  bottom:10px;          /* starts at top of base */
+  left:50%;transform:translateX(-50%);
+  width:3px;height:110px;
+  background:linear-gradient(90deg,#2e2c1a,#3a3820,#2e2c1a);
+  border-radius:2px;
+  box-shadow:1px 0 0 rgba(255,255,255,0.04);}
+
+/* horizontal elbow arm extending left toward monitor */
+#ls-lamp-arm::before{
+  content:'';
+  position:absolute;
+  top:0;left:50%;transform:translateX(-50%);
+  width:3px;height:36px;
+  background:linear-gradient(90deg,#2e2c1a,#3a3820,#2e2c1a);
+  border-radius:2px;
+  transform-origin:bottom center;
+  transform:rotate(-28deg) translateX(-50%);}
+
+/* lamp shade / head */
+#ls-lamp-head{
+  position:absolute;
+  top:-14px;left:-30px;  /* hangs left off the elbow end */
+  width:40px;height:14px;
+  background:linear-gradient(175deg,#4a4428,#2a2818,#1a1808);
+  border-radius:6px 6px 2px 2px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.6),inset 0 -2px 2px rgba(0,0,0,0.4);
+  position:relative;}
+/* inner warm bulb glow */
+#ls-lamp-head::before{content:'';position:absolute;
+  bottom:1px;left:5px;right:5px;height:5px;
+  background:rgba(255,200,50,0.22);border-radius:2px;
+  box-shadow:0 0 10px rgba(255,190,40,0.35),0 0 20px rgba(255,170,30,0.12);}
+/* lamp light cone downward */
+#ls-lamp-light{
+  position:absolute;
+  top:14px;left:-18px;
+  width:76px;height:90px;
+  background:radial-gradient(ellipse 70% 70% at 50% 0%,
+    rgba(201,168,60,0.14) 0%,
+    rgba(201,168,60,0.06) 35%,
+    transparent 70%);
+  pointer-events:none;}
+
+/* ══ KEYBOARD ══  on desk, slightly in front of monitor */
 #ls-keyboard{
   position:absolute;
-  bottom:30px;left:50%;transform:translateX(-40%);
-  background:#1a1408;
-  border:2px solid #2a2010;
-  border-radius:4px;
-  padding:6px 10px;
-  display:flex;gap:4px;flex-wrap:wrap;width:140px;
-  box-shadow:0 3px 0 #0a0800;
-}
-.ls-key{
-  width:14px;height:12px;
-  background:#2a2010;
-  border-radius:2px;
-  border-bottom:2px solid #0a0800;
-}
-.ls-key.wide{width:60px;}
+  bottom:60px;           /* desk top + tiny lift for perspective */
+  left:50%;transform:translateX(-32%);
+  background:linear-gradient(175deg,#242018,#16120a);
+  border:1.5px solid #2e2818;
+  border-top-color:#3a3220;
+  border-bottom-color:#0e0c06;
+  border-radius:5px 5px 8px 8px;
+  padding:5px 8px 8px;
+  display:grid;grid-template-rows:repeat(3,auto);gap:3px;width:138px;
+  box-shadow:0 5px 0 #0a0806,0 8px 20px rgba(0,0,0,0.75),inset 0 1px 0 rgba(255,255,255,0.04);}
+.ls-key-row{display:flex;gap:2.5px;justify-content:center;}
+.ls-key{height:10px;
+  background:linear-gradient(175deg,#322c1c,#221c0e);
+  border-radius:2px 2px 3px 3px;
+  border:1px solid #1c1810;border-bottom:2px solid #0a0806;
+  flex:1;min-width:8px;max-width:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);}
+.ls-key.wide{flex:2.5;max-width:38px;}
+.ls-key.space{flex:5;max-width:76px;}
+.ls-key.lit{background:linear-gradient(175deg,#3e4228,#2c3018);
+  box-shadow:0 0 5px rgba(80,140,40,0.45),inset 0 1px 0 rgba(130,200,60,0.12);}
 
+/* ══ MOUSE ══  on desk, right of keyboard */
 #ls-mouse{
   position:absolute;
-  bottom:34px;right:48px;
-  width:22px;height:34px;
-  background:linear-gradient(160deg,#2a2218,#1a1208);
-  border:2px solid #3a3020;
-  border-radius:10px 10px 8px 8px;
-}
-#ls-mouse::after{
-  content:'';
-  position:absolute;
-  top:6px;left:50%;transform:translateX(-50%);
-  width:2px;height:12px;
-  background:#3a3020;
-  border-radius:1px;
-}
+  bottom:60px;right:48px;
+  width:22px;height:32px;
+  background:linear-gradient(155deg,#2a2618 0%,#181410 60%,#100e08 100%);
+  border:1.5px solid #242010;
+  border-top-color:#322e1c;
+  border-radius:11px 11px 9px 9px;
+  box-shadow:2px 4px 12px rgba(0,0,0,0.85),inset 0 1px 0 rgba(255,255,255,0.04);
+  overflow:hidden;}
+#ls-mouse::before{content:'';position:absolute;top:7px;left:50%;transform:translateX(-50%);
+  width:4px;height:8px;
+  background:linear-gradient(180deg,#2c2a18,#1a1808);
+  border-radius:2px;border:1px solid #0c0a04;}
+#ls-mouse::after{content:'';position:absolute;top:0;left:50%;
+  width:1px;height:16px;background:rgba(0,0,0,0.45);}
 
+/* ══ COFFEE MUG ══  left of keyboard on desk */
 #ls-coffee{
   position:absolute;
-  bottom:28px;left:30px;
-  width:28px;height:32px;
-  background:linear-gradient(180deg,#6a3010,#4a1808);
-  border-radius:3px 3px 5px 5px;
-  border:2px solid #3a1808;
+  bottom:60px;left:32px;
+  width:24px;height:30px;
+  background:linear-gradient(160deg,#6e3212 0%,#4c1e0a 55%,#3a1208 100%);
+  border-radius:2px 2px 5px 5px;
+  border:1.5px solid #2c1006;
+  border-top-color:#7e3c18;
+  box-shadow:2px 4px 10px rgba(0,0,0,0.65),inset 1px 0 0 rgba(255,255,255,0.07);
+  overflow:hidden;}
+#ls-coffee::before{content:'';position:absolute;top:5px;left:2px;right:2px;height:8px;
+  background:linear-gradient(180deg,#2c1006,#1a0800);
+  border-radius:1px;}
+#ls-coffee::after{content:'';position:absolute;top:8px;right:-8px;
+  width:8px;height:12px;
+  border:1.5px solid #3a1208;border-left:none;border-radius:0 5px 5px 0;}
+
+/* ══ STEAM ══ */
+#ls-steam{position:absolute;bottom:91px;left:36px;display:flex;gap:4px;align-items:flex-end;}
+.ls-steam-puff{width:3px;border-radius:2px;
+  background:linear-gradient(180deg,transparent,rgba(210,180,150,0.28));
+  animation:steamRise 2s ease-out infinite;}
+.ls-steam-puff:nth-child(1){height:10px;animation-delay:0s;}
+.ls-steam-puff:nth-child(2){height:15px;animation-delay:0.55s;}
+.ls-steam-puff:nth-child(3){height:8px;animation-delay:1.1s;}
+@keyframes steamRise{
+  0%{transform:translateY(0) scaleX(1);opacity:0.32;}
+  60%{transform:translateY(-10px) scaleX(1.4);opacity:0.16;}
+  100%{transform:translateY(-20px) scaleX(0.5);opacity:0;}}
+
+/* ══ PAPER STACK ══  between mug and keyboard */
+#ls-paper-stack{position:absolute;bottom:60px;left:62px;width:32px;}
+.ls-paper-sheet{border-radius:1px;margin-bottom:2px;}
+.ls-paper-sheet:nth-child(1){height:4px;background:linear-gradient(90deg,#3e3828,#322e20);width:32px;box-shadow:0 -1px 0 rgba(255,255,255,0.05);}
+.ls-paper-sheet:nth-child(2){height:4px;background:linear-gradient(90deg,#342e20,#28241a);width:30px;margin-left:1px;}
+.ls-paper-sheet:nth-child(3){height:3px;background:#22201a;width:28px;margin-left:2px;}
+/* RESPONSIVE */
+@media(max-width:600px){
+  html,body{overflow:auto;height:auto;}
+  #scene{height:auto;min-height:100dvh;padding:10px 12px 16px;gap:8px;grid-template-rows:auto auto auto;}
+  #topbar{padding:6px 10px;}
+  .hud-item{font-size:15px;letter-spacing:1px;}
+  #title-hud{font-size:13px;letter-spacing:2px;}
+  #main{grid-template-columns:1fr;gap:10px;}
+  #ghost-panel{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:8px;background:rgba(0,0,0,0.25);border:1px solid #3a2808;border-radius:4px;}
+  #ghost-doll{width:90px;height:124px;flex-shrink:0;}
+  #ghost-info-col{display:flex;flex-direction:column;gap:6px;flex:1;min-width:120px;}
+  #ghost-name-tag{font-size:15px;max-width:100%;padding:3px 8px;}
+  #sin-badge{font-size:12px;}
+  #ghost-tabs{width:100%;margin-top:0;}
+  .ghost-tab{font-size:12px;padding:4px 2px;}
+  #form-paper{padding:14px 14px 14px 38px;max-height:none;transform:none;animation:none;}
+  .form-header-left h2{font-size:14px;letter-spacing:1px;}
+  .form-grid{grid-template-columns:1fr;gap:4px;}
+  .field-label{font-size:8px;}
+  .field-value{font-size:15px;}
+  .field-value.highlight{font-size:17px;}
+  .hole{width:13px;height:13px;left:10px;}
+  #form-paper::after{left:30px;}
+  #stamp{width:58px;height:58px;font-size:10px;top:12px;right:12px;}
+  #sort-buttons{gap:8px;}
+  .sort-btn{font-size:20px;padding:12px 8px;}
+  .btn-icon{font-size:18px;}
+  #feedback{font-size:15px;}
+  .queue-dot{width:7px;height:7px;}
+  #go-title{font-size:44px;letter-spacing:4px;}
+  #go-score{font-size:26px;}
+  .go-skull{font-size:60px;}
+  #btn-restart{font-size:22px;padding:12px 28px;}
+  #ls-room{width:300px;height:240px;}
+  #ls-monitor{width:168px;}
+  #ls-crt{width:144px;height:104px;}
+  #ls-boot-text{font-size:9px;}
+  #ls-keyboard{width:108px;bottom:50px;}
+  #ls-mouse{bottom:50px;right:36px;width:17px;height:25px;}
+  #ls-coffee{bottom:50px;left:24px;width:20px;height:24px;}
+  #ls-lamp{right:20px;}
+  #ls-lamp-arm{height:80px;}
+  #ls-desk-surface{height:44px;}
 }
-#ls-coffee::before{
-  content:'';
-  position:absolute;
-  top:4px;left:50%;transform:translateX(-50%);
-  width:18px;height:8px;
-  background:#2a0e04;
-  border-radius:50%;
-}
-#ls-coffee::after{
-  content:'';
-  position:absolute;
-  top:8px;right:-8px;
-  width:8px;height:14px;
-  border:2px solid #4a1808;
-  border-radius:0 6px 6px 0;
-  border-left:none;
-}
-
-#ls-paper-stack{
-  position:absolute;
-  bottom:28px;right:30px;
-  width:34px;height:5px;
-  background:#f5ead6;
-  box-shadow:0 -3px 0 #ede5c8,0 -6px 0 #e0d5b8;
-  border-radius:1px;
-}
-
-/* ══ END LOADING SCREEN CSS ══ */
-
-/* ══ RESPONSIVE MOBILE ══ */
-@media (max-width: 600px) {
-
-  html,body{ overflow:auto; height:auto; }
-
-  #scene{
-    height:auto;
-    min-height:100dvh;
-    padding:10px 12px 16px;
-    gap:8px;
-    grid-template-rows:auto auto auto;
-  }
-
-  /* HUD lebih kecil */
-  #topbar{ padding:6px 10px; }
-  .hud-item{ font-size:15px; letter-spacing:1px; }
-  #title-hud{ font-size:13px; letter-spacing:2px; }
-
-  /* Main: stack vertikal, ghost di atas form */
-  #main{
-    grid-template-columns:1fr;
-    gap:10px;
-  }
-
-  /* Ghost panel: horizontal row di mobile */
-  #ghost-panel{
-    flex-direction:row;
-    flex-wrap:wrap;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    padding:8px;
-    background:rgba(0,0,0,0.25);
-    border:1px solid #3a2808;
-    border-radius:4px;
-  }
-
-  #ghost-doll{
-    width:90px;
-    height:124px;
-    flex-shrink:0;
-  }
-
-  /* Info samping ghost */
-  #ghost-info-col{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    flex:1;
-    min-width:120px;
-  }
-
-  #ghost-name-tag{
-    font-size:15px;
-    max-width:100%;
-    padding:3px 8px;
-  }
-
-  #sin-badge{ font-size:12px; }
-
-  #ghost-tabs{
-    width:100%;
-    margin-top:0;
-  }
-  .ghost-tab{ font-size:12px; padding:4px 2px; }
-
-  /* Form paper */
-  #form-paper{
-    padding:14px 14px 14px 38px;
-    max-height:none;
-    transform:none;
-    animation:none;
-  }
-
-  @keyframes paperIn{
-    from{opacity:0;transform:translateY(-8px);}
-    to{opacity:1;transform:translateY(0);}
-  }
-
-  .form-header h2{ font-size:14px; letter-spacing:1px; }
-  .form-header p { font-size:9px; }
-  .ref-box       { font-size:11px; }
-  .section-title { font-size:8px; letter-spacing:2px; }
-
-  .form-grid{ grid-template-columns:1fr; gap:4px; }
-  .field-label{ font-size:8px; }
-  .field-value{ font-size:15px; }
-  .field-value.highlight{ font-size:17px; }
-
-  .check-row{ gap:8px; }
-  .check-item{ font-size:13px; }
-
-  /* Hole punches lebih kecil */
-  .hole{ width:13px; height:13px; left:10px; }
-  #form-paper::after{ left:30px; }
-
-  /* Stamp */
-  #stamp{ width:58px; height:58px; font-size:10px; top:12px; right:12px; }
-
-  /* Buttons */
-  #sort-buttons{ gap:8px; }
-  .sort-btn{ font-size:20px; padding:12px 8px; }
-  .btn-icon{ font-size:18px; }
-
-  /* Feedback */
-  #feedback{ font-size:15px; }
-
-  /* Queue dots */
-  .queue-dot{ width:7px; height:7px; }
-
-  /* Side panel */
-  #side-panel-title{ font-size:15px; }
-  .item-name{ font-size:15px; }
-  .item-hint{ font-size:13px; }
-  .dialog-question-btn{ font-size:14px; }
-  .dialog-answer-box{ font-size:13px; }
-
-  /* Game over */
-  #go-title{ font-size:44px; letter-spacing:4px; }
-  #go-score{ font-size:26px; }
-  .go-skull{ font-size:60px; }
-  .go-flavour{ font-size:12px; }
-  #btn-restart{ font-size:22px; padding:12px 28px; }
-
-  /* Loading screen monitor lebih kecil */
-  #ls-room{ width:280px; height:200px; }
-  #ls-monitor{ width:150px; }
-  #ls-crt{ width:134px; height:96px; }
-  #ls-boot-text{ font-size:9px; }
-  #ls-keyboard{ width:110px; bottom:20px; }
-  .ls-key{ width:11px; height:10px; }
-  .ls-key.wide{ width:46px; }
-  #ls-mouse{ bottom:24px; right:34px; width:18px; height:26px; }
-  #ls-coffee{ bottom:20px; left:20px; width:22px; height:26px; }
-}
-
-/* Untuk layar sangat sempit (320px) */
-@media (max-width: 360px) {
-  .hud-item{ font-size:13px; }
-  #ghost-doll{ width:76px; height:104px; }
-  .sort-btn{ font-size:18px; padding:10px 6px; }
-}
-/* ══ END RESPONSIVE ══ */
-
-@keyframes shake{
-  0%,100%{transform:rotate(0.4deg) translateX(0);}
-  20%{transform:rotate(0.4deg) translateX(-7px);}
-  40%{transform:rotate(0.4deg) translateX(7px);}
-  60%{transform:rotate(0.4deg) translateX(-4px);}
-  80%{transform:rotate(0.4deg) translateX(4px);}
-}
-@media (max-width:600px){
-  @keyframes shake{
-    0%,100%{transform:translateX(0);}
-    20%{transform:translateX(-6px);}
-    40%{transform:translateX(6px);}
-    60%{transform:translateX(-4px);}
-    80%{transform:translateX(4px);}
-  }
-  #form-paper.shake{animation:shake 0.4s ease;}
-  #game-over-screen{padding:20px;}
+@keyframes shake{0%,100%{transform:rotate(0.4deg) translateX(0);}20%{transform:rotate(0.4deg) translateX(-7px);}40%{transform:rotate(0.4deg) translateX(7px);}60%{transform:rotate(0.4deg) translateX(-4px);}80%{transform:rotate(0.4deg) translateX(4px);}}
+@media(max-width:600px){
+  @keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
 }
 #form-paper.shake{animation:shake 0.4s ease;}
-
-/* Correct flash */
-@keyframes flashGreen{
-  0%{filter:brightness(1);}
-  40%{filter:brightness(1.3) saturate(1.5);}
-  100%{filter:brightness(1);}
-}
+@keyframes flashGreen{0%{filter:brightness(1);}40%{filter:brightness(1.3) saturate(1.5);}100%{filter:brightness(1);}}
+@keyframes flashRed{0%{filter:brightness(1);}40%{filter:brightness(1.4) sepia(0.5) saturate(2);}100%{filter:brightness(1);}}
 #form-paper.flash-correct{animation:flashGreen 0.4s ease;}
+#form-paper.flash-wrong-boss{animation:flashRed 0.5s ease;}
 </style>
 </head>
 <body>
-
-<!-- ══ LOADING SCREEN ══ -->
+<div id="boss-warning">☠ PERINGATAN: JIWA BERBAHAYA TERDETEKSI ☠</div>
+<!-- LOADING -->
 <div id="loading-screen">
+  <div id="ls-ambient"></div>
+  <div id="ls-scanline-overlay"></div>
   <div id="ls-room">
-    <div id="ls-monitor">
-      <div id="ls-bezel">
-        <div id="ls-crt">
-          <div id="ls-scanlines"></div>
-          <div id="ls-boot-text"></div>
-        </div>
-      </div>
-      <div id="ls-stand"></div>
-      <div id="ls-base"></div>
+    <div id="ls-lamp">
+      <div id="ls-lamp-arm"><div id="ls-lamp-head"><div id="ls-lamp-light"></div></div></div>
+      <div id="ls-lamp-base"></div>
     </div>
+    <div id="ls-monitor">
+      <div id="ls-bezel"><div id="ls-crt"><div id="ls-scanlines"></div><div id="ls-boot-text"></div></div></div>
+      <div id="ls-neck"></div><div id="ls-stand"></div>
+    </div>
+    <div id="ls-desk-surface"></div>
     <div id="ls-keyboard">
-      <div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div>
-      <div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div>
-      <div class="ls-key wide"></div>
+      <div class="ls-key-row"><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key lit"></div></div>
+      <div class="ls-key-row"><div class="ls-key wide"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div></div>
+      <div class="ls-key-row"><div class="ls-key space"></div><div class="ls-key"></div><div class="ls-key"></div></div>
     </div>
     <div id="ls-mouse"></div>
+    <div id="ls-steam"><div class="ls-steam-puff"></div><div class="ls-steam-puff"></div><div class="ls-steam-puff"></div></div>
     <div id="ls-coffee"></div>
-    <div id="ls-paper-stack"></div>
+    <div id="ls-paper-stack"><div class="ls-paper-sheet"></div><div class="ls-paper-sheet"></div><div class="ls-paper-sheet"></div></div>
   </div>
 </div>
-
 <div id="scene">
-
-  <!-- TOP BAR -->
   <div id="topbar">
     <div class="hud-item">SKOR: <span id="score-val">0</span></div>
     <div class="hud-item" id="title-hud">☠ DEAD DESK ☠</div>
     <div class="hud-item">NYAWA: <span id="lives-val">❤️❤️❤️</span></div>
   </div>
-
-  <!-- MAIN -->
   <div id="main">
-
-    <!-- GHOST DOLL -->
     <div id="ghost-panel">
-      <div id="ghost-doll">
-        <svg id="ghost-svg" viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg"></svg>
-      </div>
+      <div id="ghost-doll"><svg id="ghost-svg" viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg"></svg></div>
       <div id="ghost-info-col">
         <div id="ghost-name-tag">—</div>
         <div id="sin-badge" class="bohong">—</div>
-        <!-- Tab buttons -->
         <div id="ghost-tabs">
           <button class="ghost-tab active" onclick="switchTab('biodata')">📋 Biodata</button>
           <button class="ghost-tab" onclick="switchTab('barang')">🎒 Barang</button>
@@ -1094,1016 +507,706 @@ body::after{
         </div>
       </div>
     </div>
-
-    <!-- FORM -->
     <div id="form-wrap">
       <div id="form-paper">
-        <!-- Holes -->
-        <div class="hole"></div>
-        <div class="hole"></div>
-        <div class="hole"></div>
-
-        <!-- Header -->
+        <div class="hole"></div><div class="hole"></div><div class="hole"></div>
         <div class="form-header">
-          <div class="form-header-left">
-            <h2>FORMULIR REGISTRASI JIWA</h2>
-            <p>Departemen Sortir Alam Baka — Divisi Penempatan</p>
-          </div>
-          <div class="ref-box">
-            Ref. No. <strong id="ref-no">#001</strong><br>
-            Tgl. Masuk: <span id="tgl-masuk">—</span>
-          </div>
+          <div class="form-header-left"><h2>FORMULIR REGISTRASI JIWA</h2><p>Departemen Sortir Alam Baka — Divisi Penempatan</p></div>
+          <div class="ref-box">Ref. No. <strong id="ref-no">#001</strong><br>Tgl. Masuk: <span id="tgl-masuk">—</span></div>
         </div>
-
-        <!-- Identitas -->
         <div class="form-section">
           <div class="section-title">§ 1 — Identitas Almarhum/Almarhumah</div>
           <div class="form-grid">
-            <div class="field">
-              <span class="field-label">Nama Lengkap</span>
-              <span class="field-value highlight" id="f-nama">—</span>
-            </div>
-            <div class="field">
-              <span class="field-label">Alias / Julukan</span>
-              <span class="field-value" id="f-alias">—</span>
-            </div>
-            <div class="field">
-              <span class="field-label">Umur Saat Meninggal</span>
-              <span class="field-value" id="f-umur">—</span>
-            </div>
-            <div class="field">
-              <span class="field-label">Penyebab Meninggal</span>
-              <span class="field-value" id="f-sebab">—</span>
-            </div>
-            <div class="field">
-              <span class="field-label">Asal Daerah</span>
-              <span class="field-value" id="f-asal">—</span>
-            </div>
-            <div class="field">
-              <span class="field-label">Pekerjaan Terakhir</span>
-              <span class="field-value" id="f-pekerjaan">—</span>
-            </div>
+            <div class="field"><span class="field-label">Nama Lengkap</span><span class="field-value highlight" id="f-nama">—</span></div>
+            <div class="field"><span class="field-label">Alias / Julukan</span><span class="field-value" id="f-alias">—</span></div>
+            <div class="field"><span class="field-label">Umur Saat Meninggal</span><span class="field-value" id="f-umur">—</span></div>
+            <div class="field"><span class="field-label">Penyebab Meninggal</span><span class="field-value" id="f-sebab">—</span></div>
+            <div class="field"><span class="field-label">Asal Daerah</span><span class="field-value" id="f-asal">—</span></div>
+            <div class="field"><span class="field-label">Pekerjaan Terakhir</span><span class="field-value" id="f-pekerjaan">—</span></div>
           </div>
         </div>
-
-        <!-- Rekam Dosa -->
         <div class="form-section">
           <div class="section-title">§ 2 — Rekam Kebiasaan Hidup</div>
           <div class="form-grid">
-            <div class="field">
-              <span class="field-label">Dosa Utama</span>
-              <span class="field-value highlight" id="f-dosa">—</span>
-            </div>
-            <div class="field">
-              <span class="field-label">Kebiasaan Lain</span>
-              <span class="field-value" id="f-kebiasaan">—</span>
-            </div>
+            <div class="field"><span class="field-label">Dosa Utama</span><span class="field-value highlight" id="f-dosa">—</span></div>
+            <div class="field"><span class="field-label">Kebiasaan Lain</span><span class="field-value" id="f-kebiasaan">—</span></div>
           </div>
-          <div style="margin-top:6px;">
-            <div class="field-label" style="margin-bottom:4px;">Penilaian Karma</div>
-            <div class="check-row" id="karma-checks"></div>
-          </div>
+          <div style="margin-top:6px;"><div class="field-label" style="margin-bottom:4px;">Penilaian Karma</div><div class="check-row" id="karma-checks"></div></div>
         </div>
-
-        <!-- Keterangan -->
         <div class="form-section">
           <div class="section-title">§ 3 — Keterangan Petugas</div>
-          <div class="form-grid full">
-            <div class="field">
-              <span class="field-label">Catatan Tambahan</span>
-              <span class="field-value" id="f-catatan" style="font-size:14px;line-height:1.4;">—</span>
-            </div>
-          </div>
+          <div class="form-grid full"><div class="field"><span class="field-label">Catatan Tambahan</span><span class="field-value" id="f-catatan" style="font-size:14px;line-height:1.4;">—</span></div></div>
         </div>
-
-        <!-- Side Panel Overlay (Barang & Interogasi) -->
         <div id="side-panel">
-          <div id="side-panel-header">
-            <span id="side-panel-title">—</span>
-            <button id="side-panel-close" onclick="switchTab('biodata')">✕ TUTUP</button>
-          </div>
+          <div id="side-panel-header"><span id="side-panel-title">—</span><button id="side-panel-close" onclick="switchTab('biodata')">✕ TUTUP</button></div>
           <div id="side-panel-body"></div>
         </div>
-
-        <!-- Stamp -->
-        <div id="stamp">
-          <span class="stamp-icon" id="stamp-icon"></span>
-          <span id="stamp-text"></span>
-        </div>
-      </div><!-- /form-paper -->
-    </div><!-- /form-wrap -->
-
-  </div><!-- /main -->
-
-  <!-- BOTTOM -->
+        <div id="stamp"><span class="stamp-icon" id="stamp-icon"></span><span id="stamp-text"></span></div>
+      </div>
+    </div>
+  </div>
   <div style="display:flex;flex-direction:column;gap:8px;">
     <div id="feedback"></div>
     <div id="sort-buttons">
-      <button class="sort-btn" id="btn-heaven" onclick="sort('Surga')">
-        <span class="btn-icon">☁️</span> SURGA
-      </button>
-      <button class="sort-btn" id="btn-hell" onclick="sort('Neraka')">
-        <span class="btn-icon">🔥</span> NERAKA
-      </button>
+      <button class="sort-btn" id="btn-heaven" onclick="sort('Surga')"><span class="btn-icon">☁️</span> SURGA</button>
+      <button class="sort-btn" id="btn-hell" onclick="sort('Neraka')"><span class="btn-icon">🔥</span> NERAKA</button>
     </div>
     <div id="queue-bar"></div>
   </div>
-
-</div><!-- /scene -->
-
+</div>
 <!-- GAME OVER -->
 <div id="game-over-screen">
   <div class="go-skull">💀</div>
   <div id="go-title">GAME OVER</div>
   <div id="go-score">Skor Akhir: <span id="go-score-val">0</span></div>
-  <p class="go-flavour">
-    Kamu dipecat dari Departemen Sortir Alam Baka.<br>
-    Ribuan jiwa terlantar di lobi menunggu kejelasan nasibnya.<br>
-    Semoga kamu tidak menyusul mereka terlalu cepat.
-  </p>
+  <p class="go-flavour">Kamu dipecat dari Departemen Sortir Alam Baka.<br>Ribuan jiwa terlantar di lobi menunggu kejelasan nasibnya.<br>Semoga kamu tidak menyusul mereka terlalu cepat.</p>
   <button id="btn-restart" onclick="restartGame()">🔄 DAFTAR ULANG</button>
 </div>
-
+<!-- LEVEL COMPLETE -->
+<div id="level-complete-screen">
+  <div id="lc-icon">⭐</div>
+  <div id="lc-title">LEVEL SELESAI</div>
+  <div id="lc-sub">Batch jiwa berhasil disortir</div>
+  <div id="lc-bonus">+5 BONUS SKOR</div>
+  <button id="btn-continue" onclick="continueToNext()">▶ LANJUT</button>
+</div>
+<!-- BOSS INTRO -->
+<div id="boss-intro-screen">
+  <div id="bi-label">⚠ JIWA BERBAHAYA TERDETEKSI ⚠</div>
+  <div id="bi-doll"></div>
+  <div id="bi-title">BOSS ENCOUNTER</div>
+  <div id="bi-name">—</div>
+  <div id="bi-desc">—</div>
+  <button id="btn-fight" onclick="startBossFight()">⚔ HADAPI ⚔</button>
+</div>
 <script>
-// ─── GHOST DATABASE ──────────────────────────────────────────────────────────
-// dialog: {jujur} = jawaban hantu baik (jujur), {bohong} = jawaban hantu buruk (berbohong)
-// barang: [{icon, nama, hint}] hint = petunjuk tersembunyi dari barang
-const ghosts = [
-  {
-    nama:"Budi Santoso", alias:"Si Budi Mulut Manis", umur:54, sebab:"Tersedak Bakso",
-    asal:"Kebumen, Jawa Tengah", pekerjaan:"Pedagang Keliling",
-    dosa:"Suka Berbohong", kebiasaan:"Hobi melebih-lebihkan cerita di warung kopi",
-    karma:["Rajin Sholat","Jarang Mandi","Suka Ngutang"], catatan:"Pernah menipu 3 tetangga soal arisan.",
-    warna:{body:"#c8e8d0",aksen:"#5a9a6a",mata:"#1a4a2a",pipi:"#f0c0a0"},
-    barang:[
-      {icon:"📒",nama:"Buku Catatan Hutang",hint:"Berisi 47 nama orang yang belum melunasi hutang — tapi semua nama ditulis tangan dengan tinta yang berbeda-beda. Mencurigakan."},
-      {icon:"🧧",nama:"Amplop Arisan Kosong",hint:"Amplop bertulisan 'MENANG ARISAN' tapi isinya kosong. Ada noda tip-ex di sudutnya."},
-      {icon:"🚬",nama:"Rokok Kretek Setengah Bungkus",hint:"Biasa saja. Tidak ada yang mencurigakan di sini."},
-    ],
-    dialog:[
-      {pertanyaan:"Apakah kamu pernah menipu orang lain?", jujur:"Saya... ya, saya pernah bohong soal arisan. Saya malu.", bohong:"Saya? Menipu? Tidak pernah! Saya pedagang jujur sejati!"},
-      {pertanyaan:"Apa yang kamu lakukan tiap hari semasa hidup?", jujur:"Jualan keliling, kadang ngopi. Tapi mulut saya memang suka nambah-nambahin cerita.", bohong:"Saya berdagang dengan penuh kejujuran dan membantu tetangga setiap hari!"},
-    ]
-  },
-  {
-    nama:"Siti Rahayu", alias:"Mbak Siti Dermawan", umur:67, sebab:"Usia Tua",
-    asal:"Solo, Jawa Tengah", pekerjaan:"Guru SD (Purn.)",
-    dosa:"Suka Berbagi", kebiasaan:"Tiap Jumat bagi-bagi nasi bungkus gratis",
-    karma:["Sabar","Murah Hati","Rajin Mengaji"], catatan:"Mendirikan yayasan anak yatim di usia 40.",
-    warna:{body:"#e8d8c8",aksen:"#a87850",mata:"#3a2010",pipi:"#f8c0a8"},
-    barang:[
-      {icon:"📚",nama:"Buku Rapor Murid Lama",hint:"Penuh coretan nilai merah yang diubah jadi biru — bukan karena curang, tapi karena beliau bimbingi muridnya sampai lulus."},
-      {icon:"🍱",nama:"Rantang Nasi Kosong",hint:"Rantang ini sudah lecek dan penuh goresan. Jelas sering dipakai untuk membawa makanan ke orang lain."},
-      {icon:"📿",nama:"Tasbih Kayu",hint:"Butiran tasbihnya aus di beberapa titik. Tanda sering digunakan dengan tulus."},
-    ],
-    dialog:[
-      {pertanyaan:"Apa yang paling kamu banggakan semasa hidup?", jujur:"Anak-anak didik saya. Banyak yang jadi orang sukses sekarang. Itu cukup buat saya.", bohong:""},
-      {pertanyaan:"Apakah kamu pernah berbuat jahat?", jujur:"Pernah marah ke murid nakal, tapi saya selalu minta maaf keesokan harinya.", bohong:""},
-    ]
-  },
-  {
-    nama:"Pak Karno", alias:"Kang Karno Bluffing", umur:43, sebab:"Kecelakaan Motor",
-    asal:"Brebes, Jawa Tengah", pekerjaan:"Calo Tiket",
-    dosa:"Suka Berbohong", kebiasaan:"Menjual tiket palsu konser dangdut",
-    karma:["Perokok Berat","Anti Antri","Hobi Gosip"], catatan:"Pernah ditangkap polisi 2x, lolos 2x.",
-    warna:{body:"#d0c8c0",aksen:"#706050",mata:"#2a1808",pipi:"#d0a888"},
-    barang:[
-      {icon:"🎟️",nama:"Tiket Konser Palsu",hint:"Terasa tipis dan warnanya luntur kalau dijilat. Nomor seri tidak masuk akal: '000000001'."},
-      {icon:"📱",nama:"HP Dua Kartu",hint:"Ada dua slot SIM. Kontak tersimpan hanya dengan inisial dan banyak nomor yang sudah diblokir."},
-      {icon:"🧴",nama:"Parfum Murah Baunya Menyengat",hint:"Mungkin untuk menutupi bau rokok. Atau menutupi diri."},
-    ],
-    dialog:[
-      {pertanyaan:"Kamu kerja apa semasa hidup?", jujur:"Calo tiket. Tapi yang palsu juga iya, kadang-kadang... sering.", bohong:"Saya pekerja seni! Membantu distribusi tiket ke masyarakat yang kesulitan!"},
-      {pertanyaan:"Pernah ditangkap polisi?", jujur:"Dua kali. Tapi saya selalu bisa keluar. Kenal orangnya.", bohong:"Tidak pernah! Saya warga negara yang taat hukum!"},
-    ]
-  },
-  {
-    nama:"Mbak Dewi", alias:"Dewi Bunga Desa", umur:29, sebab:"Demam Berdarah",
-    asal:"Yogyakarta", pekerjaan:"Perawat",
-    dosa:"Suka Berbagi", kebiasaan:"Donor darah tiap 3 bulan, sukarela ke pelosok",
-    karma:["Empati Tinggi","Suka Kucing","Vegetarian"], catatan:"Merawat ibunya hingga nafas terakhir.",
-    warna:{body:"#f0e0d8",aksen:"#c07888",mata:"#3a1820",pipi:"#f8b8c0"},
-    barang:[
-      {icon:"🩸",nama:"Kartu Donor Darah",hint:"Sudah penuh stempel. 18 kali donor. Kartu ini hampir robek di lipatannya karena sering dibuka."},
-      {icon:"💊",nama:"Kotak P3K Mini",hint:"Isinya lengkap dan rapi. Ada catatan kecil: 'untuk siapapun yang butuh'."},
-      {icon:"🐾",nama:"Foto Kucing Kampung",hint:"Foto lusuh seekor kucing oranye. Di belakangnya tertulis 'Jangan lupa makan ya, Kopi.'"},
-    ],
-    dialog:[
-      {pertanyaan:"Kamu seorang perawat — apa motivasimu?", jujur:"Ibu saya sakit lama. Saya tahu rasanya sendirian di rumah sakit tanpa yang menemani.", bohong:""},
-      {pertanyaan:"Apakah kamu pernah menyakiti orang lain?", jujur:"Tidak sengaja pernah. Tapi saya selalu berusaha memperbaikinya.", bohong:""},
-    ]
-  },
-  {
-    nama:"Agus Prabowo", alias:"Agus PHP King", umur:38, sebab:"Stres Kerja",
-    asal:"Bandung, Jawa Barat", pekerjaan:"Sales Asuransi",
-    dosa:"Suka Berbohong", kebiasaan:"Menjual produk dengan klaim palsu",
-    karma:["Rajin Gym","Sering Lembur","Pelit Tips"], catatan:"Berhasil menipu 47 nasabah lansia.",
-    warna:{body:"#c8d0d8",aksen:"#506070",mata:"#182030",pipi:"#d0b0a0"},
-    barang:[
-      {icon:"💼",nama:"Tas Kulit Murah Mirip Mahal",hint:"Kelihatan mewah dari jauh, tapi jahitannya sudah copot. Logonya sedikit miring."},
-      {icon:"📋",nama:"Brosur Asuransi Dicoret-coret",hint:"Ada klaim yang sudah dicoret dan diganti dengan angka lebih besar menggunakan spidol merah."},
-      {icon:"🏆",nama:"Piala 'Sales Terbaik' Plastik",hint:"Tertulis 'Sales Terbaik Bulan Ini' tapi bulannya dikosongkan. Jelas diproduksi massal."},
-    ],
-    dialog:[
-      {pertanyaan:"Produk asuransimu apakah benar-benar menguntungkan nasabah?", jujur:"Sejujurnya... tidak. Saya sudah tahu dari awal klaim-klaimnya tidak masuk akal.", bohong:"Tentu saja! Produk saya terbaik! Nasabah saya pasti untung semua!"},
-      {pertanyaan:"Kamu merasa bersalah atas pekerjaanmu?", jujur:"Iya. Terutama yang lansia. Mereka percaya saya.", bohong:"Tidak ada yang perlu disesali. Bisnis ya bisnis!"},
-    ]
-  },
-  {
-    nama:"Ibu Lastri", alias:"Bu Lastri Warung", umur:71, sebab:"Diabetes",
-    asal:"Surabaya, Jawa Timur", pekerjaan:"Pemilik Warung Makan",
-    dosa:"Suka Berbagi", kebiasaan:"Sering kasih makan gratis ke tukang becak",
-    karma:["Cerewet Tapi Baik","Kuat Bekerja","Penyayang Cucu"], catatan:"Warungnya jadi tempat ngadem anak jalanan.",
-    warna:{body:"#e8c8b0",aksen:"#b07840",mata:"#3a1808",pipi:"#f0b890"},
-    barang:[
-      {icon:"🍛",nama:"Centong Nasi Kayu Tua",hint:"Sudah hitam di ujungnya karena panas. Dipakai sejak 1978 kata tulisan di gagangnya."},
-      {icon:"📓",nama:"Buku Hutang Warung",hint:"Penuh nama orang — tapi semua dicoret dengan tulisan 'lunas gratis'. Hampir tidak ada yang bayar."},
-      {icon:"🧣",nama:"Kain Lap Usang",hint:"Ini lap meja yang sudah sangat tua. Tapi dilipat rapi. Tanda orang yang menjaga barangnya dengan hormat."},
-    ],
-    dialog:[
-      {pertanyaan:"Warungmu terkenal karena apa?", jujur:"Porsinya besar dan kalau tidak ada uang ya boleh hutang dulu, atau gratis saja.", bohong:""},
-      {pertanyaan:"Kamu cerewet, apakah kamu orang baik?", jujur:"Haha, iya saya cerewet. Tapi cerewet karena sayang. Tanya saja tetangga saya.", bohong:""},
-    ]
-  },
-  {
-    nama:"Tono bin Tono", alias:"Tono Duplikat", umur:47, sebab:"Tersambar Petir",
-    asal:"Pamekasan, Madura", pekerjaan:"Pembuat KTP Palsu",
-    dosa:"Suka Berbohong", kebiasaan:"Memalsukan dokumen, surat, dan ijazah",
-    karma:["Cerdas Tapi Nakal","Soksokan Dermawan","Anti KPK"], catatan:"Tercatat 14 identitas berbeda di sistem negara.",
-    warna:{body:"#c0c8b0",aksen:"#607050",mata:"#202810",pipi:"#c8b090"},
-    barang:[
-      {icon:"🪪",nama:"KTP (x3 berbeda nama)",hint:"Tiga KTP. Tiga nama berbeda. Tiga foto yang semuanya wajah yang sama."},
-      {icon:"🖨️",nama:"Cartridge Tinta Hampir Habis",hint:"Warnanya persis warna tinta dokumen resmi pemerintah. Kebetulan yang sangat mencurigakan."},
-      {icon:"📎",nama:"Klip Kertas Emas",hint:"Klip biasa. Tapi dipakai untuk menjepit berkas yang tampaknya resmi — padahal kertas HVS biasa."},
-    ],
-    dialog:[
-      {pertanyaan:"Siapa nama aslimu?", jujur:"Tono. Cuma Tono. Yang lain itu... pekerjaan.", bohong:"Saya bisa jawab dengan 14 nama berbeda kalau Anda mau!"},
-      {pertanyaan:"Apakah kamu pernah membantu orang?", jujur:"Pernah bantu orang yang butuh dokumen karena birokrasi terlalu rumit. Tapi caranya salah.", bohong:"Saya pahlawan rakyat kecil! Membantu yang tidak bisa urus administrasi!"},
-    ]
-  },
-  {
-    nama:"Ningsih Wulan", alias:"Ning Bulan Berbagi", umur:55, sebab:"Kanker",
-    asal:"Semarang, Jawa Tengah", pekerjaan:"Apoteker",
-    dosa:"Suka Berbagi", kebiasaan:"Berikan obat gratis ke warga miskin",
-    karma:["Disiplin","Penyayang","Suka Tanaman"], catatan:"Mendanai beasiswa 20 anak kurang mampu.",
-    warna:{body:"#d8e8d0",aksen:"#608858",mata:"#182810",pipi:"#e8c0a8"},
-    barang:[
-      {icon:"💉",nama:"Suntikan Kosong (Steril)",hint:"Bersih dan terbungkus rapi. Bukan untuk disalahgunakan — ini stok apotek yang belum sempat dipakai."},
-      {icon:"🌿",nama:"Tanaman Lidah Buaya Kecil",hint:"Masih segar. Ada label kecil: 'untuk luka bakar ringan, gratis, ambil saja'."},
-      {icon:"📜",nama:"Sertifikat Beasiswa",hint:"Sertifikat atas nama orang lain — tapi di sudut ada tanda tangan Ningsih sebagai donatur."},
-    ],
-    dialog:[
-      {pertanyaan:"Kamu memberi obat gratis — bukankah itu merugikan bisnis?", jujur:"Iya rugi. Tapi kalau tidak ada yang bantu, siapa lagi? Saya punya ilmunya.", bohong:""},
-      {pertanyaan:"Apa yang kamu sesali?", jujur:"Tidak sempat menyelesaikan program beasiswa yang ke-21. Sakit keburu datang.", bohong:""},
-    ]
-  },
-  {
-    nama:"Pak Harto Jr.", alias:"Junior Manipulasi", umur:62, sebab:"Serangan Jantung",
-    asal:"Jakarta Selatan", pekerjaan:"Kontraktor",
-    dosa:"Suka Berbohong", kebiasaan:"Korupsi anggaran proyek jalan dan gedung",
-    karma:["Kaya Raya","Punya Rumah 5","Jarang ke Masjid"], catatan:"Proyek jembatannya ambruk seminggu setelah diresmikan.",
-    warna:{body:"#c8c0b8",aksen:"#686058",mata:"#281808",pipi:"#d0a888"},
-    barang:[
-      {icon:"🏗️",nama:"Cetak Biru Proyek Jembatan",hint:"Ada coretan di bagian 'Ketebalan Baja': angka asli '12mm' diubah jadi '4mm'. Selisihnya masuk kantong siapa?"},
-      {icon:"💳",nama:"Kartu Kredit Platinum (4 buah)",hint:"Empat kartu, empat bank berbeda. Semua atas nama PT yang berbeda pula."},
-      {icon:"⌚",nama:"Jam Tangan Mewah",hint:"Merek Swiss, harga ratusan juta. Tapi dibeli dari anggaran 'operasional proyek'."},
-    ],
-    dialog:[
-      {pertanyaan:"Proyek jembatanmu ambruk — apa komentarmu?", jujur:"Itu... salah saya. Saya potong anggaran material. Saya tahu risikonya.", bohong:"Itu force majeure! Bencana alam! Bukan salah konstruksi kami!"},
-      {pertanyaan:"Kamu kaya — dari mana sumber kekayaanmu?", jujur:"Sebagian besar dari proyek pemerintah. Dan saya tidak selalu jujur soal anggarannya.", bohong:"Kerja keras selama 30 tahun! Murni hasil keringat sendiri!"},
-    ]
-  },
-  {
-    nama:"Sri Mulyati", alias:"Bu Sri Teladan", umur:60, sebab:"Stroke",
-    asal:"Purwokerto, Jawa Tengah", pekerjaan:"Bidan Desa",
-    dosa:"Suka Berbagi", kebiasaan:"Bantu persalinan gratis selama 30 tahun",
-    karma:["Tangguh","Rendah Hati","Suka Memasak"], catatan:"Lahirkan lebih dari 2000 bayi tanpa kecelakaan.",
-    warna:{body:"#e0d8c8",aksen:"#907850",mata:"#302010",pipi:"#f0c0a0"},
-    barang:[
-      {icon:"🩺",nama:"Stetoskop Tua",hint:"Sudah retak di bagian earpiece tapi masih berfungsi. Ditambal dengan lakban biru."},
-      {icon:"📔",nama:"Buku Catatan Kelahiran",hint:"Berisi 2.847 nama bayi yang dilahirkan. Setiap nama ditulis dengan tangan yang sama — tangan Sri."},
-      {icon:"🧤",nama:"Sarung Tangan Lateks Bersih",hint:"Terlipat rapi di plastik. Bahkan di akhir hidupnya, dia masih siap membantu."},
-    ],
-    dialog:[
-      {pertanyaan:"2000 lebih bayi — tidak pernah ada yang bermasalah?", jujur:"Alhamdulillah tidak. Saya selalu berdoa sebelum setiap persalinan.", bohong:""},
-      {pertanyaan:"Apakah kamu pernah minta bayaran?", jujur:"Kalau mereka mampu, ya saya terima. Kalau tidak, ya tidak apa-apa. Bayinya tetap dilahirkan.", bohong:""},
-    ]
-  },
-  {
-    nama:"Gatot Mukidi", alias:"Gatot Sotoy", umur:35, sebab:"Jatuh dari Pohon Kelapa",
-    asal:"Magelang, Jawa Tengah", pekerjaan:"Influencer",
-    dosa:"Suka Berbohong", kebiasaan:"Sebarkan hoaks medis ke 500rb followers",
-    karma:["Narsis","Suka Selfie","Takut Jarum Suntik"], catatan:"Sempat viral soal 'obat corona dari bawang putih'.",
-    warna:{body:"#c8d8e0",aksen:"#507888",mata:"#182838",pipi:"#c8a890"},
-    barang:[
-      {icon:"📸",nama:"Ring Light Portable",hint:"Masih ada bekas lipstik di cermin ring light. Dipakai untuk banyak orang ternyata."},
-      {icon:"🧄",nama:"Bawang Putih Diblender",hint:"Dimasukkan ke botol berlabel 'OBAT COVID-19 ALAMI — TERBUKTI SECARA SAINS'. Tidak ada referensinya."},
-      {icon:"💊",nama:"Suplemen Endorse Tak Bermerek",hint:"Tidak ada nomor BPOM. Tidak ada komposisi. Ada logo 'Recommended by Gatot Sotoy'."},
-    ],
-    dialog:[
-      {pertanyaan:"Apakah bawang putih benar-benar obat COVID?", jujur:"Tidak. Saya tahu itu tidak benar. Tapi videonya viral, saya dapat endorse.", bohong:"100% terbukti! Ratusan orang sembuh karena video saya!"},
-      {pertanyaan:"Kamu bertanggung jawab atas kontenmu?", jujur:"Seharusnya iya. Saya menyesal sudah menyebarkan informasi yang salah.", bohong:"Saya hanya berbagi informasi! Orang bebas percaya atau tidak!"},
-    ]
-  },
-  {
-    nama:"Endang Pertiwi", alias:"Mbak Endang Tulus", umur:48, sebab:"Tenggelam (menyelamatkan anak)",
-    asal:"Malang, Jawa Timur", pekerjaan:"Guru Ngaji",
-    dosa:"Suka Berbagi", kebiasaan:"Ajar ngaji gratis, bantu anak yatim piatu",
-    karma:["Pemberani","Tulus","Tidak Pernah Mengeluh"], catatan:"Meninggal saat menyelamatkan muridnya yang tenggelam.",
-    warna:{body:"#d8e0f0",aksen:"#507098",mata:"#182040",pipi:"#e8c0b8"},
-    barang:[
-      {icon:"📖",nama:"Al-Quran Lusuh Berpenanda",hint:"Hampir setiap halaman ada coretan pensil kecil — catatan pelajaran untuk murid-murid."},
-      {icon:"🪢",nama:"Tali Pelampung Putus",hint:"Tali ini putus di tengah. Tanda tarikan keras. Dipakai untuk menyelamatkan seseorang."},
-      {icon:"👟",nama:"Sepatu Basah",hint:"Masih basah. Belum sempat kering."},
-    ],
-    dialog:[
-      {pertanyaan:"Kamu meninggal saat menyelamatkan anak — apa yang kamu rasakan?", jujur:"Saya tidak sempat berpikir apa-apa. Refleks saja. Itu murid saya.", bohong:""},
-      {pertanyaan:"Apakah kamu menyesal?", jujur:"Tidak. Kalau diulangi, saya akan lakukan hal yang sama.", bohong:""},
-    ]
-  },
-  {
-    nama:"Wiyono Kopral", alias:"Pak Wiyono Tegas", umur:58, sebab:"Luka Lama Perang",
-    asal:"Lampung", pekerjaan:"Mantan Tentara / Debt Collector",
-    dosa:"Suka Berbohong", kebiasaan:"Mengintimidasi warga dengan jabatan palsu",
-    karma:["Pemberani (untuk hal salah)","Perokok","Suka Tinju"], catatan:"Pensiun lalu jadi preman berseragam tidak resmi.",
-    warna:{body:"#b8b0a8",aksen:"#504840",mata:"#201808",pipi:"#c0a080"},
-    barang:[
-      {icon:"🎖️",nama:"Medali Militer (Palsu)",hint:"Logamnya terlalu ringan. Cat emasnya mengelupas di tepi. Bukan dari dinas resmi."},
-      {icon:"📣",nama:"Megafon Kecil",hint:"Dipakai untuk teriak di depan rumah orang yang dianggap berutang. Efektif tapi menakutkan."},
-      {icon:"👊",nama:"Sarung Tinju Usang",hint:"Ada noda cokelat tua yang bukan dari latihan tinju biasa."},
-    ],
-    dialog:[
-      {pertanyaan:"Kamu masih pakai seragam militer setelah pensiun?", jujur:"Iya. Itu cara saya supaya orang takut. Lebih mudah kerja kalau orang takut.", bohong:"Saya menggunakannya dengan bangga sebagai veteran!"},
-      {pertanyaan:"Debt collector — kamu pernah menyakiti orang?", jujur:"Pernah. Terlalu sering. Saya tidak bangga dengan itu.", bohong:"Saya hanya menjalankan tugas! Tidak ada yang tersakiti!"},
-    ]
-  },
-  {
-    nama:"Mbok Jamu", alias:"Simbah Jamu Ajaib", umur:82, sebab:"Usia Tua (Damai)",
-    asal:"Salatiga, Jawa Tengah", pekerjaan:"Penjual Jamu Gendong",
-    dosa:"Suka Berbagi", kebiasaan:"Bagi jamu gratis ke yang sakit tidak mampu",
-    karma:["Bijak","Kuat Fisik","Hafal Ratusan Ramuan"], catatan:"Tidak pernah absen berjualan 50 tahun, hujan maupun terik.",
-    warna:{body:"#e0c8a0",aksen:"#907830",mata:"#302010",pipi:"#f0b888"},
-    barang:[
-      {icon:"🫙",nama:"Botol Jamu Kunyit Asam",hint:"Masih ada sisa jamu di dalamnya. Harum. Ada tulisan kecil di label: 'gratis kalau sakit'."},
-      {icon:"🎒",nama:"Bakul Gendong Bambu",hint:"Sudah retak di beberapa sudut tapi diperkuat dengan tali rafia. Menemani 50 tahun perjalanan."},
-      {icon:"🌺",nama:"Bunga Kamboja Kering",hint:"Diselipkan di sela-sela bakul. Mbok Jamu selalu membawa bunga ini katanya untuk pengingat akan kematian."},
-    ],
-    dialog:[
-      {pertanyaan:"50 tahun jualan jamu — tidak pernah absen?", jujur:"Tidak pernah. Hujan ya tetap berangkat. Panas ya tetap berangkat. Sudah jadi jalan hidup.", bohong:""},
-      {pertanyaan:"Apa rahasiamu panjang umur dan kuat?", jujur:"Jamu saya sendiri. Dan tidak pernah menyimpan dendam. Itu yang paling manjur.", bohong:""},
-    ]
-  },
-  {
-    nama:"Dalang Surya", alias:"Ki Surya Bohong", umur:66, sebab:"Keracunan Makanan",
-    asal:"Cirebon, Jawa Barat", pekerjaan:"Dalang / Seniman",
-    dosa:"Suka Berbohong", kebiasaan:"Mengklaim karya orang lain, manipulasi dana seni",
-    karma:["Berbakat","Licik","Pandai Bicara"], catatan:"Menggugat seniman junior yang mengungguli karya aslinya.",
-    warna:{body:"#c0b8d0",aksen:"#605878",mata:"#201828",pipi:"#c8a898"},
-    barang:[
-      {icon:"🪆",nama:"Wayang Kulit (Milik Orang Lain)",hint:"Di bagian bawah wayang ada inisial 'RS' — bukan 'DS'. Ini punya Rudi Santoso, pengrajin yang digugat."},
-      {icon:"📰",nama:"Kliping Artikel 'Maestro Wayang'",hint:"Artikel yang memuji Dalang Surya. Tapi kalau dibaca teliti, semua karya yang disebut bukan miliknya."},
-      {icon:"🍢",nama:"Tusuk Sate Sisa Makan",hint:"Penyebab kematiannya. Keracunan sate di acara pesta yang dia hadiri sendirian malam itu."},
-    ],
-    dialog:[
-      {pertanyaan:"Apakah semua karya wayangmu benar-benar milikmu?", jujur:"Tidak. Banyak yang saya klaim dari murid-murid saya. Saya tidak bangga dengan itu.", bohong:"Semua karya saya original! Saya maestro! Yang lain hanya meniru saya!"},
-      {pertanyaan:"Kamu menggugat seniman junior — mengapa?", jujur:"Karena dia lebih baik dari saya. Dan saya takut tersaingi.", bohong:"Karena dia mencuri teknik saya! Saya yang mengajarinya!"},
-    ]
-  },
+// DATABASE HANTU
+const ghosts=[
+  {nama:"Budi Santoso",alias:"Si Budi Mulut Manis",umur:54,sebab:"Tersedak Bakso",asal:"Kebumen, Jawa Tengah",pekerjaan:"Pedagang Keliling",dosa:"Suka Berbohong",kebiasaan:"Hobi melebih-lebihkan cerita di warung kopi",karma:["Rajin Sholat","Jarang Mandi","Suka Ngutang"],catatan:"Pernah menipu 3 tetangga soal arisan.",warna:{body:"#c8e8d0",aksen:"#5a9a6a",mata:"#1a4a2a",pipi:"#f0c0a0"},barang:[{icon:"📒",nama:"Buku Catatan Hutang",hint:"Berisi 47 nama dengan tinta berbeda-beda. Mencurigakan."},{icon:"🧧",nama:"Amplop Arisan Kosong",hint:"Amplop 'MENANG ARISAN' tapi kosong. Ada noda tip-ex."},{icon:"🚬",nama:"Rokok Kretek",hint:"Biasa saja. Tidak ada yang mencurigakan."}],dialog:[{pertanyaan:"Apakah kamu pernah menipu orang lain?",jujur:"Saya... ya, saya pernah bohong soal arisan. Saya malu.",bohong:"Saya? Menipu? Tidak pernah! Saya pedagang jujur sejati!"},{pertanyaan:"Apa yang kamu lakukan tiap hari?",jujur:"Jualan keliling. Tapi mulut saya suka nambah-nambahin cerita.",bohong:"Saya berdagang dengan penuh kejujuran dan membantu tetangga!"}]},
+  {nama:"Siti Rahayu",alias:"Mbak Siti Dermawan",umur:67,sebab:"Usia Tua",asal:"Solo, Jawa Tengah",pekerjaan:"Guru SD (Purn.)",dosa:"Suka Berbagi",kebiasaan:"Tiap Jumat bagi-bagi nasi bungkus gratis",karma:["Sabar","Murah Hati","Rajin Mengaji"],catatan:"Mendirikan yayasan anak yatim di usia 40.",warna:{body:"#e8d8c8",aksen:"#a87850",mata:"#3a2010",pipi:"#f8c0a8"},barang:[{icon:"📚",nama:"Buku Rapor Murid Lama",hint:"Nilai merah diubah jadi biru — karena beliau bimbing muridnya."},{icon:"🍱",nama:"Rantang Nasi Kosong",hint:"Lecek dan penuh goresan. Sering dipakai untuk orang lain."},{icon:"📿",nama:"Tasbih Kayu",hint:"Butiran aus di beberapa titik. Tanda sering digunakan."}],dialog:[{pertanyaan:"Apa yang paling kamu banggakan semasa hidup?",jujur:"Anak-anak didik saya. Banyak yang jadi orang sukses. Itu cukup.",bohong:""},{pertanyaan:"Apakah kamu pernah berbuat jahat?",jujur:"Pernah marah ke murid nakal, tapi selalu minta maaf keesokan harinya.",bohong:""}]},
+  {nama:"Pak Karno",alias:"Kang Karno Bluffing",umur:43,sebab:"Kecelakaan Motor",asal:"Brebes, Jawa Tengah",pekerjaan:"Calo Tiket",dosa:"Suka Berbohong",kebiasaan:"Menjual tiket palsu konser dangdut",karma:["Perokok Berat","Anti Antri","Hobi Gosip"],catatan:"Pernah ditangkap polisi 2x, lolos 2x.",warna:{body:"#d0c8c0",aksen:"#706050",mata:"#2a1808",pipi:"#d0a888"},barang:[{icon:"🎟️",nama:"Tiket Konser Palsu",hint:"Tipis dan warnanya luntur. Nomor seri: '000000001'."},{icon:"📱",nama:"HP Dua Kartu",hint:"Banyak kontak yang sudah diblokir."},{icon:"🧴",nama:"Parfum Murah Menyengat",hint:"Mungkin untuk menutupi bau rokok. Atau menutupi diri."}],dialog:[{pertanyaan:"Kamu kerja apa semasa hidup?",jujur:"Calo tiket. Tapi yang palsu juga iya, kadang-kadang... sering.",bohong:"Saya pekerja seni! Membantu distribusi tiket ke masyarakat!"},{pertanyaan:"Pernah ditangkap polisi?",jujur:"Dua kali. Tapi saya selalu bisa keluar. Kenal orangnya.",bohong:"Tidak pernah! Saya warga negara yang taat hukum!"}]},
+  {nama:"Mbak Dewi",alias:"Dewi Bunga Desa",umur:29,sebab:"Demam Berdarah",asal:"Yogyakarta",pekerjaan:"Perawat",dosa:"Suka Berbagi",kebiasaan:"Donor darah tiap 3 bulan, sukarela ke pelosok",karma:["Empati Tinggi","Suka Kucing","Vegetarian"],catatan:"Merawat ibunya hingga nafas terakhir.",warna:{body:"#f0e0d8",aksen:"#c07888",mata:"#3a1820",pipi:"#f8b8c0"},barang:[{icon:"🩸",nama:"Kartu Donor Darah",hint:"18 kali donor. Hampir robek di lipatannya karena sering dibuka."},{icon:"💊",nama:"Kotak P3K Mini",hint:"Isinya rapi. Ada catatan: 'untuk siapapun yang butuh'."},{icon:"🐾",nama:"Foto Kucing Kampung",hint:"Di belakangnya tertulis 'Jangan lupa makan ya, Kopi.'"}],dialog:[{pertanyaan:"Apa motivasimu jadi perawat?",jujur:"Ibu saya sakit lama. Saya tahu rasanya sendirian di rumah sakit.",bohong:""},{pertanyaan:"Apakah kamu pernah menyakiti orang lain?",jujur:"Tidak sengaja pernah. Tapi saya selalu berusaha memperbaikinya.",bohong:""}]},
+  {nama:"Agus Prabowo",alias:"Agus PHP King",umur:38,sebab:"Stres Kerja",asal:"Bandung, Jawa Barat",pekerjaan:"Sales Asuransi",dosa:"Suka Berbohong",kebiasaan:"Menjual produk dengan klaim palsu",karma:["Rajin Gym","Sering Lembur","Pelit Tips"],catatan:"Berhasil menipu 47 nasabah lansia.",warna:{body:"#c8d0d8",aksen:"#506070",mata:"#182030",pipi:"#d0b0a0"},barang:[{icon:"💼",nama:"Tas Kulit Murah Mirip Mahal",hint:"Jahitannya sudah copot. Logonya sedikit miring."},{icon:"📋",nama:"Brosur Asuransi Dicoret",hint:"Klaim asli dicoret dan diganti angka lebih besar dengan spidol merah."},{icon:"🏆",nama:"Piala 'Sales Terbaik' Plastik",hint:"Bulannya dikosongkan. Jelas diproduksi massal."}],dialog:[{pertanyaan:"Produk asuransimu benar-benar menguntungkan nasabah?",jujur:"Sejujurnya... tidak. Saya sudah tahu dari awal.",bohong:"Tentu saja! Produk saya terbaik! Nasabah saya pasti untung semua!"},{pertanyaan:"Kamu merasa bersalah?",jujur:"Iya. Terutama yang lansia. Mereka percaya saya.",bohong:"Tidak ada yang perlu disesali. Bisnis ya bisnis!"}]},
+  {nama:"Ibu Lastri",alias:"Bu Lastri Warung",umur:71,sebab:"Diabetes",asal:"Surabaya, Jawa Timur",pekerjaan:"Pemilik Warung Makan",dosa:"Suka Berbagi",kebiasaan:"Sering kasih makan gratis ke tukang becak",karma:["Cerewet Tapi Baik","Kuat Bekerja","Penyayang Cucu"],catatan:"Warungnya jadi tempat ngadem anak jalanan.",warna:{body:"#e8c8b0",aksen:"#b07840",mata:"#3a1808",pipi:"#f0b890"},barang:[{icon:"🍛",nama:"Centong Nasi Kayu Tua",hint:"Sudah hitam di ujungnya. Dipakai sejak 1978 kata tulisan di gagang."},{icon:"📓",nama:"Buku Hutang Warung",hint:"Semua nama dicoret dengan tulisan 'lunas gratis'."},{icon:"🧣",nama:"Kain Lap Usang",hint:"Sudah sangat tua. Tapi dilipat rapi. Orang yang menjaga barangnya."}],dialog:[{pertanyaan:"Warungmu terkenal karena apa?",jujur:"Porsinya besar dan kalau tidak ada uang ya boleh hutang dulu, atau gratis.",bohong:""},{pertanyaan:"Kamu cerewet, apakah kamu orang baik?",jujur:"Haha, iya saya cerewet. Tapi cerewet karena sayang. Tanya tetangga saya.",bohong:""}]},
+  {nama:"Tono bin Tono",alias:"Tono Duplikat",umur:47,sebab:"Tersambar Petir",asal:"Pamekasan, Madura",pekerjaan:"Pembuat KTP Palsu",dosa:"Suka Berbohong",kebiasaan:"Memalsukan dokumen, surat, dan ijazah",karma:["Cerdas Tapi Nakal","Soksokan Dermawan","Anti KPK"],catatan:"Tercatat 14 identitas berbeda di sistem negara.",warna:{body:"#c0c8b0",aksen:"#607050",mata:"#202810",pipi:"#c8b090"},barang:[{icon:"🪪",nama:"KTP (x3 berbeda nama)",hint:"Tiga KTP. Tiga nama berbeda. Tiga foto yang semuanya wajah yang sama."},{icon:"🖨️",nama:"Cartridge Tinta Hampir Habis",hint:"Warnanya persis warna tinta dokumen resmi pemerintah."},{icon:"📎",nama:"Klip Kertas Emas",hint:"Menjepit berkas yang tampaknya resmi — padahal kertas HVS biasa."}],dialog:[{pertanyaan:"Siapa nama aslimu?",jujur:"Tono. Cuma Tono. Yang lain itu... pekerjaan.",bohong:"Saya bisa jawab dengan 14 nama berbeda kalau Anda mau!"},{pertanyaan:"Apakah kamu pernah membantu orang?",jujur:"Pernah bantu orang yang butuh dokumen. Tapi caranya salah.",bohong:"Saya pahlawan rakyat kecil! Membantu yang tidak bisa urus administrasi!"}]},
+  {nama:"Ningsih Wulan",alias:"Ning Bulan Berbagi",umur:55,sebab:"Kanker",asal:"Semarang, Jawa Tengah",pekerjaan:"Apoteker",dosa:"Suka Berbagi",kebiasaan:"Berikan obat gratis ke warga miskin",karma:["Disiplin","Penyayang","Suka Tanaman"],catatan:"Mendanai beasiswa 20 anak kurang mampu.",warna:{body:"#d8e8d0",aksen:"#608858",mata:"#182810",pipi:"#e8c0a8"},barang:[{icon:"💉",nama:"Suntikan Kosong (Steril)",hint:"Bersih dan terbungkus rapi. Stok apotek yang belum sempat dipakai."},{icon:"🌿",nama:"Tanaman Lidah Buaya Kecil",hint:"Label kecil: 'untuk luka bakar ringan, gratis, ambil saja'."},{icon:"📜",nama:"Sertifikat Beasiswa",hint:"Sertifikat atas nama orang lain dengan tanda tangan Ningsih sebagai donatur."}],dialog:[{pertanyaan:"Kamu memberi obat gratis — bukankah itu merugikan bisnis?",jujur:"Iya rugi. Tapi kalau tidak ada yang bantu, siapa lagi? Saya punya ilmunya.",bohong:""},{pertanyaan:"Apa yang kamu sesali?",jujur:"Tidak sempat menyelesaikan program beasiswa yang ke-21. Sakit keburu datang.",bohong:""}]},
+  {nama:"Pak Harto Jr.",alias:"Junior Manipulasi",umur:62,sebab:"Serangan Jantung",asal:"Jakarta Selatan",pekerjaan:"Kontraktor",dosa:"Suka Berbohong",kebiasaan:"Korupsi anggaran proyek jalan dan gedung",karma:["Kaya Raya","Punya Rumah 5","Jarang ke Masjid"],catatan:"Proyek jembatannya ambruk seminggu setelah diresmikan.",warna:{body:"#c8c0b8",aksen:"#686058",mata:"#281808",pipi:"#d0a888"},barang:[{icon:"🏗️",nama:"Cetak Biru Proyek Jembatan",hint:"'12mm' diubah jadi '4mm'. Selisihnya masuk kantong siapa?"},{icon:"💳",nama:"Kartu Kredit Platinum (4 buah)",hint:"Empat kartu, empat bank berbeda. Semua atas nama PT berbeda."},{icon:"⌚",nama:"Jam Tangan Mewah",hint:"Dibeli dari anggaran 'operasional proyek'."}],dialog:[{pertanyaan:"Proyek jembatanmu ambruk — apa komentarmu?",jujur:"Itu... salah saya. Saya potong anggaran material. Saya tahu risikonya.",bohong:"Itu force majeure! Bencana alam! Bukan salah konstruksi kami!"},{pertanyaan:"Kamu kaya — dari mana sumber kekayaanmu?",jujur:"Dari proyek pemerintah. Dan saya tidak selalu jujur soal anggarannya.",bohong:"Kerja keras selama 30 tahun! Murni hasil keringat sendiri!"}]},
+  {nama:"Sri Mulyati",alias:"Bu Sri Teladan",umur:60,sebab:"Stroke",asal:"Purwokerto, Jawa Tengah",pekerjaan:"Bidan Desa",dosa:"Suka Berbagi",kebiasaan:"Bantu persalinan gratis selama 30 tahun",karma:["Tangguh","Rendah Hati","Suka Memasak"],catatan:"Lahirkan lebih dari 2000 bayi tanpa kecelakaan.",warna:{body:"#e0d8c8",aksen:"#907850",mata:"#302010",pipi:"#f0c0a0"},barang:[{icon:"🩺",nama:"Stetoskop Tua",hint:"Sudah retak tapi masih berfungsi. Ditambal dengan lakban biru."},{icon:"📔",nama:"Buku Catatan Kelahiran",hint:"2.847 nama bayi yang dilahirkan. Semua ditulis tangan Sri."},{icon:"🧤",nama:"Sarung Tangan Lateks Bersih",hint:"Terlipat rapi di plastik. Sampai akhir hidupnya, masih siap membantu."}],dialog:[{pertanyaan:"2000 lebih bayi — tidak pernah ada yang bermasalah?",jujur:"Alhamdulillah tidak. Saya selalu berdoa sebelum setiap persalinan.",bohong:""},{pertanyaan:"Apakah kamu pernah minta bayaran?",jujur:"Kalau mereka mampu, ya saya terima. Kalau tidak, ya tidak apa-apa.",bohong:""}]},
+  {nama:"Gatot Mukidi",alias:"Gatot Sotoy",umur:35,sebab:"Jatuh dari Pohon Kelapa",asal:"Magelang, Jawa Tengah",pekerjaan:"Influencer",dosa:"Suka Berbohong",kebiasaan:"Sebarkan hoaks medis ke 500rb followers",karma:["Narsis","Suka Selfie","Takut Jarum Suntik"],catatan:"Viral soal 'obat corona dari bawang putih'.",warna:{body:"#c8d8e0",aksen:"#507888",mata:"#182838",pipi:"#c8a890"},barang:[{icon:"📸",nama:"Ring Light Portable",hint:"Ada bekas lipstik di cermin ring light. Dipakai untuk banyak orang."},{icon:"🧄",nama:"Bawang Putih Diblender",hint:"Berlabel 'OBAT COVID-19 ALAMI — TERBUKTI SECARA SAINS'. Tidak ada referensinya."},{icon:"💊",nama:"Suplemen Endorse Tak Bermerek",hint:"Tidak ada nomor BPOM. Ada logo 'Recommended by Gatot Sotoy'."}],dialog:[{pertanyaan:"Apakah bawang putih benar-benar obat COVID?",jujur:"Tidak. Saya tahu itu tidak benar. Tapi videonya viral, saya dapat endorse.",bohong:"100% terbukti! Ratusan orang sembuh karena video saya!"},{pertanyaan:"Kamu bertanggung jawab atas kontenmu?",jujur:"Seharusnya iya. Saya menyesal sudah menyebarkan informasi yang salah.",bohong:"Saya hanya berbagi informasi! Orang bebas percaya atau tidak!"}]},
+  {nama:"Endang Pertiwi",alias:"Mbak Endang Tulus",umur:48,sebab:"Tenggelam (menyelamatkan anak)",asal:"Malang, Jawa Timur",pekerjaan:"Guru Ngaji",dosa:"Suka Berbagi",kebiasaan:"Ajar ngaji gratis, bantu anak yatim piatu",karma:["Pemberani","Tulus","Tidak Pernah Mengeluh"],catatan:"Meninggal saat menyelamatkan muridnya yang tenggelam.",warna:{body:"#d8e0f0",aksen:"#507098",mata:"#182040",pipi:"#e8c0b8"},barang:[{icon:"📖",nama:"Al-Quran Lusuh Berpenanda",hint:"Hampir setiap halaman ada coretan pensil — catatan pelajaran untuk murid."},{icon:"🪢",nama:"Tali Pelampung Putus",hint:"Putus di tengah. Tanda tarikan keras. Dipakai untuk menyelamatkan seseorang."},{icon:"👟",nama:"Sepatu Basah",hint:"Masih basah. Belum sempat kering."}],dialog:[{pertanyaan:"Kamu meninggal saat menyelamatkan anak — apa yang kamu rasakan?",jujur:"Saya tidak sempat berpikir apa-apa. Refleks saja. Itu murid saya.",bohong:""},{pertanyaan:"Apakah kamu menyesal?",jujur:"Tidak. Kalau diulangi, saya akan lakukan hal yang sama.",bohong:""}]},
+  {nama:"Wiyono Kopral",alias:"Pak Wiyono Tegas",umur:58,sebab:"Luka Lama Perang",asal:"Lampung",pekerjaan:"Mantan Tentara / Debt Collector",dosa:"Suka Berbohong",kebiasaan:"Mengintimidasi warga dengan jabatan palsu",karma:["Pemberani (untuk hal salah)","Perokok","Suka Tinju"],catatan:"Pensiun lalu jadi preman berseragam tidak resmi.",warna:{body:"#b8b0a8",aksen:"#504840",mata:"#201808",pipi:"#c0a080"},barang:[{icon:"🎖️",nama:"Medali Militer (Palsu)",hint:"Logamnya terlalu ringan. Cat emasnya mengelupas. Bukan dari dinas resmi."},{icon:"📣",nama:"Megafon Kecil",hint:"Dipakai untuk teriak di depan rumah orang yang dianggap berutang."},{icon:"👊",nama:"Sarung Tinju Usang",hint:"Ada noda cokelat tua yang bukan dari latihan tinju biasa."}],dialog:[{pertanyaan:"Kamu masih pakai seragam militer setelah pensiun?",jujur:"Iya. Itu cara saya supaya orang takut. Lebih mudah kerja kalau orang takut.",bohong:"Saya menggunakannya dengan bangga sebagai veteran!"},{pertanyaan:"Debt collector — kamu pernah menyakiti orang?",jujur:"Pernah. Terlalu sering. Saya tidak bangga dengan itu.",bohong:"Saya hanya menjalankan tugas! Tidak ada yang tersakiti!"}]},
+  {nama:"Mbok Jamu",alias:"Simbah Jamu Ajaib",umur:82,sebab:"Usia Tua (Damai)",asal:"Salatiga, Jawa Tengah",pekerjaan:"Penjual Jamu Gendong",dosa:"Suka Berbagi",kebiasaan:"Bagi jamu gratis ke yang sakit tidak mampu",karma:["Bijak","Kuat Fisik","Hafal Ratusan Ramuan"],catatan:"Tidak pernah absen berjualan 50 tahun, hujan maupun terik.",warna:{body:"#e0c8a0",aksen:"#907830",mata:"#302010",pipi:"#f0b888"},barang:[{icon:"🫙",nama:"Botol Jamu Kunyit Asam",hint:"Masih ada sisa jamu. Harum. Label kecil: 'gratis kalau sakit'."},{icon:"🎒",nama:"Bakul Gendong Bambu",hint:"Retak di beberapa sudut tapi diperkuat tali rafia. Menemani 50 tahun."},{icon:"🌺",nama:"Bunga Kamboja Kering",hint:"Diselipkan di sela bakul. Kata Mbok Jamu sebagai pengingat akan kematian."}],dialog:[{pertanyaan:"50 tahun jualan jamu — tidak pernah absen?",jujur:"Tidak pernah. Hujan ya tetap berangkat. Panas ya tetap berangkat.",bohong:""},{pertanyaan:"Apa rahasiamu panjang umur?",jujur:"Jamu saya sendiri. Dan tidak pernah menyimpan dendam. Itu yang paling manjur.",bohong:""}]},
+  {nama:"Dalang Surya",alias:"Ki Surya Bohong",umur:66,sebab:"Keracunan Makanan",asal:"Cirebon, Jawa Barat",pekerjaan:"Dalang / Seniman",dosa:"Suka Berbohong",kebiasaan:"Mengklaim karya orang lain, manipulasi dana seni",karma:["Berbakat","Licik","Pandai Bicara"],catatan:"Menggugat seniman junior yang mengungguli karya aslinya.",warna:{body:"#c0b8d0",aksen:"#605878",mata:"#201828",pipi:"#c8a898"},barang:[{icon:"🪆",nama:"Wayang Kulit (Milik Orang Lain)",hint:"Di bawah wayang ada inisial 'RS' — bukan 'DS'. Punya Rudi Santoso."},{icon:"📰",nama:"Kliping Artikel 'Maestro Wayang'",hint:"Semua karya yang disebut bukan miliknya."},{icon:"🍢",nama:"Tusuk Sate Sisa Makan",hint:"Penyebab kematiannya. Keracunan sate di acara pesta."}],dialog:[{pertanyaan:"Apakah semua karya wayangmu benar-benar milikmu?",jujur:"Tidak. Banyak yang saya klaim dari murid-murid saya.",bohong:"Semua karya saya original! Saya maestro! Yang lain hanya meniru saya!"},{pertanyaan:"Kamu menggugat seniman junior — mengapa?",jujur:"Karena dia lebih baik dari saya. Dan saya takut tersaingi.",bohong:"Karena dia mencuri teknik saya! Saya yang mengajarinya!"}]},
 ];
 
-// ─── SVG GHOST DOLL GENERATOR ────────────────────────────────────────────────
-// Each ghost gets a stable variant seed based on its name
-function nameHash(str) {
-  let h = 0;
-  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
-  return h;
-}
+const bosses={
+  5:{nama:"Datuk Licik Soeharto",alias:"Si Raja Dalih",umur:77,sebab:"Lupa Meninggal",asal:"Tidak Diketahui",pekerjaan:"Pejabat Publik (Dirahasiakan)",dosa:"Suka Berbohong",kebiasaan:"Selalu punya alibi untuk setiap kejahatan",karma:["Kebal Hukum","Ahli Manipulasi","Senyum Ramah Berbahaya"],catatan:"⚠ JIWA LEVEL 2 — Mampu memalsukan data formulir ini. Periksa BARANG dan TANYA sebelum sortir!",timerLimit:20,warna:{body:"#6a0a0a",aksen:"#cc2222",mata:"#ff0000",pipi:"#4a0000"},isBoss:true,bossLevel:1,bossIntroDesc:"Jiwa paling licin yang pernah melewati meja ini. Formulirnya bisa memalsukan dirinya sendiri. WAJIB gunakan tab BARANG & TANYA sebelum sortir! Waktu terbatas: 20 detik.",barang:[{icon:"📁",nama:"Berkas Tebal Tersegel",hint:"Dibuka paksa: semua surat perintah mengorbankan orang lain. Semua tanda tangan dipalsu."},{icon:"🖊️",nama:"Pena Tinta Merah",hint:"Dipakai untuk mencoret nama orang dari daftar. Ribuan nama."},{icon:"😁",nama:"Foto Senyum Resmi",hint:"Di balik foto: 'Senyum adalah senjata terbaik seorang pembohong.'"}],dialog:[{pertanyaan:"Apa dosamu yang sesungguhnya?",jujur:"*terdiam lama* ...Saya menghancurkan terlalu banyak orang demi jabatan.",bohong:"Saya tidak pernah berdosa! Semua yang saya lakukan adalah demi rakyat!"},{pertanyaan:"Apakah kamu pernah berbagi dengan orang lain?",jujur:"Tidak. Yang saya bagi hanya penderitaan.",bohong:"Saya SELALU berbagi! Saya dermawan! Tanya siapapun!"},{pertanyaan:"Mengapa formulirmu mengatakan kamu Suka Berbagi?",jujur:"...*diam* Saya mengubahnya. Sistem ini bisa saya manipulasi.",bohong:"Karena memang benar! Formulir tidak pernah salah!"}]},
+  10:{nama:"Iblis Raden Kamitua",alias:"Si Tua Tak Bernama",umur:999,sebab:"Tidak Pernah Benar-Benar Hidup",asal:"Antara Dunia",pekerjaan:"Penggoda / Penipu Kosmis",dosa:"Suka Berbohong",kebiasaan:"Menyamar sebagai orang baik untuk lolos ke Surga",karma:["Abadi","Tak Punya Rasa Malu","Master Manipulasi"],catatan:"☠ JIWA TINGKAT MAHIR — Entitas ini bukan manusia biasa. Percayai logika dan dialog, bukan formulir!",timerLimit:15,warna:{body:"#1a0010",aksen:"#880044",mata:"#ff00ff",pipi:"#440022"},isBoss:true,bossLevel:2,bossIntroDesc:"Bukan manusia. Bukan hantu biasa. Telah menipu 1.000 petugas sortir sebelummu. Formulirnya berubah saat dibaca. Waktu terbatas: 15 detik. Gunakan TANYA untuk memastikan!",barang:[{icon:"🪄",nama:"Tongkat Tak Kasat Mata",hint:"Hanya terlihat dari sudut mata. Dipakai untuk 'mengedit' kenyataan — termasuk formulir resmi."},{icon:"📜",nama:"Kitab Nama-nama Korban",hint:"Ribuan nama orang yang berhasil diperalat. Halaman terakhir masih kosong."},{icon:"🎭",nama:"Topeng Orang Suci",hint:"Di balik topeng ada topeng lain. Di balik topeng lainnya ada wajah yang tidak bisa dideskripsikan."}],dialog:[{pertanyaan:"Siapa sebenarnya dirimu?",jujur:"*tertawa panjang* Saya adalah semua kebohongan yang pernah ada.",bohong:"Saya hanyalah orang tua sederhana yang ingin istirahat di Surga."},{pertanyaan:"Kamu pernah berbuat baik?",jujur:"Tidak pernah. Tidak akan pernah. Itu bukan apa yang saya.",bohong:"Saya telah berbuat baik selama SEMBILAN RATUS SEMBILAN PULUH SEMBILAN TAHUN!"},{pertanyaan:"Mengapa formulirmu terasa aneh?",jujur:"Karena saya yang menulisnya. Sebelum kamu datang.",bohong:"Formulir tidak terasa aneh. Kamu yang salah baca, Petugas."}]},
+};
 
-function buildGhostSVG(ghost) {
-  const w = ghost.warna;
-  const isBad = ghost.dosa === "Suka Berbohong";
-  const seed = nameHash(ghost.nama);
+// SVG GENERATOR
+function nameHash(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h;}
 
-  // ── BODY SHAPE (3 variants) ──
-  const bodyVariant = seed % 3;
-  const bodyPaths = [
-    // Chubby round
-    `M28 118 Q22 162 28 192 L132 192 Q138 162 132 118 Q122 55 80 48 Q38 55 28 118 Z`,
-    // Tall slim
-    `M35 122 Q30 162 34 192 L126 192 Q130 162 125 122 Q116 62 80 52 Q44 62 35 122 Z`,
-    // Wide squat
-    `M22 130 Q18 165 24 192 L136 192 Q142 165 138 130 Q126 68 80 58 Q34 68 22 130 Z`,
+// ── BOSS SVG: tiap bossLevel punya beberapa look berbeda berdasarkan seed ──
+function buildBossSVG(ghost){
+  const w=ghost.warna, bl=ghost.bossLevel||1, seed=nameHash(ghost.nama);
+  const bv=seed%3; // 3 body shape per boss level
+
+  // === BOSS LEVEL 1 SHAPES ===
+  const bl1Bodies=[
+    // Stocky, intimidating bureaucrat
+    `M24 122 Q18 165 26 194 L134 194 Q142 165 136 122 Q124 52 80 44 Q36 52 24 122 Z`,
+    // Tall and thin, serpentine
+    `M38 118 Q34 162 36 194 L124 194 Q126 162 122 118 Q114 56 80 46 Q46 56 38 118 Z`,
+    // Wide squat menacing
+    `M16 132 Q12 168 20 194 L140 194 Q148 168 144 132 Q130 62 80 50 Q30 62 16 132 Z`,
   ];
-  const bodyPath = bodyPaths[bodyVariant];
+  // === BOSS LEVEL 2 SHAPES ===
+  const bl2Bodies=[
+    // Tall eldritch, elongated head
+    `M32 126 Q26 168 32 196 L128 196 Q134 168 128 126 Q118 44 80 32 Q42 44 32 126 Z`,
+    // Massive wide cosmic horror
+    `M12 138 Q8 172 16 196 L144 196 Q152 172 148 138 Q134 56 80 42 Q26 56 12 138 Z`,
+    // Asymmetric twisted
+    `M26 120 Q18 162 24 196 L130 196 Q140 168 136 124 Q126 50 80 40 Q38 52 26 120 Z`,
+  ];
 
-  // ── FACE POSITION based on body ──
-  const faceY = [0, 2, -4][bodyVariant];
+  const bodies = bl===1 ? bl1Bodies : bl2Bodies;
+  const bp=bodies[bv], fy=[-2,4,-4,2,0,3][bv]||0;
 
-  // ── EYES (4 variants) ──
-  const eyeVariant = seed % 4;
-  const eyes = {
-    // Normal round
-    0: (m) => `
-      <ellipse cx="62" cy="${91+faceY}" rx="7.5" ry="${isBad?7:8}" fill="${m}"/>
-      <ellipse cx="98" cy="${91+faceY}" rx="7.5" ry="${isBad?7:8}" fill="${m}"/>
-      <ellipse cx="64" cy="${89+faceY}" rx="3" ry="3" fill="white"/>
-      <ellipse cx="100" cy="${89+faceY}" rx="3" ry="3" fill="white"/>
-      <ellipse cx="65" cy="${88+faceY}" rx="1.2" ry="1.2" fill="${m}"/>
-      <ellipse cx="101" cy="${88+faceY}" rx="1.2" ry="1.2" fill="${m}"/>`,
-    // Oval tall
-    1: (m) => `
-      <ellipse cx="62" cy="${91+faceY}" rx="6" ry="${isBad?9:10}" fill="${m}"/>
-      <ellipse cx="98" cy="${91+faceY}" rx="6" ry="${isBad?9:10}" fill="${m}"/>
-      <ellipse cx="63.5" cy="${88+faceY}" rx="2.5" ry="3.5" fill="white"/>
-      <ellipse cx="99.5" cy="${88+faceY}" rx="2.5" ry="3.5" fill="white"/>`,
-    // Sleepy half-closed
-    2: (m) => `
-      <ellipse cx="62" cy="${93+faceY}" rx="8" ry="5.5" fill="${m}"/>
-      <ellipse cx="98" cy="${93+faceY}" rx="8" ry="5.5" fill="${m}"/>
-      <path d="M54 ${88+faceY} Q62 ${85+faceY} 70 ${88+faceY}" fill="${m}" stroke="${m}" stroke-width="1"/>
-      <path d="M90 ${88+faceY} Q98 ${85+faceY} 106 ${88+faceY}" fill="${m}" stroke="${m}" stroke-width="1"/>
-      <ellipse cx="64" cy="${92+faceY}" rx="2.5" ry="2" fill="white"/>
-      <ellipse cx="100" cy="${92+faceY}" rx="2.5" ry="2" fill="white"/>`,
-    // Star sparkle eyes (good only) / X eyes (bad)
-    3: (m) => isBad
-      ? `<text x="54" y="${97+faceY}" font-size="14" fill="${m}" font-family="sans-serif">✕</text>
-         <text x="89" y="${97+faceY}" font-size="14" fill="${m}" font-family="sans-serif">✕</text>`
-      : `<text x="54" y="${97+faceY}" font-size="14" fill="${m}" font-family="sans-serif">★</text>
-         <text x="89" y="${97+faceY}" font-size="14" fill="${m}" font-family="sans-serif">★</text>`,
-  };
+  // === BOSS EYES: level 1 = 4 types, level 2 = 4 types ===
+  const eyeSeed=(seed>>2)%4;
+  let beyes='';
+  if(bl===1){
+    // Level 1 boss eyes
+    const bl1Eyes=[
+      // Sharp angular eyes with slit pupils
+      `<polygon points="50,${84+fy} 74,${80+fy} 74,${98+fy} 50,${94+fy}" fill="${w.mata}"/>
+       <polygon points="86,${80+fy} 110,${84+fy} 110,${94+fy} 86,${98+fy}" fill="${w.mata}"/>
+       <ellipse cx="62" cy="${89+fy}" rx="2" ry="7" fill="#ff2200"/>
+       <ellipse cx="98" cy="${89+fy}" rx="2" ry="7" fill="#ff2200"/>`,
+      // Bulging eyes with red glow rings
+      `<circle cx="62" cy="${89+fy}" r="11" fill="${w.mata}"/>
+       <circle cx="98" cy="${89+fy}" r="11" fill="${w.mata}"/>
+       <circle cx="62" cy="${89+fy}" r="7" fill="#cc0000"/>
+       <circle cx="98" cy="${89+fy}" r="7" fill="#cc0000"/>
+       <circle cx="62" cy="${89+fy}" r="3" fill="#ff6600" opacity="0.9"/>
+       <circle cx="98" cy="${89+fy}" r="3" fill="#ff6600" opacity="0.9"/>
+       <circle cx="60" cy="${87+fy}" r="1.5" fill="white" opacity="0.6"/>
+       <circle cx="96" cy="${87+fy}" r="1.5" fill="white" opacity="0.6"/>`,
+      // Half-closed suspicious eyes
+      `<ellipse cx="62" cy="${92+fy}" rx="10" ry="7" fill="${w.mata}"/>
+       <ellipse cx="98" cy="${92+fy}" rx="10" ry="7" fill="${w.mata}"/>
+       <path d="M52 ${85+fy} Q62 ${82+fy} 72 ${85+fy}" fill="${w.mata}"/>
+       <path d="M88 ${85+fy} Q98 ${82+fy} 108 ${85+fy}" fill="${w.mata}"/>
+       <ellipse cx="62" cy="${91+fy}" rx="4" ry="3" fill="#ff4444"/>
+       <ellipse cx="98" cy="${91+fy}" rx="4" ry="3" fill="#ff4444"/>
+       <ellipse cx="61" cy="${90+fy}" rx="1.5" ry="1.5" fill="white" opacity="0.5"/>
+       <ellipse cx="97" cy="${90+fy}" rx="1.5" ry="1.5" fill="white" opacity="0.5"/>`,
+      // Dollar/spiral eyes (greedy corrupt official)
+      `<circle cx="62" cy="${89+fy}" r="10" fill="${w.mata}"/>
+       <circle cx="98" cy="${89+fy}" r="10" fill="${w.mata}"/>
+       <text x="54" y="${95+fy}" font-size="13" fill="#ffdd00" font-family="sans-serif" font-weight="bold">$</text>
+       <text x="90" y="${95+fy}" font-size="13" fill="#ffdd00" font-family="sans-serif" font-weight="bold">$</text>`,
+    ];
+    beyes=bl1Eyes[eyeSeed];
+  } else {
+    // Level 2 boss eyes — cosmic horror
+    const bl2Eyes=[
+      // Many-ringed void eyes
+      `<circle cx="62" cy="${89+fy}" r="12" fill="${w.mata}"/>
+       <circle cx="98" cy="${89+fy}" r="12" fill="${w.mata}"/>
+       <circle cx="62" cy="${89+fy}" r="9" fill="#220033"/>
+       <circle cx="98" cy="${89+fy}" r="9" fill="#220033"/>
+       <circle cx="62" cy="${89+fy}" r="6" fill="${w.mata}" opacity="0.7"/>
+       <circle cx="98" cy="${89+fy}" r="6" fill="${w.mata}" opacity="0.7"/>
+       <circle cx="62" cy="${89+fy}" r="3" fill="#ff00ff"/>
+       <circle cx="98" cy="${89+fy}" r="3" fill="#ff00ff"/>
+       <circle cx="60" cy="${87+fy}" r="1" fill="white"/>
+       <circle cx="96" cy="${87+fy}" r="1" fill="white"/>`,
+      // All-seeing eye (triangle pupils)
+      `<ellipse cx="62" cy="${89+fy}" rx="11" ry="12" fill="${w.mata}"/>
+       <ellipse cx="98" cy="${89+fy}" rx="11" ry="12" fill="${w.mata}"/>
+       <polygon points="62,${81+fy} 68,${98+fy} 56,${98+fy}" fill="#ff00ff" opacity="0.9"/>
+       <polygon points="98,${81+fy} 104,${98+fy} 92,${98+fy}" fill="#ff00ff" opacity="0.9"/>
+       <circle cx="62" cy="${89+fy}" r="2" fill="white"/>
+       <circle cx="98" cy="${89+fy}" r="2" fill="white"/>`,
+      // Glowing empty sockets
+      `<ellipse cx="62" cy="${89+fy}" rx="11" ry="13" fill="#0a0010"/>
+       <ellipse cx="98" cy="${89+fy}" rx="11" ry="13" fill="#0a0010"/>
+       <ellipse cx="62" cy="${89+fy}" rx="8" ry="10" fill="${w.mata}" opacity="0.5"/>
+       <ellipse cx="98" cy="${89+fy}" rx="8" ry="10" fill="${w.mata}" opacity="0.5"/>
+       <ellipse cx="62" cy="${91+fy}" rx="3" ry="4" fill="#ff00ff" opacity="0.8"/>
+       <ellipse cx="98" cy="${91+fy}" rx="3" ry="4" fill="#ff00ff" opacity="0.8"/>`,
+      // Spiral hypno eyes
+      `<circle cx="62" cy="${89+fy}" r="11" fill="${w.mata}"/>
+       <circle cx="98" cy="${89+fy}" r="11" fill="${w.mata}"/>
+       <path d="M62 ${78+fy} a11 11 0 0 1 0 22" stroke="#ff00ff" stroke-width="3" fill="none" opacity="0.7"/>
+       <path d="M62 ${83+fy} a6 6 0 0 1 0 12" stroke="#ff88ff" stroke-width="2" fill="none" opacity="0.6"/>
+       <circle cx="62" cy="${89+fy}" r="2.5" fill="#ffffff"/>
+       <path d="M98 ${78+fy} a11 11 0 0 1 0 22" stroke="#ff00ff" stroke-width="3" fill="none" opacity="0.7"/>
+       <path d="M98 ${83+fy} a6 6 0 0 1 0 12" stroke="#ff88ff" stroke-width="2" fill="none" opacity="0.6"/>
+       <circle cx="98" cy="${89+fy}" r="2.5" fill="#ffffff"/>`,
+    ];
+    beyes=bl2Eyes[eyeSeed];
+  }
 
-  // ── BROWS ──
-  const browVariant = seed % 3;
-  const brows = {
-    0: isBad  // slanted evil / gentle arch
-      ? `<path d="M53 ${80+faceY} Q61 ${74+faceY} 69 ${80+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-         <path d="M91 ${80+faceY} Q99 ${74+faceY} 107 ${80+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`
-      : `<path d="M54 ${81+faceY} Q62 ${77+faceY} 70 ${81+faceY}" stroke="${w.mata}" stroke-width="2" fill="none" stroke-linecap="round"/>
-         <path d="M90 ${81+faceY} Q98 ${77+faceY} 106 ${81+faceY}" stroke="${w.mata}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
-    1: isBad  // thick block brows
-      ? `<rect x="53" y="${76+faceY}" width="17" height="4" rx="2" fill="${w.mata}" transform="rotate(-8,61,78)"/>
-         <rect x="90" y="${76+faceY}" width="17" height="4" rx="2" fill="${w.mata}" transform="rotate(8,99,78)"/>`
-      : `<rect x="54" y="${78+faceY}" width="16" height="3" rx="2" fill="${w.mata}" opacity="0.7"/>
-         <rect x="90" y="${78+faceY}" width="16" height="3" rx="2" fill="${w.mata}" opacity="0.7"/>`,
-    2: isBad  // one raised brow
-      ? `<path d="M53 ${82+faceY} Q61 ${74+faceY} 69 ${79+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-         <path d="M91 ${79+faceY} Q99 ${74+faceY} 107 ${82+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`
-      : `<path d="M54 ${79+faceY} Q62 ${76+faceY} 70 ${80+faceY}" stroke="${w.mata}" stroke-width="2" fill="none" stroke-linecap="round"/>
-         <path d="M90 ${80+faceY} Q98 ${76+faceY} 106 ${79+faceY}" stroke="${w.mata}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
-  };
+  // === BOSS BROWS ===
+  const browSeed=(seed>>4)%3;
+  const bBrows=[
+    // Severe V-shape
+    `<path d="M48 ${74+fy} L72 ${68+fy}" stroke="${w.mata}" stroke-width="5" stroke-linecap="round"/>
+     <path d="M112 ${74+fy} L88 ${68+fy}" stroke="${w.mata}" stroke-width="5" stroke-linecap="round"/>`,
+    // Jagged angry
+    `<path d="M48 ${78+fy} L56 ${70+fy} L64 ${76+fy} L72 ${68+fy}" stroke="${w.mata}" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+     <path d="M112 ${78+fy} L104 ${70+fy} L96 ${76+fy} L88 ${68+fy}" stroke="${w.mata}" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+    // Thick block
+    `<rect x="48" y="${68+fy}" width="26" height="6" rx="3" fill="${w.mata}" transform="rotate(-6,61,71)"/>
+     <rect x="86" y="${68+fy}" width="26" height="6" rx="3" fill="${w.mata}" transform="rotate(6,99,71)"/>`,
+  ][browSeed];
 
-  // ── MOUTH (4 variants) ──
-  const mouthVariant = seed % 4;
-  const mouths = {
-    0: isBad
-      ? `<path d="M67 ${111+faceY} Q80 ${104+faceY} 93 ${111+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`
-      : `<path d="M67 ${108+faceY} Q80 ${119+faceY} 93 ${108+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`,
-    1: isBad
-      ? `<path d="M68 ${112+faceY} L92 ${108+faceY}" stroke="${w.mata}" stroke-width="2.5" stroke-linecap="round"/>
-         <path d="M68 ${116+faceY} L74 ${112+faceY}" stroke="${w.mata}" stroke-width="1.5" stroke-linecap="round"/>`
-      : `<ellipse cx="80" cy="${112+faceY}" rx="10" ry="6" fill="${w.pipi}" opacity="0.5"/>
-         <path d="M70 ${110+faceY} Q80 ${118+faceY} 90 ${110+faceY}" stroke="${w.mata}" stroke-width="2" fill="none"/>`,
-    2: isBad
-      ? `<path d="M68 ${110+faceY} Q74 ${115+faceY} 80 ${110+faceY} Q86 ${115+faceY} 92 ${110+faceY}" stroke="${w.mata}" stroke-width="2" fill="none"/>`
-      : `<circle cx="80" cy="${112+faceY}" r="7" fill="${w.mata}" opacity="0.15"/>
-         <path d="M73 ${112+faceY} Q80 ${120+faceY} 87 ${112+faceY}" stroke="${w.mata}" stroke-width="2.5" fill="none"/>
-         <circle cx="72" cy="${111+faceY}" r="2" fill="${w.pipi}" opacity="0.6"/>
-         <circle cx="88" cy="${111+faceY}" r="2" fill="${w.pipi}" opacity="0.6"/>`,
-    3: isBad
-      ? `<rect x="68" y="${108+faceY}" width="24" height="7" rx="3" fill="${w.mata}" opacity="0.85"/>
-         <line x1="74" y1="${108+faceY}" x2="74" y2="${115+faceY}" stroke="${w.body}" stroke-width="1.5"/>
-         <line x1="80" y1="${108+faceY}" x2="80" y2="${115+faceY}" stroke="${w.body}" stroke-width="1.5"/>
-         <line x1="86" y1="${108+faceY}" x2="86" y2="${115+faceY}" stroke="${w.body}" stroke-width="1.5"/>`
-      : `<path d="M68 ${108+faceY} Q80 ${122+faceY} 92 ${108+faceY}" stroke="${w.mata}" stroke-width="3" fill="none" stroke-linecap="round"/>
-         <path d="M72 ${115+faceY} Q80 ${122+faceY} 88 ${115+faceY}" fill="${w.pipi}" opacity="0.3"/>`,
-  };
+  // === BOSS MOUTHS ===
+  const mouthSeed=(seed>>6)%4;
+  const bMouths=[
+    // Wide smug grin with teeth
+    `<path d="M60 ${110+fy} Q80 ${103+fy} 100 ${110+fy}" stroke="${w.mata}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+     <path d="M63 ${111+fy} Q80 ${118+fy} 97 ${111+fy}" stroke="${w.mata}" stroke-width="2" fill="none" opacity="0.5"/>
+     <line x1="70" y1="${110+fy}" x2="70" y2="${115+fy}" stroke="${w.mata}" stroke-width="2"/>
+     <line x1="77" y1="${108+fy}" x2="77" y2="${113+fy}" stroke="${w.mata}" stroke-width="2"/>
+     <line x1="84" y1="${108+fy}" x2="84" y2="${113+fy}" stroke="${w.mata}" stroke-width="2"/>
+     <line x1="90" y1="${110+fy}" x2="90" y2="${115+fy}" stroke="${w.mata}" stroke-width="2"/>`,
+    // Lipless slit frown
+    `<path d="M62 ${112+fy} L98 ${108+fy}" stroke="${w.mata}" stroke-width="4" stroke-linecap="round"/>
+     <path d="M62 ${116+fy} L70 ${112+fy}" stroke="${w.mata}" stroke-width="2" stroke-linecap="round" opacity="0.5"/>`,
+    // Wide open maw
+    `<ellipse cx="80" cy="${113+fy}" rx="14" ry="9" fill="${w.mata}" opacity="0.9"/>
+     <ellipse cx="80" cy="${110+fy}" rx="12" ry="4" fill="${w.body}" opacity="0.8"/>
+     <line x1="68" y1="${111+fy}" x2="70" y2="${120+fy}" stroke="${w.body}" stroke-width="2"/>
+     <line x1="76" y1="${109+fy}" x2="77" y2="${119+fy}" stroke="${w.body}" stroke-width="2"/>
+     <line x1="84" y1="${109+fy}" x2="85" y2="${119+fy}" stroke="${w.body}" stroke-width="2"/>
+     <line x1="90" y1="${111+fy}" x2="92" y2="${120+fy}" stroke="${w.body}" stroke-width="2"/>`,
+    // Thin cruel smile
+    `<path d="M64 ${114+fy} Q72 ${109+fy} 80 ${111+fy} Q88 ${109+fy} 96 ${114+fy}" stroke="${w.mata}" stroke-width="3" fill="none" stroke-linecap="round"/>
+     <path d="M64 ${114+fy} Q62 ${118+fy} 66 ${118+fy}" stroke="${w.mata}" stroke-width="2" fill="none"/>
+     <path d="M96 ${114+fy} Q98 ${118+fy} 94 ${118+fy}" stroke="${w.mata}" stroke-width="2" fill="none"/>`,
+  ][mouthSeed];
 
-  // ── CHEEKS ──
-  const cheekVariant = seed % 3;
-  const cheeks = {
-    0: `<ellipse cx="50" cy="${101+faceY}" rx="10" ry="7" fill="${w.pipi}" opacity="0.35"/>
-        <ellipse cx="110" cy="${101+faceY}" rx="10" ry="7" fill="${w.pipi}" opacity="0.35"/>`,
-    1: `<circle cx="50" cy="${102+faceY}" r="8" fill="${w.pipi}" opacity="0.3"/>
-        <circle cx="110" cy="${102+faceY}" r="8" fill="${w.pipi}" opacity="0.3"/>
-        <circle cx="47" cy="${99+faceY}" r="2" fill="${w.pipi}" opacity="0.4"/>
-        <circle cx="107" cy="${99+faceY}" r="2" fill="${w.pipi}" opacity="0.4"/>`,
-    2: `<path d="M42 ${99+faceY} Q50 ${106+faceY} 58 ${99+faceY}" fill="${w.pipi}" opacity="0.4"/>
-        <path d="M102 ${99+faceY} Q110 ${106+faceY} 118 ${99+faceY}" fill="${w.pipi}" opacity="0.4"/>`,
-  };
+  // === BOSS ACCESSORIES: level 1 = 4 types, level 2 = 4 types ===
+  const accSeed=(seed>>8)%4;
+  let bacc='';
+  if(bl===1){
+    const bl1Acc=[
+      // Blood-dripping halo
+      `<ellipse cx="80" cy="22" rx="28" ry="7" fill="none" stroke="#cc2222" stroke-width="4" opacity="0.9"/>
+       <ellipse cx="80" cy="22" rx="28" ry="7" fill="none" stroke="#ff6666" stroke-width="1.5" opacity="0.5"/>
+       <path d="M60 24 Q59 34 61 38" stroke="#cc0000" stroke-width="2.5" fill="none"/>
+       <path d="M80 26 Q79 38 81 44" stroke="#cc0000" stroke-width="2.5" fill="none"/>
+       <path d="M100 24 Q99 34 101 38" stroke="#cc0000" stroke-width="2.5" fill="none"/>`,
+      // Horns
+      `<polygon points="63,35 57,8 73,32" fill="#8b0000" opacity="0.95"/>
+       <polygon points="63,35 57,8 73,32" fill="#cc2222" opacity="0.3"/>
+       <polygon points="97,35 91,8 107,32" fill="#8b0000" opacity="0.95"/>
+       <polygon points="97,35 91,8 107,32" fill="#cc2222" opacity="0.3"/>`,
+      // Barbed wire crown
+      `<path d="M50 38 Q60 24 70 36 Q80 22 90 36 Q100 24 110 38" stroke="#5a1010" stroke-width="3" fill="none" stroke-linecap="round"/>
+       <circle cx="60" cy="30" r="3.5" fill="#8b1a1a"/><circle cx="70" cy="26" r="2" fill="#ff4444"/>
+       <circle cx="80" cy="28" r="3.5" fill="#8b1a1a"/><circle cx="90" cy="26" r="2" fill="#ff4444"/>
+       <circle cx="100" cy="30" r="3.5" fill="#8b1a1a"/>`,
+      // Official corrupt medal/badge
+      `<ellipse cx="80" cy="26" rx="22" ry="10" fill="#1a0808" stroke="#cc2222" stroke-width="2"/>
+       <text x="64" y="31" font-size="11" fill="#cc4444" font-family="sans-serif">PEJABAT</text>
+       <circle cx="62" cy="40" r="4" fill="#cc2222"/><circle cx="80" cy="42" r="4" fill="#aa1a1a"/>
+       <circle cx="98" cy="40" r="4" fill="#cc2222"/>`,
+    ];
+    bacc=bl1Acc[accSeed];
+  } else {
+    const bl2Acc=[
+      // Dark crown of thorns + eldritch glow
+      `<path d="M42 46 L50 20 L60 40 L70 16 L80 38 L90 16 L100 40 L110 20 L118 46"
+            fill="#220011" stroke="#880044" stroke-width="2.5"/>
+       <circle cx="50" cy="22" r="5" fill="#ff00cc" opacity="0.85"/>
+       <circle cx="70" cy="18" r="5" fill="#cc00ff" opacity="0.85"/>
+       <circle cx="80" cy="40" r="3" fill="#ff00cc" opacity="0.6"/>
+       <circle cx="90" cy="18" r="5" fill="#cc00ff" opacity="0.85"/>
+       <circle cx="110" cy="22" r="5" fill="#ff00cc" opacity="0.85"/>
+       <ellipse cx="80" cy="34" rx="34" ry="7" fill="none" stroke="#ff00ff" stroke-width="1.5" opacity="0.4"/>`,
+      // Void halo (anti-halo, darkness)
+      `<ellipse cx="80" cy="22" rx="30" ry="8" fill="#0a0010" stroke="#440066" stroke-width="3" opacity="0.9"/>
+       <ellipse cx="80" cy="22" rx="30" ry="8" fill="none" stroke="#ff00ff" stroke-width="1" opacity="0.5"/>
+       <circle cx="50" cy="22" r="3" fill="#ff00ff" opacity="0.7"/>
+       <circle cx="65" cy="16" r="2" fill="#cc00ff" opacity="0.6"/>
+       <circle cx="80" cy="14" r="3" fill="#ff00ff" opacity="0.8"/>
+       <circle cx="95" cy="16" r="2" fill="#cc00ff" opacity="0.6"/>
+       <circle cx="110" cy="22" r="3" fill="#ff00ff" opacity="0.7"/>`,
+      // Many eyes crown (eldritch)
+      `<path d="M48 40 Q80 16 112 40" stroke="#440022" stroke-width="6" fill="none"/>
+       <ellipse cx="55" cy="32" rx="6" ry="5" fill="#1a0020"/><circle cx="55" cy="32" r="3" fill="#ff00ff"/>
+       <ellipse cx="70" cy="24" rx="6" ry="5" fill="#1a0020"/><circle cx="70" cy="24" r="3" fill="#cc00ff"/>
+       <ellipse cx="80" cy="21" rx="7" ry="5" fill="#1a0020"/><circle cx="80" cy="21" r="3.5" fill="#ff00ff"/>
+       <ellipse cx="90" cy="24" rx="6" ry="5" fill="#1a0020"/><circle cx="90" cy="24" r="3" fill="#cc00ff"/>
+       <ellipse cx="105" cy="32" rx="6" ry="5" fill="#1a0020"/><circle cx="105" cy="32" r="3" fill="#ff00ff"/>`,
+      // Floating void sigils
+      `<text x="54" y="28" font-size="18" fill="#ff00ff" opacity="0.7" font-family="sans-serif">⛧</text>
+       <text x="88" y="24" font-size="14" fill="#cc00ff" opacity="0.6" font-family="sans-serif">⛧</text>
+       <ellipse cx="80" cy="20" rx="26" ry="7" fill="none" stroke="#880044" stroke-width="2" opacity="0.6"/>
+       <ellipse cx="80" cy="20" rx="26" ry="7" fill="none" stroke="#ff00ff" stroke-width="0.5" opacity="0.3"/>`,
+    ];
+    bacc=bl2Acc[accSeed];
+  }
 
-  // ── ARMS (3 variants) ──
-  const armVariant = seed % 3;
-  const arms = {
-    // Short stubby
-    0: `<path d="M28 132 Q10 148 14 166 Q18 176 28 170" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>
-        <path d="M132 132 Q150 148 146 166 Q142 176 132 170" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`,
-    // Long droopy
-    1: `<path d="M30 128 Q6 150 10 178 Q14 190 26 184" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>
-        <path d="M130 128 Q154 150 150 178 Q146 190 134 184" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`,
-    // Raised one arm (pointing / waving)
-    2: isBad
-      ? `<path d="M30 130 Q8 110 12 90 Q16 78 26 82" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>
-         <path d="M130 132 Q152 148 148 168 Q144 178 134 172" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`
-      : `<path d="M28 130 Q10 148 14 166 Q18 176 28 170" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>
-         <path d="M132 128 Q154 108 150 88 Q146 76 136 80" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`,
-  };
+  // === BOSS ARMS ===
+  const armSeed=(seed>>10)%3;
+  const bArms=[
+    // Reaching forward menacingly
+    `<path d="M28 125 Q2 122 4 110 Q8 100 22 106" fill="${w.body}" stroke="${w.aksen}" stroke-width="2" opacity="0.9"/>
+     <path d="M132 125 Q158 122 156 110 Q152 100 138 106" fill="${w.body}" stroke="${w.aksen}" stroke-width="2" opacity="0.9"/>`,
+    // One raised pointing, one drooping
+    `<path d="M28 128 Q4 108 8 88 Q12 76 24 80" fill="${w.body}" stroke="${w.aksen}" stroke-width="2" opacity="0.9"/>
+     <path d="M132 132 Q156 148 152 170 Q148 182 136 176" fill="${w.body}" stroke="${w.aksen}" stroke-width="2" opacity="0.9"/>`,
+    // Both arms raised (boss battle pose)
+    `<path d="M28 126 Q4 112 6 94 Q10 82 22 86" fill="${w.body}" stroke="${w.aksen}" stroke-width="2.5" opacity="0.9"/>
+     <path d="M132 126 Q156 112 154 94 Q150 82 138 86" fill="${w.body}" stroke="${w.aksen}" stroke-width="2.5" opacity="0.9"/>`,
+  ][armSeed];
 
-  // ── ACCESSORIES ──
-  const badAccVariant = seed % 4;
-  const goodAccVariant = seed % 4;
+  // === BOSS TAILS ===
+  const tailSeed=(seed>>12)%3;
+  const bTails=[
+    // Jagged many-pronged
+    `<path d="M44 194 L36 220 L54 210 L50 228 L66 212 L64 230 L80 214 L96 230 L94 212 L110 228 L106 210 L124 220 L116 194 Z"
+          fill="${w.body}" opacity="0.9" stroke="${w.aksen}" stroke-width="1"/>`,
+    // Serpentine coiling tail
+    `<path d="M46 194 Q38 214 56 222 Q70 228 72 214 Q76 232 80 234 Q84 232 88 214 Q90 228 104 222 Q122 214 114 194 Z"
+          fill="${w.body}" opacity="0.92"/>
+     <path d="M72 214 Q76 232 80 234 Q84 232 88 214" fill="none" stroke="${w.aksen}" stroke-width="2" opacity="0.4"/>`,
+    // Wide ominous drape
+    `<path d="M40 194 Q30 216 48 226 Q62 232 66 218 Q72 236 80 238 Q88 236 94 218 Q98 232 112 226 Q130 216 120 194 Z"
+          fill="${w.body}" opacity="0.9" stroke="${w.aksen}" stroke-width="0.5" opacity="0.3"/>`,
+  ][tailSeed];
 
-  const badAccessories = {
-    // Classic horns
-    0: `<polygon points="63,35 57,12 73,32" fill="#c03030" opacity="0.9"/>
-        <polygon points="97,35 91,12 107,32" fill="#c03030" opacity="0.9"/>
-        <polygon points="63,35 57,12 73,32" fill="#ff6060" opacity="0.3"/>`,
-    // Crown of thorns
-    1: `<path d="M52 42 Q60 28 68 42 Q72 28 80 42 Q88 28 96 42 Q104 28 108 42" stroke="#5a2020" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <circle cx="60" cy="35" r="3" fill="#8b1a1a"/>
-        <circle cx="80" cy="30" r="3" fill="#8b1a1a"/>
-        <circle cx="100" cy="35" r="3" fill="#8b1a1a"/>`,
-    // Demon mask
-    2: `<polygon points="63,36 58,16 74,34" fill="#9b2020" opacity="0.85"/>
-        <polygon points="97,36 86,16 102,34" fill="#9b2020" opacity="0.85"/>
-        <path d="M60 46 Q80 38 100 46" stroke="#6a1010" stroke-width="2" fill="none" opacity="0.6"/>`,
-    // Skull crown
-    3: `<ellipse cx="80" cy="32" rx="22" ry="10" fill="#2a0808" stroke="#6a2020" stroke-width="1.5"/>
-        <circle cx="73" cy="30" r="4" fill="#1a0000"/>
-        <circle cx="87" cy="30" r="4" fill="#1a0000"/>
-        <path d="M75 36 L75 40 M80 37 L80 41 M85 36 L85 40" stroke="#6a2020" stroke-width="1.5"/>`,
-  };
+  // === BOSS BODY EXTRAS ===
+  const exSeed=(seed>>14)%4;
+  const bExtras=[
+    // Rune markings
+    `<text x="68" y="155" font-size="10" fill="${w.aksen}" opacity="0.3" font-family="sans-serif">✦ ✦ ✦</text>
+     <text x="72" y="174" font-size="9" fill="${w.aksen}" opacity="0.2" font-family="sans-serif">⛧ ⛧</text>`,
+    // Cracks/scars
+    `<path d="M72 136 L76 148 L70 158 L74 170" stroke="${w.aksen}" stroke-width="1.5" fill="none" opacity="0.35"/>
+     <path d="M88 140 L84 154 L88 162" stroke="${w.aksen}" stroke-width="1.5" fill="none" opacity="0.3"/>`,
+    // Dark vertical stripes
+    `<path d="M72 122 L72 190" stroke="${w.aksen}" stroke-width="6" opacity="0.12"/>
+     <path d="M88 122 L88 190" stroke="${w.aksen}" stroke-width="4" opacity="0.08"/>`,
+    // Seal/sigil badge
+    `<circle cx="80" cy="158" r="14" fill="${w.aksen}" opacity="0.15"/>
+     <circle cx="80" cy="158" r="10" fill="none" stroke="${w.aksen}" stroke-width="1" opacity="0.3"/>
+     <text x="74" y="163" font-size="11" fill="${w.mata}" opacity="0.4" font-family="sans-serif">☠</text>`,
+  ][exSeed];
 
-  const goodAccessories = {
-    // Classic halo
-    0: `<ellipse cx="80" cy="24" rx="28" ry="8" fill="none" stroke="${w.aksen}" stroke-width="4" opacity="0.85"/>
-        <ellipse cx="80" cy="24" rx="28" ry="8" fill="none" stroke="#fff4a0" stroke-width="1.5" opacity="0.6"/>`,
-    // Flower crown
-    1: `${[55,65,75,85,95,105].map((x,i)=>`
-        <circle cx="${x}" cy="${28+Math.sin(i)*4}" r="5" fill="${['#ff9999','#ffcc88','#aaffaa','#88ccff','#ffaaff','#ffffaa'][i]}" opacity="0.9"/>
-        <circle cx="${x}" cy="${28+Math.sin(i)*4}" r="2" fill="white" opacity="0.7"/>`).join('')}
-        <path d="M52 30 Q80 20 108 30" stroke="#70a050" stroke-width="2" fill="none" opacity="0.5"/>`,
-    // Angel wings tiny
-    2: `<path d="M30 70 Q10 55 18 38 Q28 25 40 40 Q46 50 38 62" fill="white" opacity="0.7"/>
-        <path d="M130 70 Q150 55 142 38 Q132 25 120 40 Q114 50 122 62" fill="white" opacity="0.7"/>
-        <ellipse cx="80" cy="24" rx="22" ry="6" fill="none" stroke="#ffe080" stroke-width="3" opacity="0.8"/>`,
-    // Star sparkles
-    3: `<text x="52" y="30" font-size="12" fill="#ffe080" opacity="0.9">✦</text>
-        <text x="96" y="26" font-size="10" fill="#ffe080" opacity="0.8">✦</text>
-        <text x="74" y="18" font-size="14" fill="#fff4a0" opacity="0.95">★</text>
-        <ellipse cx="80" cy="26" rx="24" ry="7" fill="none" stroke="#c9a84c" stroke-width="2.5" opacity="0.7"/>`,
-  };
-
-  const accessory = isBad ? badAccessories[badAccVariant] : goodAccessories[goodAccVariant];
-
-  // ── TAIL / BOTTOM (3 variants) ──
-  const tailVariant = seed % 3;
-  const tails = {
-    0: isBad
-      ? `<path d="M50 192 Q40 208 56 213 Q66 217 66 207 Q68 217 80 220 Q92 217 94 207 Q94 217 104 213 Q120 208 110 192 Z" fill="${w.body}" opacity="0.9"/>
-         <path d="M50 192 Q40 208 56 213" fill="none" stroke="${w.aksen}" stroke-width="1.5" opacity="0.4"/>
-         <path d="M94 207 Q94 217 104 213 Q120 208 110 192" fill="none" stroke="${w.aksen}" stroke-width="1.5" opacity="0.4"/>`
-      : `<path d="M52 192 Q48 212 64 217 Q74 220 74 210 Q76 220 88 218 Q98 216 94 206 Q104 214 112 202 Q108 187 98 187 L62 187 Z" fill="${w.body}" opacity="0.9"/>
-         <ellipse cx="80" cy="187" rx="4" ry="6" fill="${w.aksen}" opacity="0.3"/>`,
-    1: isBad
-      ? `<path d="M45 192 Q32 210 50 218 Q62 222 64 210 Q70 224 80 222 Q90 224 96 210 Q98 222 110 218 Q128 210 115 192 Z" fill="${w.body}" opacity="0.9"/>
-         <path d="M64 210 Q70 224 80 222 Q90 224 96 210" fill="none" stroke="${w.aksen}" stroke-width="1" opacity="0.4"/>`
-      : `<path d="M50 192 Q46 214 60 218 Q70 222 72 212 Q74 222 80 224 Q86 222 88 212 Q90 222 100 218 Q114 214 110 192 Z" fill="${w.body}" opacity="0.9"/>
-         <path d="M72 212 Q74 222 80 224 Q86 222 88 212" fill="none" stroke="${w.aksen}" stroke-width="1.5" opacity="0.4"/>`,
-    2: isBad
-      ? `<path d="M48 192 Q42 212 58 218 Q70 222 72 208 Q76 222 80 224 Q84 222 88 208 Q90 222 102 218 Q118 212 112 192 Z" fill="${w.body}" opacity="0.9"/>
-         <line x1="80" y1="192" x2="80" y2="224" stroke="${w.aksen}" stroke-width="1" opacity="0.25"/>`
-      : `<path d="M54 192 Q50 210 62 216 Q74 220 76 210 Q78 220 80 222 Q82 220 84 210 Q86 220 98 216 Q110 210 106 192 Z" fill="${w.body}" opacity="0.9"/>
-         <ellipse cx="65" cy="208" rx="3" ry="4" fill="${w.aksen}" opacity="0.2"/>
-         <ellipse cx="95" cy="208" rx="3" ry="4" fill="${w.aksen}" opacity="0.2"/>`,
-  };
-
-  // ── BODY EXTRAS (patches, spots, patterns) ──
-  const extraVariant = seed % 4;
-  const extras = {
-    0: ``, // plain
-    1: `<!-- polka dots -->
-        <circle cx="65" cy="148" r="4" fill="${w.aksen}" opacity="0.2"/>
-        <circle cx="88" cy="162" r="3" fill="${w.aksen}" opacity="0.2"/>
-        <circle cx="75" cy="174" r="3.5" fill="${w.aksen}" opacity="0.15"/>`,
-    2: `<!-- vertical stripe -->
-        <path d="M78 125 L78 188" stroke="${w.aksen}" stroke-width="5" opacity="0.12"/>
-        <path d="M86 125 L86 188" stroke="${w.aksen}" stroke-width="3" opacity="0.08"/>`,
-    3: `<!-- patch badge -->
-        <rect x="64" y="148" width="32" height="20" rx="4" fill="${w.aksen}" opacity="0.18"/>
-        <rect x="66" y="150" width="28" height="16" rx="3" fill="none" stroke="${w.aksen}" stroke-width="1" opacity="0.3"/>`,
-  };
-
-  return `<svg viewBox="0 0 160 224" xmlns="http://www.w3.org/2000/svg">
+  const uid=`b${seed%99}`;
+  return `<svg viewBox="0 0 160 242" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="bg${seed%9}" cx="50%" cy="38%" r="58%">
-      <stop offset="0%" stop-color="white" stop-opacity="0.45"/>
+    <radialGradient id="bg${uid}" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.18"/>
       <stop offset="100%" stop-color="${w.body}" stop-opacity="0"/>
     </radialGradient>
-    <filter id="glo${seed%9}">
-      <feGaussianBlur stdDeviation="4" result="b"/>
+    <filter id="glo${uid}">
+      <feGaussianBlur stdDeviation="${bl===2?10:7}" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
-
-  <!-- Aura glow -->
-  <ellipse cx="80" cy="135" rx="58" ry="78" fill="${w.body}" opacity="0.18" filter="url(#glo${seed%9})"/>
-
-  ${accessory}
-
-  <!-- Body -->
-  <path d="${bodyPath}" fill="${w.body}" opacity="0.92"/>
-  <path d="${bodyPath}" fill="url(#bg${seed%9})"/>
-  <path d="${bodyPath}" fill="none" stroke="${w.aksen}" stroke-width="1.5" opacity="0.45"/>
-
-  ${extras[extraVariant]}
-
-  ${arms[armVariant]}
-
-  <!-- Cheeks -->
-  ${cheeks[cheekVariant]}
-
-  <!-- Brows -->
-  ${brows[browVariant]}
-
-  <!-- Eyes -->
-  ${eyes[eyeVariant](w.mata)}
-
-  <!-- Mouth -->
-  ${mouths[mouthVariant]}
-
-  <!-- Wrinkles -->
-  <path d="M62 145 Q66 157 62 168" stroke="${w.aksen}" stroke-width="1" fill="none" opacity="0.25"/>
-  <path d="M80 150 Q84 163 80 175" stroke="${w.aksen}" stroke-width="1" fill="none" opacity="0.25"/>
-  <path d="M98 145 Q94 157 98 168" stroke="${w.aksen}" stroke-width="1" fill="none" opacity="0.25"/>
-
-  ${tails[tailVariant]}
+  <ellipse cx="80" cy="140" rx="${bl===2?72:66}" ry="${bl===2?96:88}" fill="${w.body}" opacity="${bl===2?0.28:0.22}" filter="url(#glo${uid})"/>
+  ${bacc}
+  <path d="${bp}" fill="${w.body}" opacity="0.96"/>
+  <path d="${bp}" fill="url(#bg${uid})"/>
+  <path d="${bp}" fill="none" stroke="${w.aksen}" stroke-width="2.5" opacity="0.65"/>
+  ${bExtras}
+  ${bArms}
+  ${bBrows}
+  ${beyes}
+  ${bMouths}
+  ${bTails}
 </svg>`;
 }
 
-// ─── STATE ───────────────────────────────────────────────────────────────────
-let score = 0, lives = 3, currentGhost = null;
-let queue = [], queueIndex = 0;
-const QUEUE_SIZE = 10;
+// ── NORMAL GHOST SVG ──
+function buildGhostSVG(ghost){
+  if(ghost.isBoss) return buildBossSVG(ghost);
 
-// ─── AUDIO ───────────────────────────────────────────────────────────────────
-const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const w=ghost.warna,isBad=ghost.dosa==="Suka Berbohong",seed=nameHash(ghost.nama);
+  const bodies=["M28 118 Q22 162 28 192 L132 192 Q138 162 132 118 Q122 55 80 48 Q38 55 28 118 Z","M35 122 Q30 162 34 192 L126 192 Q130 162 125 122 Q116 62 80 52 Q44 62 35 122 Z","M22 130 Q18 165 24 192 L136 192 Q142 165 138 130 Q126 68 80 58 Q34 68 22 130 Z","M36 126 Q32 160 36 192 L124 192 Q128 160 124 126 Q118 72 80 64 Q42 72 36 126 Z","M18 136 Q14 168 20 192 L140 192 Q146 168 142 136 Q130 74 80 62 Q30 74 18 136 Z","M30 120 Q24 158 30 192 L130 192 Q136 158 130 120 Q124 60 80 50 Q36 60 30 120 Z"];
+  const bv=seed%6,bp=bodies[bv],fy=[0,2,-4,4,-2,1][bv];
+  const ev=seed%8,eB=isBad,ec=w.mata;
+  const eyesArr=[
+    // 0 round standard
+    `<ellipse cx="62" cy="${91+fy}" rx="7.5" ry="${eB?7:8}" fill="${ec}"/><ellipse cx="98" cy="${91+fy}" rx="7.5" ry="${eB?7:8}" fill="${ec}"/><ellipse cx="64" cy="${89+fy}" rx="3" ry="3" fill="white"/><ellipse cx="100" cy="${89+fy}" rx="3" ry="3" fill="white"/>`,
+    // 1 oval tall
+    `<ellipse cx="62" cy="${91+fy}" rx="6" ry="${eB?9:10}" fill="${ec}"/><ellipse cx="98" cy="${91+fy}" rx="6" ry="${eB?9:10}" fill="${ec}"/><ellipse cx="63.5" cy="${88+fy}" rx="2.5" ry="3.5" fill="white"/><ellipse cx="99.5" cy="${88+fy}" rx="2.5" ry="3.5" fill="white"/>`,
+    // 2 sleepy half-closed
+    `<ellipse cx="62" cy="${93+fy}" rx="8" ry="5.5" fill="${ec}"/><ellipse cx="98" cy="${93+fy}" rx="8" ry="5.5" fill="${ec}"/><path d="M54 ${88+fy} Q62 ${85+fy} 70 ${88+fy}" fill="${ec}" stroke="${ec}" stroke-width="1"/><path d="M90 ${88+fy} Q98 ${85+fy} 106 ${88+fy}" fill="${ec}" stroke="${ec}" stroke-width="1"/><ellipse cx="64" cy="${92+fy}" rx="2.5" ry="2" fill="white"/><ellipse cx="100" cy="${92+fy}" rx="2.5" ry="2" fill="white"/>`,
+    // 3 X or star
+    eB?`<text x="54" y="${97+fy}" font-size="14" fill="${ec}" font-family="sans-serif">✕</text><text x="89" y="${97+fy}" font-size="14" fill="${ec}" font-family="sans-serif">✕</text>`:`<text x="54" y="${97+fy}" font-size="14" fill="${ec}" font-family="sans-serif">★</text><text x="89" y="${97+fy}" font-size="14" fill="${ec}" font-family="sans-serif">★</text>`,
+    // 4 big teary
+    `<ellipse cx="62" cy="${90+fy}" rx="9" ry="${eB?7:10}" fill="${ec}"/><ellipse cx="98" cy="${90+fy}" rx="9" ry="${eB?7:10}" fill="${ec}"/><ellipse cx="59" cy="${87+fy}" rx="4" ry="4.5" fill="white"/><ellipse cx="95" cy="${87+fy}" rx="4" ry="4.5" fill="white"/><ellipse cx="60" cy="${86+fy}" rx="2" ry="2.5" fill="${ec}"/><ellipse cx="96" cy="${86+fy}" rx="2" ry="2.5" fill="${ec}"/>${!eB?`<path d="M62 ${99+fy} Q61 ${107+fy} 63 ${108+fy}" stroke="#88ccff" stroke-width="1.5" fill="none" opacity="0.7"/><path d="M98 ${99+fy} Q97 ${107+fy} 99 ${108+fy}" stroke="#88ccff" stroke-width="1.5" fill="none" opacity="0.7"/>`:''}`,
+    // 5 hypno swirl
+    `<circle cx="62" cy="${91+fy}" r="9" fill="${ec}"/><circle cx="98" cy="${91+fy}" r="9" fill="${ec}"/><path d="M62 ${82+fy} a9 9 0 0 1 0 18" stroke="white" stroke-width="2" fill="none" opacity="0.5"/><path d="M62 ${85+fy} a6 6 0 0 1 0 12" stroke="white" stroke-width="1.5" fill="none" opacity="0.4"/><circle cx="62" cy="${91+fy}" r="2" fill="white" opacity="0.6"/><path d="M98 ${82+fy} a9 9 0 0 1 0 18" stroke="white" stroke-width="2" fill="none" opacity="0.5"/><path d="M98 ${85+fy} a6 6 0 0 1 0 12" stroke="white" stroke-width="1.5" fill="none" opacity="0.4"/><circle cx="98" cy="${91+fy}" r="2" fill="white" opacity="0.6"/>`,
+    // 6 wide round kawaii
+    `<circle cx="62" cy="${91+fy}" r="10" fill="${ec}"/><circle cx="98" cy="${91+fy}" r="10" fill="${ec}"/><circle cx="58" cy="${87+fy}" r="5" fill="white"/><circle cx="94" cy="${87+fy}" r="5" fill="white"/><circle cx="59" cy="${88+fy}" r="2.5" fill="${ec}"/><circle cx="95" cy="${88+fy}" r="2.5" fill="${ec}"/>${!eB?`<circle cx="57" cy="${86+fy}" r="1.2" fill="white"/><circle cx="93" cy="${86+fy}" r="1.2" fill="white"/>`:''}`,
+    // 7 dot eyes (simple but expressive)
+    `<circle cx="62" cy="${93+fy}" r="${eB?5:6}" fill="${ec}"/><circle cx="98" cy="${93+fy}" r="${eB?5:6}" fill="${ec}"/>${eB?'':`<circle cx="60" cy="${91+fy}" r="2" fill="white"/><circle cx="96" cy="${91+fy}" r="2" fill="white"/>`}`,
+  ][ev];
 
-function tone(freq, type, dur, vol=0.3, delay=0) {
-  const o = ctx.createOscillator(), g = ctx.createGain();
-  o.connect(g); g.connect(ctx.destination);
-  o.type = type;
-  o.frequency.setValueAtTime(freq, ctx.currentTime + delay);
-  g.gain.setValueAtTime(vol, ctx.currentTime + delay);
-  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + dur);
-  o.start(ctx.currentTime + delay);
-  o.stop(ctx.currentTime + delay + dur + 0.05);
+  const brV=seed%5;
+  const brows=[
+    eB?`<path d="M53 ${80+fy} Q61 ${74+fy} 69 ${80+fy}" stroke="${ec}" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M91 ${80+fy} Q99 ${74+fy} 107 ${80+fy}" stroke="${ec}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`:`<path d="M54 ${81+fy} Q62 ${77+fy} 70 ${81+fy}" stroke="${ec}" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M90 ${81+fy} Q98 ${77+fy} 106 ${81+fy}" stroke="${ec}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+    eB?`<rect x="53" y="${76+fy}" width="17" height="4" rx="2" fill="${ec}" transform="rotate(-8,61,78)"/><rect x="90" y="${76+fy}" width="17" height="4" rx="2" fill="${ec}" transform="rotate(8,99,78)"/>`:`<rect x="54" y="${78+fy}" width="16" height="3" rx="2" fill="${ec}" opacity="0.7"/><rect x="90" y="${78+fy}" width="16" height="3" rx="2" fill="${ec}" opacity="0.7"/>`,
+    eB?`<path d="M53 ${82+fy} Q61 ${74+fy} 69 ${79+fy}" stroke="${ec}" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M91 ${79+fy} Q99 ${74+fy} 107 ${82+fy}" stroke="${ec}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`:`<path d="M54 ${79+fy} Q62 ${76+fy} 70 ${80+fy}" stroke="${ec}" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M90 ${80+fy} Q98 ${76+fy} 106 ${79+fy}" stroke="${ec}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+    eB?`<path d="M52 ${82+fy} L70 ${77+fy}" stroke="${ec}" stroke-width="3.5" stroke-linecap="round"/><path d="M108 ${82+fy} L90 ${77+fy}" stroke="${ec}" stroke-width="3.5" stroke-linecap="round"/>`:`<path d="M54 ${80+fy} Q62 ${74+fy} 70 ${77+fy}" stroke="${ec}" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M106 ${80+fy} Q98 ${74+fy} 90 ${77+fy}" stroke="${ec}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`,
+    // NEW: raised one brow (skeptical)
+    `<path d="M53 ${83+fy} Q61 ${79+fy} 69 ${83+fy}" stroke="${ec}" stroke-width="${eB?3:2}" fill="none" stroke-linecap="round"/><path d="M91 ${76+fy} Q99 ${72+fy} 107 ${76+fy}" stroke="${ec}" stroke-width="${eB?3:2}" fill="none" stroke-linecap="round"/>`,
+  ][brV];
+
+  const mV=seed%8;
+  const mouths=[
+    eB?`<path d="M67 ${111+fy} Q80 ${104+fy} 93 ${111+fy}" stroke="${ec}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`:`<path d="M67 ${108+fy} Q80 ${119+fy} 93 ${108+fy}" stroke="${ec}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`,
+    eB?`<path d="M68 ${112+fy} L92 ${108+fy}" stroke="${ec}" stroke-width="2.5" stroke-linecap="round"/>`:`<ellipse cx="80" cy="${112+fy}" rx="10" ry="6" fill="${w.pipi}" opacity="0.5"/><path d="M70 ${110+fy} Q80 ${118+fy} 90 ${110+fy}" stroke="${ec}" stroke-width="2" fill="none"/>`,
+    eB?`<path d="M68 ${110+fy} Q74 ${115+fy} 80 ${110+fy} Q86 ${115+fy} 92 ${110+fy}" stroke="${ec}" stroke-width="2" fill="none"/>`:`<circle cx="80" cy="${112+fy}" r="7" fill="${ec}" opacity="0.15"/><path d="M73 ${112+fy} Q80 ${120+fy} 87 ${112+fy}" stroke="${ec}" stroke-width="2.5" fill="none"/>`,
+    eB?`<rect x="68" y="${108+fy}" width="24" height="7" rx="3" fill="${ec}" opacity="0.85"/><line x1="74" y1="${108+fy}" x2="74" y2="${115+fy}" stroke="${w.body}" stroke-width="1.5"/><line x1="80" y1="${108+fy}" x2="80" y2="${115+fy}" stroke="${w.body}" stroke-width="1.5"/><line x1="86" y1="${108+fy}" x2="86" y2="${115+fy}" stroke="${w.body}" stroke-width="1.5"/>`:`<path d="M68 ${108+fy} Q80 ${122+fy} 92 ${108+fy}" stroke="${ec}" stroke-width="3" fill="none" stroke-linecap="round"/>`,
+    eB?`<ellipse cx="80" cy="${112+fy}" rx="10" ry="7" fill="${ec}" opacity="0.9"/><path d="M72 ${109+fy} Q80 ${105+fy} 88 ${109+fy}" fill="${w.body}" opacity="0.6"/>`:`<ellipse cx="80" cy="${112+fy}" rx="8" ry="9" fill="${ec}" opacity="0.85"/><path d="M74 ${108+fy} Q80 ${104+fy} 86 ${108+fy}" fill="${w.pipi}" opacity="0.5"/>`,
+    eB?`<path d="M70 ${113+fy} Q78 ${110+fy} 90 ${108+fy}" stroke="${ec}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`:`<path d="M70 ${110+fy} Q78 ${114+fy} 90 ${113+fy}" stroke="${ec}" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="72" cy="${111+fy}" r="2.5" fill="${w.pipi}" opacity="0.5"/>`,
+    // 6: cat mouth (3-split)
+    `<path d="M80 ${112+fy} L74 ${107+fy}" stroke="${ec}" stroke-width="2" stroke-linecap="round"/><path d="M80 ${112+fy} L86 ${107+fy}" stroke="${ec}" stroke-width="2" stroke-linecap="round"/><path d="M74 ${107+fy} Q70 ${111+fy} 67 ${110+fy}" stroke="${ec}" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M86 ${107+fy} Q90 ${111+fy} 93 ${110+fy}" stroke="${ec}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+    // 7: open O mouth (surprised/scared)
+    `<ellipse cx="80" cy="${113+fy}" rx="${eB?6:8}" ry="${eB?5:8}" fill="${ec}" opacity="0.85"/>`,
+  ][mV];
+
+  const ckV=seed%5;
+  const cheeks=[
+    `<ellipse cx="50" cy="${101+fy}" rx="10" ry="7" fill="${w.pipi}" opacity="0.35"/><ellipse cx="110" cy="${101+fy}" rx="10" ry="7" fill="${w.pipi}" opacity="0.35"/>`,
+    `<circle cx="50" cy="${102+fy}" r="8" fill="${w.pipi}" opacity="0.3"/><circle cx="110" cy="${102+fy}" r="8" fill="${w.pipi}" opacity="0.3"/>`,
+    `<path d="M42 ${99+fy} Q50 ${106+fy} 58 ${99+fy}" fill="${w.pipi}" opacity="0.4"/><path d="M102 ${99+fy} Q110 ${106+fy} 118 ${99+fy}" fill="${w.pipi}" opacity="0.4"/>`,
+    `<circle cx="47" cy="${100+fy}" r="3" fill="${w.pipi}" opacity="0.35"/><circle cx="53" cy="${103+fy}" r="2.5" fill="${w.pipi}" opacity="0.3"/><circle cx="58" cy="${99+fy}" r="2" fill="${w.pipi}" opacity="0.25"/><circle cx="103" cy="${100+fy}" r="3" fill="${w.pipi}" opacity="0.35"/><circle cx="107" cy="${103+fy}" r="2.5" fill="${w.pipi}" opacity="0.3"/><circle cx="112" cy="${99+fy}" r="2" fill="${w.pipi}" opacity="0.25"/>`,
+    // 4: blush lines
+    `<path d="M44 ${101+fy} L52 ${99+fy} M45 ${104+fy} L53 ${102+fy} M46 ${107+fy} L54 ${105+fy}" stroke="${w.pipi}" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/><path d="M108 ${101+fy} L116 ${99+fy} M107 ${104+fy} L115 ${102+fy} M106 ${107+fy} L114 ${105+fy}" stroke="${w.pipi}" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>`,
+  ][ckV];
+
+  const arV=seed%5;
+  const arms=[
+    `<path d="M28 132 Q10 148 14 166 Q18 176 28 170" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/><path d="M132 132 Q150 148 146 166 Q142 176 132 170" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`,
+    `<path d="M30 128 Q6 150 10 178 Q14 190 26 184" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/><path d="M130 128 Q154 150 150 178 Q146 190 134 184" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`,
+    eB?`<path d="M30 130 Q8 110 12 90 Q16 78 26 82" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/><path d="M130 132 Q152 148 148 168 Q144 178 134 172" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`:`<path d="M28 130 Q10 148 14 166 Q18 176 28 170" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/><path d="M132 128 Q154 108 150 88 Q146 76 136 80" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`,
+    eB?`<path d="M30 130 Q4 128 6 120 Q10 112 22 116" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/><path d="M130 130 Q156 128 154 120 Q150 112 138 116" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`:`<path d="M30 138 Q8 130 8 120 Q10 110 22 114" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/><path d="M130 138 Q152 130 152 120 Q150 110 138 114" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`,
+    // 4: tiny stubby arms
+    `<path d="M32 140 Q18 148 20 158 Q22 164 32 162" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/><path d="M128 140 Q142 148 140 158 Q138 164 128 162" fill="${w.body}" stroke="${w.aksen}" stroke-width="1.5" opacity="0.85"/>`,
+  ][arV];
+
+  const badAcc=[
+    `<polygon points="63,35 57,12 73,32" fill="#c03030" opacity="0.9"/><polygon points="97,35 91,12 107,32" fill="#c03030" opacity="0.9"/>`,
+    `<path d="M52 42 Q60 28 68 42 Q72 28 80 42 Q88 28 96 42 Q104 28 108 42" stroke="#5a2020" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="60" cy="35" r="3" fill="#8b1a1a"/><circle cx="80" cy="30" r="3" fill="#8b1a1a"/><circle cx="100" cy="35" r="3" fill="#8b1a1a"/>`,
+    `<polygon points="63,36 58,16 74,34" fill="#9b2020" opacity="0.85"/><polygon points="97,36 86,16 102,34" fill="#9b2020" opacity="0.85"/>`,
+    `<ellipse cx="80" cy="32" rx="22" ry="10" fill="#2a0808" stroke="#6a2020" stroke-width="1.5"/><circle cx="73" cy="30" r="4" fill="#1a0000"/><circle cx="87" cy="30" r="4" fill="#1a0000"/>`,
+    // 4 new: black halo (fallen angel)
+    `<ellipse cx="80" cy="24" rx="26" ry="7" fill="none" stroke="#3a0808" stroke-width="5" opacity="0.8"/><ellipse cx="80" cy="24" rx="26" ry="7" fill="none" stroke="#cc2222" stroke-width="1" opacity="0.4"/>`,
+    // 5 new: shadow cloak draping from top
+    `<path d="M54 30 Q50 44 46 50 Q60 42 70 48 Q78 40 80 48 Q82 40 90 48 Q100 42 114 50 Q110 44 106 30" fill="#1a0808" opacity="0.5"/>`,
+  ][seed%6];
+
+  const goodAcc=[
+    `<ellipse cx="80" cy="24" rx="28" ry="8" fill="none" stroke="${w.aksen}" stroke-width="4" opacity="0.85"/><ellipse cx="80" cy="24" rx="28" ry="8" fill="none" stroke="#fff4a0" stroke-width="1.5" opacity="0.6"/>`,
+    [55,65,75,85,95,105].map((x,i)=>`<circle cx="${x}" cy="${28+Math.sin(i)*4}" r="5" fill="${['#ff9999','#ffcc88','#aaffaa','#88ccff','#ffaaff','#ffffaa'][i]}" opacity="0.9"/>`).join('')+`<path d="M52 30 Q80 20 108 30" stroke="#70a050" stroke-width="2" fill="none" opacity="0.5"/>`,
+    `<path d="M30 70 Q10 55 18 38 Q28 25 40 40 Q46 50 38 62" fill="white" opacity="0.7"/><path d="M130 70 Q150 55 142 38 Q132 25 120 40 Q114 50 122 62" fill="white" opacity="0.7"/><ellipse cx="80" cy="24" rx="22" ry="6" fill="none" stroke="#ffe080" stroke-width="3" opacity="0.8"/>`,
+    `<text x="52" y="30" font-size="12" fill="#ffe080" opacity="0.9">✦</text><text x="74" y="18" font-size="14" fill="#fff4a0" opacity="0.95">★</text><text x="96" y="26" font-size="10" fill="#ffe080" opacity="0.8">✦</text><ellipse cx="80" cy="26" rx="24" ry="7" fill="none" stroke="#c9a84c" stroke-width="2.5" opacity="0.7"/>`,
+    // 4 new: dove + peace
+    `<path d="M60 28 Q70 14 80 22 Q90 14 100 28" stroke="${w.aksen}" stroke-width="2" fill="none" opacity="0.7"/><ellipse cx="80" cy="20" rx="20" ry="6" fill="none" stroke="#ffe0a0" stroke-width="2.5" opacity="0.6"/><circle cx="62" cy="24" r="3" fill="#ffe0a0" opacity="0.7"/><circle cx="98" cy="24" r="3" fill="#ffe0a0" opacity="0.7"/>`,
+    // 5 new: cloud halo
+    `<path d="M54 24 Q56 16 64 18 Q66 12 74 14 Q76 8 84 10 Q86 8 94 10 Q100 10 104 16 Q110 18 106 24" fill="white" opacity="0.55"/>`,
+  ][seed%6];
+
+  const acc=eB?badAcc:goodAcc;
+
+  const tailV=seed%5;
+  const tails=[
+    eB?`<path d="M50 192 Q40 208 56 213 Q66 217 66 207 Q68 217 80 220 Q92 217 94 207 Q94 217 104 213 Q120 208 110 192 Z" fill="${w.body}" opacity="0.9"/>`:`<path d="M52 192 Q48 212 64 217 Q74 220 74 210 Q76 220 88 218 Q98 216 94 206 Q104 214 112 202 Q108 187 98 187 L62 187 Z" fill="${w.body}" opacity="0.9"/>`,
+    eB?`<path d="M45 192 Q32 210 50 218 Q62 222 64 210 Q70 224 80 222 Q90 224 96 210 Q98 222 110 218 Q128 210 115 192 Z" fill="${w.body}" opacity="0.9"/>`:`<path d="M50 192 Q46 214 60 218 Q70 222 72 212 Q74 222 80 224 Q86 222 88 212 Q90 222 100 218 Q114 214 110 192 Z" fill="${w.body}" opacity="0.9"/>`,
+    eB?`<path d="M48 192 Q42 212 58 218 Q70 222 72 208 Q76 222 80 224 Q84 222 88 208 Q90 222 102 218 Q118 212 112 192 Z" fill="${w.body}" opacity="0.9"/>`:`<path d="M54 192 Q50 210 62 216 Q74 220 76 210 Q78 220 80 222 Q82 220 84 210 Q86 220 98 216 Q110 210 106 192 Z" fill="${w.body}" opacity="0.9"/>`,
+    eB?`<path d="M46 192 L38 218 L54 208 L50 226 L64 210 L62 228 L80 212 L98 228 L96 210 L110 226 L106 208 L122 218 L114 192 Z" fill="${w.body}" opacity="0.88" stroke="${w.aksen}" stroke-width="0.8"/>`:`<path d="M52 192 Q44 210 56 218 Q66 222 70 214 Q72 226 80 228 Q88 226 90 214 Q94 222 104 218 Q116 210 108 192 Z" fill="${w.body}" opacity="0.9"/>`,
+    // 4 new: single pointed tail (classic ghost)
+    eB?`<path d="M50 192 Q40 214 60 224 Q70 228 80 214 Q90 228 100 224 Q120 214 110 192 Z" fill="${w.body}" opacity="0.9"/>`:`<path d="M56 192 Q50 212 62 220 Q72 226 80 212 Q88 226 98 220 Q110 212 104 192 Z" fill="${w.body}" opacity="0.9"/>`,
+  ][tailV];
+
+  const exV=seed%5;
+  const extras=["",
+    `<circle cx="65" cy="148" r="4" fill="${w.aksen}" opacity="0.2"/><circle cx="88" cy="162" r="3" fill="${w.aksen}" opacity="0.2"/>`,
+    `<path d="M78 125 L78 188" stroke="${w.aksen}" stroke-width="5" opacity="0.12"/>`,
+    `<rect x="64" y="148" width="32" height="20" rx="4" fill="${w.aksen}" opacity="0.18"/>`,
+    // 4 new: scar / stitch mark
+    `<path d="M76 140 L84 140" stroke="${w.aksen}" stroke-width="2" opacity="0.3" stroke-linecap="round"/><path d="M76 140 L76 148 M80 138 L80 150 M84 140 L84 148" stroke="${w.aksen}" stroke-width="1" opacity="0.25" stroke-linecap="round"/>`,
+  ][exV];
+
+  return `<svg viewBox="0 0 160 228" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="bg${seed%9}" cx="50%" cy="38%" r="58%"><stop offset="0%" stop-color="white" stop-opacity="0.45"/><stop offset="100%" stop-color="${w.body}" stop-opacity="0"/></radialGradient><filter id="gl${seed%9}"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="80" cy="135" rx="58" ry="78" fill="${w.body}" opacity="0.18" filter="url(#gl${seed%9})"/>${acc}<path d="${bp}" fill="${w.body}" opacity="0.92"/><path d="${bp}" fill="url(#bg${seed%9})"/><path d="${bp}" fill="none" stroke="${w.aksen}" stroke-width="1.5" opacity="0.45"/>${extras}${arms}${cheeks}${brows}${eyesArr}${mouths}<path d="M62 145 Q66 157 62 168" stroke="${w.aksen}" stroke-width="1" fill="none" opacity="0.25"/><path d="M80 150 Q84 163 80 175" stroke="${w.aksen}" stroke-width="1" fill="none" opacity="0.25"/><path d="M98 145 Q94 157 98 168" stroke="${w.aksen}" stroke-width="1" fill="none" opacity="0.25"/>${tails}</svg>`;
 }
 
-function playSoundCorrect() {
-  tone(660,'sine',0.12,0.25);
-  tone(880,'sine',0.15,0.2,0.08);
-  tone(1100,'sine',0.12,0.15,0.16);
-}
-function playSoundWrong() {
-  tone(200,'sawtooth',0.2,0.4);
-  tone(150,'sawtooth',0.25,0.4,0.15);
-  tone(120,'square',0.3,0.35,0.3);
-}
-function playSoundGameOver() {
-  tone(220,'sawtooth',0.4,0.5);
-  tone(180,'sawtooth',0.5,0.5,0.35);
-  tone(140,'square',0.7,0.5,0.7);
-  tone(100,'sawtooth',0.9,0.4,1.1);
-}
+// STATE
+let score=0,lives=3,currentGhost=null,queue=[],queueIndex=0,currentLevel=1,inBossFight=false,bossTimer=null,bossTimeLeft=0;
+const QUEUE_SIZE=10,BOSS_POSITIONS=[5,10];
 
-// ─── HELPERS ─────────────────────────────────────────────────────────────────
-function shuffle(arr) {
-  const a=[...arr];
-  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
-  return a;
-}
+// AUDIO
+const actx=new(window.AudioContext||window.webkitAudioContext)();
+function tone(f,t,d,v=0.3,dl=0){const o=actx.createOscillator(),g=actx.createGain();o.connect(g);g.connect(actx.destination);o.type=t;o.frequency.setValueAtTime(f,actx.currentTime+dl);g.gain.setValueAtTime(v,actx.currentTime+dl);g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+dl+d);o.start(actx.currentTime+dl);o.stop(actx.currentTime+dl+d+0.05);}
+function playSoundCorrect(){tone(660,'sine',0.12,0.25);tone(880,'sine',0.15,0.2,0.08);tone(1100,'sine',0.12,0.15,0.16);}
+function playSoundWrong(){tone(200,'sawtooth',0.2,0.4);tone(150,'sawtooth',0.25,0.4,0.15);tone(120,'square',0.3,0.35,0.3);}
+function playSoundGameOver(){tone(220,'sawtooth',0.4,0.5);tone(180,'sawtooth',0.5,0.5,0.35);tone(140,'square',0.7,0.5,0.7);tone(100,'sawtooth',0.9,0.4,1.1);}
+function playSoundBoss(){tone(80,'sawtooth',0.6,0.5);tone(60,'square',0.8,0.5,0.4);tone(40,'sawtooth',1.0,0.4,0.8);}
+function playSoundBossWin(){[300,400,550,700,900].forEach((f,i)=>tone(f,'sine',0.2,0.25,i*0.12));}
+function playSoundLevel(){[523,659,784,1047].forEach((f,i)=>tone(f,'sine',0.25,0.25,i*0.1));}
 
-function randomDate() {
-  const d=Math.floor(Math.random()*28)+1;
-  const m=["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"][Math.floor(Math.random()*12)];
-  const y=Math.floor(Math.random()*5)+2020;
-  return `${String(d).padStart(2,'0')} ${m} ${y}`;
-}
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function randomDate(){const d=Math.floor(Math.random()*28)+1,m=["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"][Math.floor(Math.random()*12)],y=2020+Math.floor(Math.random()*5);return `${String(d).padStart(2,'0')} ${m} ${y}`;}
+function getDest(dosa){return dosa==="Suka Berbagi"?"Surga":"Neraka";}
 
-function getDestination(dosa) {
-  return dosa === "Suka Berbagi" ? "Surga" : "Neraka";
-}
+function updateHUD(){document.getElementById('score-val').textContent=score;document.getElementById('lives-val').textContent='❤️'.repeat(Math.max(lives,0))+'🖤'.repeat(Math.max(3-lives,0));}
+function setFeedback(m,c){const el=document.getElementById('feedback');el.textContent=m;el.className=c;}
 
-// ─── UI ──────────────────────────────────────────────────────────────────────
-function updateHUD() {
-  document.getElementById('score-val').textContent = score;
-  const h = '❤️'.repeat(Math.max(lives,0)) + '🖤'.repeat(Math.max(3-lives,0));
-  document.getElementById('lives-val').textContent = h;
-}
-
-function setFeedback(msg, cls) {
-  const el = document.getElementById('feedback');
-  el.textContent = msg; el.className = cls;
-}
-
-function renderQueue() {
-  const bar = document.getElementById('queue-bar');
-  bar.innerHTML = '';
-  for (let i = 0; i < QUEUE_SIZE; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'queue-dot ' + (i < queueIndex ? 'done' : i === queueIndex ? 'current' : 'pending');
-    bar.appendChild(dot);
+function renderQueue(){
+  const bar=document.getElementById('queue-bar');bar.innerHTML='';
+  for(let i=0;i<QUEUE_SIZE;i++){
+    const isB=BOSS_POSITIONS.includes(i+1),dot=document.createElement('div');
+    let c='queue-dot';if(isB)c+=' boss-dot';if(i<queueIndex)c+=' done';else if(i===queueIndex)c+=' current';else c+=' pending';
+    dot.className=c;dot.title=isB?`Level ${i+1}: BOSS`:`Level ${i+1}`;bar.appendChild(dot);
   }
 }
 
-function renderGhost() {
-  const g = currentGhost;
+function setBossMode(on){
+  const t=document.getElementById('title-hud'),d=document.getElementById('ghost-doll'),p=document.getElementById('form-paper');
+  if(on){t.classList.add('boss-mode');d.classList.add('boss-aura');p.classList.add('boss-paper');showBossWarning();}
+  else{t.classList.remove('boss-mode');d.classList.remove('boss-aura');p.classList.remove('boss-paper');document.getElementById('boss-warning').classList.remove('show');}
+}
+function showBossWarning(){const el=document.getElementById('boss-warning');el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);}
 
-  // SVG doll
-  const svgContainer = document.getElementById('ghost-doll');
-  svgContainer.innerHTML = buildGhostSVG(g);
+function startBossTimer(s){
+  stopBossTimer();bossTimeLeft=s;
+  const fb=document.getElementById('feedback');
+  fb.textContent=`⏱ ${bossTimeLeft}s — gunakan tab BARANG & TANYA!`;fb.className='wrong';
+  bossTimer=setInterval(()=>{
+    bossTimeLeft--;
+    if(bossTimeLeft<=0){
+      stopBossTimer();lives--;updateHUD();
+      setFeedback('⏰ WAKTU HABIS! Jiwa lolos ke tempat yang salah!','wrong');playSoundWrong();
+      document.getElementById('form-paper').classList.add('shake');
+      if(lives<=0){setTimeout(triggerGameOver,700);return;}
+      queueIndex++;inBossFight=false;setBossMode(false);setTimeout(nextGhost,1000);
+    } else {
+      fb.textContent=`⏱ ${bossTimeLeft}s tersisa${bossTimeLeft<=5?' — CEPAT!':''}`;fb.className='wrong';
+    }
+  },1000);
+}
+function stopBossTimer(){if(bossTimer){clearInterval(bossTimer);bossTimer=null;}bossTimeLeft=0;}
 
-  // Name tag
-  document.getElementById('ghost-name-tag').textContent = g.nama;
-
-  // Sin badge
-  const badge = document.getElementById('sin-badge');
-  badge.textContent = g.dosa === 'Suka Berbohong' ? '⚠ '+g.dosa : '✦ '+g.dosa;
-  badge.className = g.dosa === 'Suka Berbohong' ? 'bohong' : 'berbagi';
-
-  // Form fields
-  document.getElementById('ref-no').textContent = '#' + String(queueIndex).padStart(3,'0');
-  document.getElementById('tgl-masuk').textContent = randomDate();
-  document.getElementById('f-nama').textContent = g.nama;
-  document.getElementById('f-alias').textContent = '"' + g.alias + '"';
-  document.getElementById('f-umur').textContent = g.umur + ' tahun';
-  document.getElementById('f-sebab').textContent = g.sebab;
-  document.getElementById('f-asal').textContent = g.asal;
-  document.getElementById('f-pekerjaan').textContent = g.pekerjaan;
-  document.getElementById('f-dosa').textContent = g.dosa;
-  document.getElementById('f-kebiasaan').textContent = g.kebiasaan;
-  document.getElementById('f-catatan').textContent = g.catatan;
-
-  // Karma checkboxes
-  const kc = document.getElementById('karma-checks');
-  kc.innerHTML = '';
-  g.karma.forEach(k => {
-    kc.innerHTML += `<div class="check-item"><div class="checkbox checked">✓</div>${k}</div>`;
-  });
-
-  // Clear stamp & feedback
-  const stamp = document.getElementById('stamp');
-  stamp.className = '';
-  document.getElementById('stamp-icon').textContent = '';
-  document.getElementById('stamp-text').textContent = '';
-  setFeedback('', '');
-  resetTabs();
-
-  // Re-trigger paper animation
-  const paper = document.getElementById('form-paper');
-  paper.style.animation = 'none';
-  void paper.offsetWidth;
-  paper.style.animation = '';
-
+function renderGhost(){
+  const g=currentGhost;
+  document.getElementById('ghost-doll').innerHTML=buildGhostSVG(g);
+  document.getElementById('ghost-name-tag').textContent=g.nama;
+  document.getElementById('ghost-name-tag').className=g.isBoss?'boss-tag':'';
+  const badge=document.getElementById('sin-badge');
+  if(g.isBoss){badge.textContent=`☠ ${g.bossLevel===1?'Suka Berbagi (?)':'??? TIDAK DIKETAHUI'}`;badge.className='boss';}
+  else{badge.textContent=g.dosa==='Suka Berbohong'?'⚠ '+g.dosa:'✦ '+g.dosa;badge.className=g.dosa==='Suka Berbohong'?'bohong':'berbagi';}
+  document.getElementById('ref-no').textContent='#'+String(queueIndex+1).padStart(3,'0');
+  document.getElementById('tgl-masuk').textContent=randomDate();
+  document.getElementById('f-nama').textContent=g.nama;
+  document.getElementById('f-alias').textContent='"'+g.alias+'"';
+  document.getElementById('f-umur').textContent=g.umur+' tahun';
+  document.getElementById('f-sebab').textContent=g.sebab;
+  document.getElementById('f-asal').textContent=g.asal;
+  document.getElementById('f-pekerjaan').textContent=g.pekerjaan;
+  if(g.isBoss&&g.bossLevel===1)document.getElementById('f-dosa').textContent='Suka Berbagi (?)';
+  else if(g.isBoss&&g.bossLevel===2)document.getElementById('f-dosa').textContent='??? (DATA TIDAK DAPAT DIBACA)';
+  else document.getElementById('f-dosa').textContent=g.dosa;
+  document.getElementById('f-kebiasaan').textContent=g.kebiasaan;
+  document.getElementById('f-catatan').textContent=g.catatan;
+  const kc=document.getElementById('karma-checks');kc.innerHTML='';
+  g.karma.forEach(k=>{kc.innerHTML+=`<div class="check-item"><div class="checkbox checked">✓</div>${k}</div>`;});
+  const stamp=document.getElementById('stamp');stamp.className='';document.getElementById('stamp-icon').textContent='';document.getElementById('stamp-text').textContent='';
+  setFeedback('','');resetTabs();
+  const paper=document.getElementById('form-paper');paper.style.animation='none';void paper.offsetWidth;paper.style.animation='';
   renderQueue();
 }
 
-// ─── GAME LOGIC ──────────────────────────────────────────────────────────────
-function buildQueue() {
-  queue = shuffle(ghosts).slice(0, QUEUE_SIZE);
-  queueIndex = 0;
+function buildQueue(){
+  const sh=shuffle(ghosts);queue=[];let gi=0;
+  for(let i=0;i<QUEUE_SIZE;i++){
+    const pos=i+1;
+    if(BOSS_POSITIONS.includes(pos))queue.push({...bosses[pos]});
+    else{queue.push(sh[gi%sh.length]);gi++;}
+  }
+  queueIndex=0;
 }
 
-function nextGhost() {
-  if (queueIndex >= queue.length) buildQueue();
-  currentGhost = queue[queueIndex];
-  renderGhost();
+function nextGhost(){
+  if(queueIndex>=QUEUE_SIZE){showLevelComplete();return;}
+  currentGhost=queue[queueIndex];inBossFight=currentGhost.isBoss||false;
+  if(inBossFight)showBossIntro(currentGhost);else{setBossMode(false);renderGhost();}
 }
 
-function sort(pilihan) {
-  if (!currentGhost) return;
-  if (ctx.state === 'suspended') ctx.resume();
+function showBossIntro(boss){
+  playSoundBoss();
+  document.getElementById('bi-name').textContent=`"${boss.alias}"`;
+  document.getElementById('bi-desc').textContent=boss.bossIntroDesc;
+  document.getElementById('bi-doll').innerHTML=buildGhostSVG(boss);
+  document.getElementById('boss-intro-screen').classList.add('show');
+}
+function startBossFight(){
+  document.getElementById('boss-intro-screen').classList.remove('show');
+  setBossMode(true);renderGhost();
+  if(currentGhost.timerLimit>0)startBossTimer(currentGhost.timerLimit);
+}
 
-  const seharusnya = getDestination(currentGhost.dosa);
-  const stamp = document.getElementById('stamp');
-  const paper = document.getElementById('form-paper');
+function showLevelComplete(){
+  stopBossTimer();setBossMode(false);playSoundLevel();
+  const bonus=5;score+=bonus;updateHUD();
+  document.getElementById('lc-bonus').textContent=`+${bonus} BONUS SKOR`;
+  document.getElementById('lc-sub').textContent=`Level ${currentLevel} selesai — ${QUEUE_SIZE} jiwa disortir`;
+  document.getElementById('level-complete-screen').classList.add('show');
+}
+function continueToNext(){
+  document.getElementById('level-complete-screen').classList.remove('show');
+  currentLevel++;buildQueue();nextGhost();
+}
 
-  if (pilihan === 'Surga') {
-    stamp.className = 'show-heaven';
-    document.getElementById('stamp-icon').textContent = '☁️';
-    document.getElementById('stamp-text').textContent = 'SURGA\nAPPROVED';
+function sort(pilihan){
+  if(!currentGhost)return;if(actx.state==='suspended')actx.resume();stopBossTimer();
+  const seharusnya=getDest(currentGhost.dosa),stamp=document.getElementById('stamp'),paper=document.getElementById('form-paper');
+  if(pilihan==='Surga'){stamp.className='show-heaven';document.getElementById('stamp-icon').textContent='☁️';document.getElementById('stamp-text').textContent='SURGA\nAPPROVED';}
+  else{stamp.className='show-hell';document.getElementById('stamp-icon').textContent='🔥';document.getElementById('stamp-text').textContent='NERAKA\nAPPROVED';}
+  if(pilihan===seharusnya){
+    const pts=currentGhost.isBoss?3:1;score+=pts;updateHUD();
+    setFeedback(`✅ BENAR — Jiwa tersortir tepat.${currentGhost.isBoss?' (+'+pts+' poin BOSS!)':''}`,'correct');
+    if(currentGhost.isBoss)playSoundBossWin();else playSoundCorrect();
+    paper.classList.remove('flash-correct','shake','flash-wrong-boss');void paper.offsetWidth;paper.classList.add('flash-correct');
+    if(inBossFight){inBossFight=false;setBossMode(false);}
+    queueIndex++;setTimeout(nextGhost,950);
   } else {
-    stamp.className = 'show-hell';
-    document.getElementById('stamp-icon').textContent = '🔥';
-    document.getElementById('stamp-text').textContent = 'NERAKA\nAPPROVED';
-  }
-
-  if (pilihan === seharusnya) {
-    score++;
-    updateHUD();
-    setFeedback('✅ BENAR — Jiwa tersortir dengan tepat.', 'correct');
-    playSoundCorrect();
-    paper.classList.remove('flash-correct', 'shake');
-    void paper.offsetWidth;
-    paper.classList.add('flash-correct');
-    queueIndex++;
-    setTimeout(nextGhost, 950);
-  } else {
-    lives--;
-    updateHUD();
-    setFeedback(`❌ SALAH — Seharusnya: ${seharusnya}.`, 'wrong');
-    playSoundWrong();
-    paper.classList.remove('flash-correct', 'shake');
-    void paper.offsetWidth;
-    paper.classList.add('shake');
-
-    if (lives <= 0) {
-      setTimeout(triggerGameOver, 700);
-      return;
-    }
-    queueIndex++;
-    setTimeout(nextGhost, 950);
+    lives--;updateHUD();
+    setFeedback(`❌ SALAH — Seharusnya: ${seharusnya}.${currentGhost.isBoss?' [Cek BARANG & TANYA!]':''}`,'wrong');
+    playSoundWrong();paper.classList.remove('flash-correct','shake','flash-wrong-boss');void paper.offsetWidth;
+    paper.classList.add(currentGhost.isBoss?'flash-wrong-boss':'shake');
+    if(lives<=0){setTimeout(triggerGameOver,700);return;}
+    if(currentGhost.isBoss){setTimeout(()=>{if(currentGhost.timerLimit>0)startBossTimer(currentGhost.timerLimit);},600);}
+    else{queueIndex++;setTimeout(nextGhost,950);}
   }
 }
 
-function triggerGameOver() {
-  playSoundGameOver();
-  document.getElementById('go-score-val').textContent = score;
-  document.getElementById('game-over-screen').classList.add('show');
-}
+function triggerGameOver(){playSoundGameOver();stopBossTimer();setBossMode(false);document.getElementById('go-score-val').textContent=score;document.getElementById('game-over-screen').classList.add('show');}
+function restartGame(){score=0;lives=3;currentLevel=1;inBossFight=false;stopBossTimer();setBossMode(false);document.getElementById('game-over-screen').classList.remove('show');updateHUD();buildQueue();nextGhost();}
 
-function restartGame() {
-  score = 0; lives = 3;
-  document.getElementById('game-over-screen').classList.remove('show');
-  updateHUD();
-  buildQueue();
-  nextGhost();
-}
-
-// ─── TAB & SIDE PANEL ────────────────────────────────────────────────────────
-let activeTab = 'biodata';
-
-function switchTab(tab) {
-  activeTab = tab;
-  document.querySelectorAll('.ghost-tab').forEach((btn, i) => {
-    btn.classList.toggle('active', ['biodata','barang','tanya'][i] === tab);
-  });
-
-  const panel = document.getElementById('side-panel');
-  const body  = document.getElementById('side-panel-body');
-  const title = document.getElementById('side-panel-title');
-
-  if (tab === 'biodata') {
-    panel.classList.remove('show');
-    return;
-  }
-
+let activeTab='biodata';
+function switchTab(tab){
+  activeTab=tab;
+  document.querySelectorAll('.ghost-tab').forEach((b,i)=>b.classList.toggle('active',['biodata','barang','tanya'][i]===tab));
+  const panel=document.getElementById('side-panel'),body=document.getElementById('side-panel-body'),title=document.getElementById('side-panel-title');
+  if(tab==='biodata'){panel.classList.remove('show');return;}
   panel.classList.add('show');
-
-  if (tab === 'barang') {
-    title.textContent = '🎒 BARANG BAWAAN';
-    body.innerHTML = '';
-    (currentGhost.barang || []).forEach(b => {
-      const card = document.createElement('div');
-      card.className = 'item-card';
-      card.innerHTML = `
-        <span class="item-icon">${b.icon}</span>
-        <div class="item-info">
-          <div class="item-name">${b.nama}</div>
-          <div class="item-tap">[ klik untuk periksa ]</div>
-          <div class="item-hint">${b.hint}</div>
-        </div>`;
-      card.addEventListener('click', () => {
-        const hint = card.querySelector('.item-hint');
-        const tap  = card.querySelector('.item-tap');
-        const isOpen = hint.classList.contains('show');
-        // close all others
-        body.querySelectorAll('.item-hint').forEach(h => h.classList.remove('show'));
-        body.querySelectorAll('.item-tap').forEach(t => t.textContent = '[ klik untuk periksa ]');
-        if (!isOpen) {
-          hint.classList.add('show');
-          tap.textContent = '[ tutup ]';
-          tone(440,'sine',0.08,0.15);
-        }
+  if(tab==='barang'){
+    title.textContent='🎒 BARANG BAWAAN';body.innerHTML='';
+    (currentGhost.barang||[]).forEach(b=>{
+      const card=document.createElement('div');card.className='item-card';
+      card.innerHTML=`<span class="item-icon">${b.icon}</span><div class="item-info"><div class="item-name">${b.nama}</div><div class="item-tap">[ klik untuk periksa ]</div><div class="item-hint">${b.hint}</div></div>`;
+      card.addEventListener('click',()=>{
+        const hint=card.querySelector('.item-hint'),tap=card.querySelector('.item-tap'),isOpen=hint.classList.contains('show');
+        body.querySelectorAll('.item-hint').forEach(h=>h.classList.remove('show'));body.querySelectorAll('.item-tap').forEach(t=>t.textContent='[ klik untuk periksa ]');
+        if(!isOpen){hint.classList.add('show');tap.textContent='[ tutup ]';tone(440,'sine',0.08,0.15);}
       });
       body.appendChild(card);
     });
-
-  } else if (tab === 'tanya') {
-    title.textContent = '💬 INTEROGASI JIWA';
-    body.innerHTML = `<p style="font-family:'Caveat',cursive;font-size:13px;color:var(--ink-faded);margin-bottom:10px;position:relative;z-index:1;">Pilih pertanyaan untuk diajukan kepada ${currentGhost.nama}:</p>`;
-    const isBad = currentGhost.dosa === 'Suka Berbohong';
-    (currentGhost.dialog || []).forEach((d, idx) => {
-      const wrap = document.createElement('div');
-      const btn  = document.createElement('button');
-      const ans  = document.createElement('div');
-
-      btn.className = 'dialog-question-btn';
-      btn.textContent = d.pertanyaan;
-      ans.className = 'dialog-answer-box';
-
-      // hantu bohong kadang bohong, kadang "slip" jujur (50/50)
-      const slips = Math.random() < 0.35; // 35% chance si penjahat jujur tanpa sadar
-      const jawaban = isBad
-        ? (slips ? `*terdiam sebentar* "${d.jujur}"` : `"${d.bohong}"`)
-        : `"${d.jujur}"`;
-
-      ans.innerHTML = `<div class="dialog-speaker">${currentGhost.nama} berkata:</div>${jawaban}`;
-
-      btn.addEventListener('click', () => {
-        if (btn.classList.contains('asked')) return;
-        btn.classList.add('asked');
-        ans.classList.add('show');
-        tone(330,'sine',0.06,0.12);
-        setTimeout(() => tone(440,'sine',0.08,0.1), 80);
-      });
-
-      wrap.appendChild(btn);
-      wrap.appendChild(ans);
-      body.appendChild(wrap);
+  } else if(tab==='tanya'){
+    title.textContent='💬 INTEROGASI JIWA';
+    body.innerHTML=`<p style="font-family:'Caveat',cursive;font-size:13px;color:var(--ink-faded);margin-bottom:10px;position:relative;z-index:1;">Ajukan pertanyaan kepada ${currentGhost.nama}:</p>`;
+    const isBad=currentGhost.dosa==='Suka Berbohong';
+    (currentGhost.dialog||[]).forEach(d=>{
+      const wrap=document.createElement('div'),btn=document.createElement('button'),ans=document.createElement('div');
+      btn.className='dialog-question-btn';btn.textContent=d.pertanyaan;ans.className='dialog-answer-box';
+      const slips=Math.random()<0.35;
+      const jawaban=isBad?(slips?`*terdiam sebentar* "${d.jujur}"`:`"${d.bohong}"`):(`"${d.jujur}"`);
+      ans.innerHTML=`<div class="dialog-speaker">${currentGhost.nama} berkata:</div>${jawaban}`;
+      btn.addEventListener('click',()=>{if(btn.classList.contains('asked'))return;btn.classList.add('asked');ans.classList.add('show');tone(330,'sine',0.06,0.12);setTimeout(()=>tone(440,'sine',0.08,0.1),80);});
+      wrap.appendChild(btn);wrap.appendChild(ans);body.appendChild(wrap);
     });
   }
 }
+function resetTabs(){activeTab='biodata';document.querySelectorAll('.ghost-tab').forEach((b,i)=>b.classList.toggle('active',i===0));document.getElementById('side-panel').classList.remove('show');document.getElementById('side-panel-body').innerHTML='';}
 
-function resetTabs() {
-  activeTab = 'biodata';
-  document.querySelectorAll('.ghost-tab').forEach((btn, i) => {
-    btn.classList.toggle('active', i === 0);
-  });
-  document.getElementById('side-panel').classList.remove('show');
-  document.getElementById('side-panel-body').innerHTML = '';
-}
-
-// ─── LOADING SCREEN ───────────────────────────────────────────────────────────
-(function() {
-  const bootLines = [
-    "DEAD DESK SYSTEMS v6.6.6",
-    "Copyright (C) 1999 Departemen Alam Baka",
-    "──────────────────────────────────────",
-    "",
-    "[ OK ] Menginisialisasi CPU Neraka...",
-    "[ OK ] Memuat database 999.999 jiwa...",
-    "[ OK ] Mengecek stok formulir: 847 lembar",
-    "[ OK ] Menyambungkan ke server Surga...",
-    "[ OK ] Menyambungkan ke server Neraka...",
-    "[ OK ] Memuat meja kerja petugas baru...",
-    "[ OK ] Mengkalibrasi timbangan karma...",
-    "[ OK ] Lampu meja menyala...",
-    "[ OK ] Kopi sudah diseduh...",
-    "",
-    "SISTEM SIAP.",
-    "Selamat datang, Petugas Junior #4471.",
-    "47 jiwa dalam antrean hari ini.",
-    "",
-    "Membuka antarmuka registrasi...",
-    ">>> ZOOM IN <<<",
-  ];
-
-  const bootEl = document.getElementById('ls-boot-text');
-  let lineIdx = 0, charIdx = 0, text = '';
-
-  function typeNext() {
-    if (lineIdx >= bootLines.length) {
-      // Trigger zoom into monitor screen
-      const room = document.getElementById('ls-room');
-      room.classList.add('do-zoom');
-
-      // Hide loading screen exactly when zoom ends, game already visible behind
-      setTimeout(() => {
-        const ls = document.getElementById('loading-screen');
-        ls.style.display = 'none';
-      }, 1200);
-      return;
-    }
-
-    const line = bootLines[lineIdx];
-    if (charIdx < line.length) {
-      text += line[charIdx++];
-      bootEl.textContent = text;
-      const delay = line.startsWith('[') ? 12 : line.startsWith('>') ? 80 : 22;
-      setTimeout(typeNext, delay + Math.random() * 10);
-    } else {
-      text += '\n';
-      bootEl.textContent = text;
-      lineIdx++; charIdx = 0;
-      // Auto-scroll boot text
-      bootEl.scrollTop = bootEl.scrollHeight;
-      const pause = bootLines[lineIdx - 1] === '' ? 40 :
-                    bootLines[lineIdx - 1].startsWith('[') ? 60 : 30;
-      setTimeout(typeNext, pause);
-    }
+// LOADING SCREEN - FAST
+(function(){
+  const lines=["DEAD DESK v6.6.6","──────────────────","[ OK ] CPU Neraka...","[ OK ] Database 999.999 jiwa","[ OK ] Server Surga & Neraka","[ OK ] Karma kalibrasi OK","[ OK ] Kopi diseduh ☕","","SISTEM SIAP. Petugas #4471",">>> MULAI <<<"];
+  const el=document.getElementById('ls-boot-text');let li=0,ci=0,txt='';
+  function go(){
+    if(li>=lines.length){document.getElementById('ls-room').classList.add('do-zoom');setTimeout(()=>document.getElementById('loading-screen').style.display='none',900);return;}
+    const line=lines[li];
+    if(ci<line.length){txt+=line[ci++];el.textContent=txt;setTimeout(go,line.startsWith('[')?7:line.startsWith('>')?50:13);}
+    else{txt+='\n';el.textContent=txt;el.scrollTop=el.scrollHeight;li++;ci=0;setTimeout(go,lines[li-1]===''?15:lines[li-1].startsWith('[')? 30:15);}
   }
-
-  // Remove fade-out on #loading-screen, game is revealed by zoom not by opacity
-  document.getElementById('loading-screen').style.transition = 'none';
-
-  setTimeout(typeNext, 400);
+  document.getElementById('loading-screen').style.transition='none';
+  setTimeout(go,200);
 })();
 
-// ─── INIT ────────────────────────────────────────────────────────────────────
-updateHUD();
-buildQueue();
-nextGhost();
+updateHUD();buildQueue();nextGhost();
 </script>
 </body>
 </html>
