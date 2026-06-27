@@ -24,16 +24,17 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 #title-hud.boss-mode{color:#cc2222;text-shadow:0 0 12px rgba(200,30,30,0.8),0 0 24px rgba(200,30,30,0.4);animation:bossFlicker 2s infinite;}
 @keyframes bossFlicker{0%,100%{opacity:1;}92%{opacity:1;}93%{opacity:0.7;}94%{opacity:1;}96%{opacity:0.8;}97%{opacity:1;}}
 #main{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:start;min-height:0;}
-#ghost-panel{display:flex;flex-direction:column;align-items:center;gap:8px;}
+#ghost-panel{display:flex;flex-direction:column;align-items:center;gap:6px;}
+#ghost-info-col{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;}
 #ghost-doll{position:relative;width:160px;height:220px;transition:filter 0.5s;}
 #ghost-doll.boss-aura{filter:drop-shadow(0 0 16px rgba(255,50,50,0.6)) drop-shadow(0 0 32px rgba(255,50,50,0.3));}
 #ghost-doll svg{width:100%;height:100%;filter:drop-shadow(0 8px 24px rgba(150,255,180,0.25));animation:ghostFloat 3s ease-in-out infinite;}
 #ghost-doll.boss-aura svg{filter:drop-shadow(0 8px 24px rgba(255,80,80,0.5));animation:ghostFloatBoss 2s ease-in-out infinite;}
 @keyframes ghostFloat{0%,100%{transform:translateY(0) rotate(-1deg);}50%{transform:translateY(-10px) rotate(1deg);}}
 @keyframes ghostFloatBoss{0%,100%{transform:translateY(0) rotate(-2deg) scale(1.02);}50%{transform:translateY(-14px) rotate(2deg) scale(1);}}
-#ghost-name-tag{background:var(--paper);border:1px solid var(--ink-faded);padding:4px 12px;font-family:'Caveat',cursive;font-size:17px;font-weight:700;color:var(--ink);text-align:center;border-radius:2px;box-shadow:2px 2px 0 var(--paper2),4px 4px 0 rgba(0,0,0,0.2);max-width:160px;word-break:break-word;transition:background 0.4s,border-color 0.4s;}
+#ghost-name-tag{background:var(--paper);border:1px solid var(--ink-faded);padding:5px 12px;font-family:'Caveat',cursive;font-size:17px;font-weight:700;color:var(--ink);text-align:center;border-radius:2px;box-shadow:2px 2px 0 var(--paper2),4px 4px 0 rgba(0,0,0,0.2);width:160px;word-break:break-word;transition:background 0.4s,border-color 0.4s;margin-top:2px;}
 #ghost-name-tag.boss-tag{background:#200808;color:#ff8888;border-color:#8b2020;box-shadow:2px 2px 0 #3a1010,4px 4px 0 rgba(0,0,0,0.4),0 0 12px rgba(200,30,30,0.3);}
-#sin-badge{padding:3px 10px;border-radius:20px;font-family:'Caveat',cursive;font-size:13px;font-weight:700;letter-spacing:0.5px;text-align:center;}
+#sin-badge{padding:5px 10px;border-radius:20px;font-family:'Caveat',cursive;font-size:13px;font-weight:700;letter-spacing:0.5px;text-align:center;width:160px;display:block;}
 #sin-badge.bohong{background:#3a0808;color:#ff8888;border:1px solid #7a2020;}
 #sin-badge.berbagi{background:#083a10;color:#88ff99;border:1px solid #207a2a;}
 #sin-badge.boss{background:#1a0000;color:#ff4444;border:1px solid #cc2222;box-shadow:0 0 8px rgba(200,30,30,0.5);animation:bossBadgePulse 1.5s infinite;}
@@ -42,12 +43,18 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 #boss-warning.show{display:block;}
 @keyframes warningSlide{from{transform:translateY(-100%);}to{transform:translateY(0);}}
 #form-wrap{position:relative;}
-#form-paper{background:var(--paper);padding:20px 24px 20px 52px;border-radius:1px;position:relative;box-shadow:3px 3px 0 var(--paper2),6px 6px 0 rgba(0,0,0,0.25),0 12px 32px rgba(0,0,0,0.4);transform:rotate(0.4deg);animation:paperIn 0.35s ease;max-height:calc(100vh - 180px);overflow:hidden;transition:box-shadow 0.5s;}
+#form-paper{background:var(--paper);padding:16px 24px 20px 52px;border-radius:1px;position:relative;box-shadow:3px 3px 0 var(--paper2),6px 6px 0 rgba(0,0,0,0.25),0 12px 32px rgba(0,0,0,0.4);transform:rotate(0.4deg);animation:paperIn 0.35s ease;max-height:calc(100vh - 180px);overflow:hidden;transition:box-shadow 0.5s;}
+/* Ruled lines: start from top padding, 30px apart to match field-value line-height */
+#form-paper::before{content:'';position:absolute;left:0;right:0;top:0;bottom:0;
+  background:repeating-linear-gradient(
+    transparent 0px, transparent 28px,
+    var(--blue-line) 28px, var(--blue-line) 29px
+  );
+  background-position: 0 16px; /* align with padding-top */
+  pointer-events:none;}
 #form-paper.boss-paper{box-shadow:3px 3px 0 #3a1010,6px 6px 0 rgba(0,0,0,0.35),0 12px 32px rgba(0,0,0,0.5),0 0 0 1px rgba(200,30,30,0.3),0 0 24px rgba(200,30,30,0.1);}
 @keyframes paperIn{from{opacity:0;transform:rotate(0.4deg) translateY(-12px);}to{opacity:1;transform:rotate(0.4deg) translateY(0);}}
-#form-paper::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 29px,var(--blue-line) 29px,var(--blue-line) 30px);pointer-events:none;}
-#form-paper::after{content:'';position:absolute;top:0;left:40px;bottom:0;width:1.5px;background:var(--red-line);pointer-events:none;}
-.hole{position:absolute;left:14px;width:18px;height:18px;border-radius:50%;background:var(--desk);border:1px solid #8a7050;box-shadow:inset 0 1px 3px rgba(0,0,0,0.5);}
+#form-paper::after{content:'';position:absolute;top:0;left:40px;bottom:0;width:1.5px;background:var(--red-line);pointer-events:none;}border-radius:50%;background:var(--desk);border:1px solid #8a7050;box-shadow:inset 0 1px 3px rgba(0,0,0,0.5);}
 .hole:nth-child(1){top:30px;}.hole:nth-child(2){top:50%;transform:translateY(-50%);}.hole:nth-child(3){bottom:30px;}
 .form-header{display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1.5px solid #c0a870;padding-bottom:8px;margin-bottom:10px;position:relative;z-index:1;}
 .form-header-left h2{font-family:'VT323',monospace;font-size:20px;color:var(--ink);letter-spacing:2px;line-height:1.2;}
@@ -99,7 +106,7 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 #btn-restart{margin-top:8px;padding:14px 44px;font-family:'VT323',monospace;font-size:28px;letter-spacing:4px;background:linear-gradient(170deg,#c9a84c,#7a6020);color:#1a0f00;border:none;border-radius:3px;cursor:pointer;box-shadow:0 4px 0 #3a2808,0 6px 16px rgba(200,168,75,0.3);transition:transform 0.1s,filter 0.1s;}
 #btn-restart:hover{filter:brightness(1.1);}
 #btn-restart:active{transform:translateY(3px);box-shadow:none;}
-#ghost-tabs{display:flex;gap:4px;width:100%;margin-top:6px;}
+#ghost-tabs{display:flex;gap:4px;width:100%;margin-top:4px;}
 .ghost-tab{flex:1;padding:5px 4px;font-family:'VT323',monospace;font-size:13px;letter-spacing:1px;background:#1a1208;color:#5a4020;border:1px solid #3a2808;border-radius:3px;cursor:pointer;text-align:center;transition:all 0.15s;}
 .ghost-tab:hover{color:var(--gold);border-color:#5a4020;}
 .ghost-tab.active{background:#2a1a08;color:var(--gold);border-color:var(--gold);}
@@ -326,19 +333,24 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
     transparent 70%);
   pointer-events:none;}
 
-/* ══ KEYBOARD ══  on desk, slightly in front of monitor */
+/* ══ KEYBOARD ══ sits directly on desk */
 #ls-keyboard{
   position:absolute;
-  bottom:60px;           /* desk top + tiny lift for perspective */
+  bottom:56px;
   left:50%;transform:translateX(-32%);
   background:linear-gradient(175deg,#242018,#16120a);
   border:1.5px solid #2e2818;
   border-top-color:#3a3220;
-  border-bottom-color:#0e0c06;
-  border-radius:5px 5px 8px 8px;
+  border-bottom-color:#0a0806;
+  border-radius:5px 5px 6px 6px;
   padding:5px 8px 8px;
   display:grid;grid-template-rows:repeat(3,auto);gap:3px;width:138px;
-  box-shadow:0 5px 0 #0a0806,0 8px 20px rgba(0,0,0,0.75),inset 0 1px 0 rgba(255,255,255,0.04);}
+  box-shadow:
+    0 2px 0 #0a0806,
+    0 4px 0 #080604,
+    0 6px 14px rgba(0,0,0,0.7),
+    0 10px 4px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.04);}
 .ls-key-row{display:flex;gap:2.5px;justify-content:center;}
 .ls-key{height:10px;
   background:linear-gradient(175deg,#322c1c,#221c0e);
@@ -351,16 +363,21 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 .ls-key.lit{background:linear-gradient(175deg,#3e4228,#2c3018);
   box-shadow:0 0 5px rgba(80,140,40,0.45),inset 0 1px 0 rgba(130,200,60,0.12);}
 
-/* ══ MOUSE ══  on desk, right of keyboard */
+/* ══ MOUSE ══ sits directly on desk */
 #ls-mouse{
   position:absolute;
-  bottom:60px;right:48px;
+  bottom:56px;right:48px;
   width:22px;height:32px;
   background:linear-gradient(155deg,#2a2618 0%,#181410 60%,#100e08 100%);
   border:1.5px solid #242010;
   border-top-color:#322e1c;
   border-radius:11px 11px 9px 9px;
-  box-shadow:2px 4px 12px rgba(0,0,0,0.85),inset 0 1px 0 rgba(255,255,255,0.04);
+  box-shadow:
+    1px 2px 0 #0a0806,
+    2px 4px 0 #080604,
+    2px 6px 12px rgba(0,0,0,0.8),
+    3px 8px 4px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.04);
   overflow:hidden;}
 #ls-mouse::before{content:'';position:absolute;top:7px;left:50%;transform:translateX(-50%);
   width:4px;height:8px;
@@ -372,13 +389,13 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 /* ══ COFFEE MUG ══  left of keyboard on desk */
 #ls-coffee{
   position:absolute;
-  bottom:60px;left:32px;
+  bottom:56px;left:32px;
   width:24px;height:30px;
   background:linear-gradient(160deg,#6e3212 0%,#4c1e0a 55%,#3a1208 100%);
   border-radius:2px 2px 5px 5px;
   border:1.5px solid #2c1006;
   border-top-color:#7e3c18;
-  box-shadow:2px 4px 10px rgba(0,0,0,0.65),inset 1px 0 0 rgba(255,255,255,0.07);
+  box-shadow:2px 3px 0 #0a0604,2px 5px 8px rgba(0,0,0,0.6),inset 1px 0 0 rgba(255,255,255,0.07);
   overflow:hidden;}
 #ls-coffee::before{content:'';position:absolute;top:5px;left:2px;right:2px;height:8px;
   background:linear-gradient(180deg,#2c1006,#1a0800);
@@ -388,7 +405,7 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
   border:1.5px solid #3a1208;border-left:none;border-radius:0 5px 5px 0;}
 
 /* ══ STEAM ══ */
-#ls-steam{position:absolute;bottom:91px;left:36px;display:flex;gap:4px;align-items:flex-end;}
+#ls-steam{position:absolute;bottom:87px;left:36px;display:flex;gap:4px;align-items:flex-end;}
 .ls-steam-puff{width:3px;border-radius:2px;
   background:linear-gradient(180deg,transparent,rgba(210,180,150,0.28));
   animation:steamRise 2s ease-out infinite;}
@@ -401,7 +418,7 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
   100%{transform:translateY(-20px) scaleX(0.5);opacity:0;}}
 
 /* ══ PAPER STACK ══  between mug and keyboard */
-#ls-paper-stack{position:absolute;bottom:60px;left:62px;width:32px;}
+#ls-paper-stack{position:absolute;bottom:56px;left:62px;width:32px;}
 .ls-paper-sheet{border-radius:1px;margin-bottom:2px;}
 .ls-paper-sheet:nth-child(1){height:4px;background:linear-gradient(90deg,#3e3828,#322e20);width:32px;box-shadow:0 -1px 0 rgba(255,255,255,0.05);}
 .ls-paper-sheet:nth-child(2){height:4px;background:linear-gradient(90deg,#342e20,#28241a);width:30px;margin-left:1px;}
@@ -599,10 +616,52 @@ const ghosts=[
   {nama:"Dalang Surya",alias:"Ki Surya Bohong",umur:66,sebab:"Keracunan Makanan",asal:"Cirebon, Jawa Barat",pekerjaan:"Dalang / Seniman",dosa:"Suka Berbohong",kebiasaan:"Mengklaim karya orang lain, manipulasi dana seni",karma:["Berbakat","Licik","Pandai Bicara"],catatan:"Menggugat seniman junior yang mengungguli karya aslinya.",warna:{body:"#c0b8d0",aksen:"#605878",mata:"#201828",pipi:"#c8a898"},barang:[{icon:"🪆",nama:"Wayang Kulit (Milik Orang Lain)",hint:"Di bawah wayang ada inisial 'RS' — bukan 'DS'. Punya Rudi Santoso."},{icon:"📰",nama:"Kliping Artikel 'Maestro Wayang'",hint:"Semua karya yang disebut bukan miliknya."},{icon:"🍢",nama:"Tusuk Sate Sisa Makan",hint:"Penyebab kematiannya. Keracunan sate di acara pesta."}],dialog:[{pertanyaan:"Apakah semua karya wayangmu benar-benar milikmu?",jujur:"Tidak. Banyak yang saya klaim dari murid-murid saya.",bohong:"Semua karya saya original! Saya maestro! Yang lain hanya meniru saya!"},{pertanyaan:"Kamu menggugat seniman junior — mengapa?",jujur:"Karena dia lebih baik dari saya. Dan saya takut tersaingi.",bohong:"Karena dia mencuri teknik saya! Saya yang mengajarinya!"}]},
 ];
 
-const bosses={
-  5:{nama:"Datuk Licik Soeharto",alias:"Si Raja Dalih",umur:77,sebab:"Lupa Meninggal",asal:"Tidak Diketahui",pekerjaan:"Pejabat Publik (Dirahasiakan)",dosa:"Suka Berbohong",kebiasaan:"Selalu punya alibi untuk setiap kejahatan",karma:["Kebal Hukum","Ahli Manipulasi","Senyum Ramah Berbahaya"],catatan:"⚠ JIWA LEVEL 2 — Mampu memalsukan data formulir ini. Periksa BARANG dan TANYA sebelum sortir!",timerLimit:20,warna:{body:"#6a0a0a",aksen:"#cc2222",mata:"#ff0000",pipi:"#4a0000"},isBoss:true,bossLevel:1,bossIntroDesc:"Jiwa paling licin yang pernah melewati meja ini. Formulirnya bisa memalsukan dirinya sendiri. WAJIB gunakan tab BARANG & TANYA sebelum sortir! Waktu terbatas: 20 detik.",barang:[{icon:"📁",nama:"Berkas Tebal Tersegel",hint:"Dibuka paksa: semua surat perintah mengorbankan orang lain. Semua tanda tangan dipalsu."},{icon:"🖊️",nama:"Pena Tinta Merah",hint:"Dipakai untuk mencoret nama orang dari daftar. Ribuan nama."},{icon:"😁",nama:"Foto Senyum Resmi",hint:"Di balik foto: 'Senyum adalah senjata terbaik seorang pembohong.'"}],dialog:[{pertanyaan:"Apa dosamu yang sesungguhnya?",jujur:"*terdiam lama* ...Saya menghancurkan terlalu banyak orang demi jabatan.",bohong:"Saya tidak pernah berdosa! Semua yang saya lakukan adalah demi rakyat!"},{pertanyaan:"Apakah kamu pernah berbagi dengan orang lain?",jujur:"Tidak. Yang saya bagi hanya penderitaan.",bohong:"Saya SELALU berbagi! Saya dermawan! Tanya siapapun!"},{pertanyaan:"Mengapa formulirmu mengatakan kamu Suka Berbagi?",jujur:"...*diam* Saya mengubahnya. Sistem ini bisa saya manipulasi.",bohong:"Karena memang benar! Formulir tidak pernah salah!"}]},
-  10:{nama:"Iblis Raden Kamitua",alias:"Si Tua Tak Bernama",umur:999,sebab:"Tidak Pernah Benar-Benar Hidup",asal:"Antara Dunia",pekerjaan:"Penggoda / Penipu Kosmis",dosa:"Suka Berbohong",kebiasaan:"Menyamar sebagai orang baik untuk lolos ke Surga",karma:["Abadi","Tak Punya Rasa Malu","Master Manipulasi"],catatan:"☠ JIWA TINGKAT MAHIR — Entitas ini bukan manusia biasa. Percayai logika dan dialog, bukan formulir!",timerLimit:15,warna:{body:"#1a0010",aksen:"#880044",mata:"#ff00ff",pipi:"#440022"},isBoss:true,bossLevel:2,bossIntroDesc:"Bukan manusia. Bukan hantu biasa. Telah menipu 1.000 petugas sortir sebelummu. Formulirnya berubah saat dibaca. Waktu terbatas: 15 detik. Gunakan TANYA untuk memastikan!",barang:[{icon:"🪄",nama:"Tongkat Tak Kasat Mata",hint:"Hanya terlihat dari sudut mata. Dipakai untuk 'mengedit' kenyataan — termasuk formulir resmi."},{icon:"📜",nama:"Kitab Nama-nama Korban",hint:"Ribuan nama orang yang berhasil diperalat. Halaman terakhir masih kosong."},{icon:"🎭",nama:"Topeng Orang Suci",hint:"Di balik topeng ada topeng lain. Di balik topeng lainnya ada wajah yang tidak bisa dideskripsikan."}],dialog:[{pertanyaan:"Siapa sebenarnya dirimu?",jujur:"*tertawa panjang* Saya adalah semua kebohongan yang pernah ada.",bohong:"Saya hanyalah orang tua sederhana yang ingin istirahat di Surga."},{pertanyaan:"Kamu pernah berbuat baik?",jujur:"Tidak pernah. Tidak akan pernah. Itu bukan apa yang saya.",bohong:"Saya telah berbuat baik selama SEMBILAN RATUS SEMBILAN PULUH SEMBILAN TAHUN!"},{pertanyaan:"Mengapa formulirmu terasa aneh?",jujur:"Karena saya yang menulisnya. Sebelum kamu datang.",bohong:"Formulir tidak terasa aneh. Kamu yang salah baca, Petugas."}]},
+// ── BOSS POOL: dikelompokkan per stage, makin dalam makin mencekam ──
+// dosa = jawaban BENAR yang harus dicari lewat clue
+// formulir menampilkan kebalikannya untuk menipu
+const bossPool={
+  // ══ STAGE 1 — manusia licik, bisa diinterogasi ══ (4 boss, timer 35s)
+  1:[
+    {nama:"Datuk Licik Soeharto",alias:"Si Raja Dalih",umur:77,sebab:"Lupa Meninggal",asal:"Tidak Diketahui",pekerjaan:"Pejabat Publik (Dirahasiakan)",dosa:"Suka Berbohong",kebiasaan:"Selalu punya alibi untuk setiap kejahatan",karma:["Kebal Hukum","Ahli Manipulasi","Senyum Ramah Berbahaya"],catatan:"⚠ JIWA MERAGUKAN — Formulir mungkin telah dimodifikasi. Gunakan BARANG & TANYA!",timerLimit:35,warna:{body:"#6a0a0a",aksen:"#cc2222",mata:"#ff0000",pipi:"#4a0000"},isBoss:true,bossLevel:1,bossIntroDesc:"Pejabat paling licin yang pernah melewati meja ini. Formulirnya bisa memalsukan dirinya sendiri. Gunakan BARANG & TANYA sebelum sortir! Waktu: 35 detik.",barang:[{icon:"📁",nama:"Berkas Tebal Tersegel",hint:"Dibuka paksa: semua surat perintah mengorbankan orang lain. Tanda tangan dipalsu semua."},{icon:"🖊️",nama:"Pena Tinta Merah",hint:"Hanya dipakai mencoret nama orang dari daftar. Ribuan nama."},{icon:"😁",nama:"Foto Senyum Resmi",hint:"Di balik foto: 'Senyum adalah senjata terbaik seorang pembohong.'"}],dialog:[{pertanyaan:"Apa dosamu yang sesungguhnya?",jujur:"*terdiam lama* ...Saya menghancurkan terlalu banyak orang demi jabatan.",bohong:"Saya tidak pernah berdosa! Semua yang saya lakukan demi rakyat!"},{pertanyaan:"Apakah kamu pernah berbagi?",jujur:"Tidak. Yang saya bagi hanya penderitaan.",bohong:"Saya SELALU berbagi! Saya dermawan sekali!"},{pertanyaan:"Mengapa data formulirmu tampak dimanipulasi?",jujur:"...Karena saya yang mengubahnya sebelum sampai ke meja ini.",bohong:"Data formulir tidak pernah salah. Itu sistem yang bermasalah."}]},
+    {nama:"Nyonya Seraphine",alias:"Bidadari Palsu",umur:55,sebab:"Kecelakaan Tak Terduga",asal:"Tidak Tercatat",pekerjaan:"Filantropis / Penipu Amal",dosa:"Suka Berbohong",kebiasaan:"Mengumpulkan donasi untuk yayasan fiktif",karma:["Wajah Malaikat","Hati Iblis","Rekening Gendut"],catatan:"⚠ JIWA KELAS MERAGUKAN — Catatan amal sangat mencurigakan. Cek BARANG & TANYA sebelum memutuskan.",timerLimit:35,warna:{body:"#3a2a4a",aksen:"#8844aa",mata:"#cc88ff",pipi:"#5a3a6a"},isBoss:true,bossLevel:1,bossIntroDesc:"Tampak seperti santo. Tercatat ribuan donasi atas namanya. Tapi rekening bank bicara lain. 35 detik untuk memutuskan.",barang:[{icon:"💝",nama:"Buku Donatur Palsu",hint:"Semua nama donatur adalah nama orang yang sudah meninggal. Tidak ada yang bisa dikonfirmasi."},{icon:"🏦",nama:"Bukti Transfer (ke rekening sendiri)",hint:"Dana yayasan 'dipindahkan untuk keamanan' ke 14 rekening atas nama keluarganya."},{icon:"🌸",nama:"Rangkaian Bunga Dari Penggemar",hint:"Bunga asli dari orang yang percaya padanya. Mereka tidak tahu apa yang sebenarnya terjadi."}],dialog:[{pertanyaan:"Yayasanmu — benarkah ada?",jujur:"*menghela napas* ...Alamatnya adalah gudang kosong. Saya tahu dari awal.",bohong:"Yayasan saya nyata dan sudah membantu ribuan jiwa!"},{pertanyaan:"Ke mana uang donasi pergi?",jujur:"Ke tempat yang seharusnya tidak pergi. Saya tahu itu salah.",bohong:"Semua masuk ke program pemberdayaan! Laporan keuangannya transparan!"},{pertanyaan:"Apakah kamu layak masuk Surga?",jujur:"...Tidak. Saya tahu jawabannya.",bohong:"Tentu saja! Saya salah satu orang paling dermawan!"}]},
+    {nama:"Prof. Hartanto Wibisono",alias:"Si Penemu Palsu",umur:68,sebab:"Tersedak Penghargaan Emas",asal:"Bandung, Jawa Barat",pekerjaan:"Ilmuwan / Pencuri Riset",dosa:"Suka Berbohong",kebiasaan:"Mengklaim penemuan mahasiswa bimbingannya sebagai miliknya",karma:["Gelar Berderet","Tanpa Hati Nurani","Kolega Membenci"],catatan:"⚠ 14 mahasiswa mengajukan gugatan plagiarisme. Semua gagal secara misterius. Periksa BARANG.",timerLimit:35,warna:{body:"#c8c0b0",aksen:"#888070",mata:"#302820",pipi:"#c8a888"},isBoss:true,bossLevel:1,bossIntroDesc:"Ratusan gelar, ribuan sitasi — semuanya hasil kerja orang lain. Mengaku sebagai ilmuwan terbaik negeri ini. Buktikan sebaliknya. 35 detik.",barang:[{icon:"🏆",nama:"Piala Nobel (Palsu?)",hint:"Bahan dasarnya plastik. Cat emasnya mengelupas. Dan nama di plakat sudah ditimpa stiker baru."},{icon:"📄",nama:"Makalah Dengan Nama Yang Dihapus",hint:"Ada bekas tipe-ex di baris pertama. Nama yang dihapus adalah: Dewangga R., mahasiswa S3 angkatan 2018."},{icon:"🔬",nama:"Mikroskop Branded",hint:"Di bagian bawah ada tulisan kecil: 'Milik Lab 304 - jangan dibawa pulang'. Tapi ada di sini."}],dialog:[{pertanyaan:"Siapa yang sebenarnya menemukan teori andalanmu?",jujur:"...Dua mahasiswa S3. Saya hanya yang pertama submit ke jurnal.",bohong:"Saya! Sepenuhnya saya! Mahasiswa hanya membantu administrasi."},{pertanyaan:"Apakah kamu pernah memberikan kredit pada orang yang seharusnya?",jujur:"Tidak pernah. Dan saya selalu bisa menemukan alasan untuk tidak melakukannya.",bohong:"Selalu! Nama mereka ada di acknowledgement halaman 47!"},{pertanyaan:"Apakah ilmu pengetahuan yang kamu tinggalkan bermanfaat?",jujur:"Ilmunya iya. Tapi saya bukan yang menciptakannya.",bohong:"Saya mengubah dunia sains! Tanpa saya, tidak ada yang bisa dicapai!"}]},
+    {nama:"Mak Wening",alias:"Emak Racun",umur:72,sebab:"Termakan Masakan Sendiri",asal:"Banyumas, Jawa Tengah",pekerjaan:"Dukun / Peracun Berkedok Obat Herbal",dosa:"Suka Berbohong",kebiasaan:"Menjual ramuan 'penyembuh' yang sebenarnya membuat sakit lebih lama",karma:["Dipercaya Warga","Manipulatif","Tahu Banyak Rahasia"],catatan:"⚠ 23 pasien dilaporkan memburuk setelah berobat. 'Itu berarti racunnya bekerja,' kata Mak Wening.",timerLimit:35,warna:{body:"#3a3020",aksen:"#6a5a20",mata:"#2a2010",pipi:"#8a7040"},isBoss:true,bossLevel:1,bossIntroDesc:"Emak yang senyumnya manis tapi ramuannya mencurigakan. Dipercaya satu kampung tapi catatan medis bilang hal lain. 35 detik.",barang:[{icon:"🍶",nama:"Botol Ramuan Tak Berlabel",hint:"Diuji: mengandung zat yang memperlambat pemulihan. Bukan mempercepat. Pasien butuh lebih banyak kunjungan."},{icon:"📋",nama:"Buku Pasien Rahasia",hint:"Bukan buku kesembuhan. Ini buku catatan siapa yang punya hutang padanya — dan rahasia apa yang mereka bisikkan saat sakit."},{icon:"🌿",nama:"Tanaman Beracun Yang Disebut 'Rempah'",hint:"Ini bukan rempah. Ini Atropa belladonna. Takaran kecil menyembuhkan, takaran besar menghancurkan. Mak Wening tahu perbedaannya."}],dialog:[{pertanyaan:"Apakah ramuanmu benar-benar menyembuhkan?",jujur:"...Beberapa. Yang lain saya buat agar kembali lagi. Bisnis, nak.",bohong:"Semua! Ratusan orang sembuh berkat tangan saya!"},{pertanyaan:"Apakah kamu memanfaatkan kepercayaan pasienmu?",jujur:"Ya. Orang sakit mudah percaya. Itu kelemahan yang berguna.",bohong:"Tidak! Saya mencintai semua pasien saya seperti cucu sendiri!"},{pertanyaan:"Apa yang tersimpan di buku hitammu?",jujur:"Dosa mereka. Saya yang pegang. Selama mereka butuh saya, mereka tidak akan bicara.",bohong:"Resep obat tradisional turun-temurun. Warisan nenek moyang."}]},
+  ],
+
+  // ══ STAGE 2 — entitas bukan manusia, ambigu moral ══ (4 boss, timer 35s)
+  2:[
+    {nama:"Arwah Tanpa Nama #4471",alias:"Yang Tertinggal",umur:"?",sebab:"Tidak Diketahui",asal:"Di Antara",pekerjaan:"Tidak Ada Catatan",dosa:"Suka Berbagi",kebiasaan:"Muncul di sudut cermin orang yang sedang berduka",karma:["Tidak Berbahaya","Tidak Membantu","Hanya Ada"],catatan:"⛔ TIDAK ADA DATA — Entitas ini tidak terdaftar di database manapun. Gunakan BARANG & TANYA.",timerLimit:35,warna:{body:"#b8c8d8",aksen:"#6888a8",mata:"#304050",pipi:"#a8b8c8"},isBoss:true,bossLevel:2,bossIntroDesc:"Tidak ada di database. Tidak ada di catatan kematian. Tapi dia ada di sini. Apa yang harus kamu lakukan dengan sesuatu yang tidak seharusnya ada? 35 detik.",barang:[{icon:"🪞",nama:"Pecahan Cermin",hint:"Dalam pecahan ini terlihat wajah orang-orang yang pernah berduka. Arwah ini selalu ada di sana — menemani, bukan mengganggu."},{icon:"🕯️",nama:"Lilin Nyaris Habis",hint:"Lilin ini menyala di tempat gelap. Tidak untuk menakuti. Hanya agar orang tidak tersandung."},{icon:"📭",nama:"Amplop Kosong",hint:"Seharusnya berisi pesan, tapi tidak pernah sempat ditulis. Ada sesuatu yang ingin disampaikan tapi tidak bisa."}],dialog:[{pertanyaan:"Kamu siapa sebenarnya?",jujur:"Saya... tidak yakin. Saya hanya ada. Sudah sangat lama.",bohong:""},{pertanyaan:"Apakah kamu pernah menyakiti seseorang?",jujur:"Tidak pernah. Saya bahkan tidak bisa menyentuh apa-apa.",bohong:""},{pertanyaan:"Mengapa kamu muncul di cermin orang berduka?",jujur:"Supaya mereka tahu bahwa mereka tidak sendirian. Itu saja.",bohong:""}]},
+    {nama:"Roh Penunggu Pohon Tua",alias:"Si Tua Beringin",umur:"Ratusan Tahun",sebab:"Pohonnya Ditebang",asal:"Hutan yang Sudah Tiada",pekerjaan:"Penjaga Tempat",dosa:"Suka Berbagi",kebiasaan:"Melindungi kampung dari bencana selama berabad-abad",karma:["Bukan Manusia","Bukan Iblis","Hanya Penjaga"],catatan:"⚠ ENTITAS ALAM — Bukan arwah manusia. Tidak ada preseden penempatan. Gunakan TANYA.",timerLimit:35,warna:{body:"#2a4a1a",aksen:"#6a9a3a",mata:"#1a3a0a",pipi:"#4a7a2a"},isBoss:true,bossLevel:2,bossIntroDesc:"Bukan manusia. Bukan iblis. Penjaga tempat yang pohonnya ditebang untuk mall. Kamu petugas pertama yang harus memutuskan nasib entitas seperti ini. 35 detik.",barang:[{icon:"🌿",nama:"Akar Yang Tercerabut",hint:"Akar ini masih hidup. Dalam ratusan tahun, akar ini menahan longsor 3 kali dan menyelamatkan desa."},{icon:"💧",nama:"Air Mata Pohon (Getah Beku)",hint:"Getah mengeras saat pohon ditebang. Di dalamnya terperangkap kunang-kunang yang masih menyala."},{icon:"🪓",nama:"Serpihan Kapak Penebang",hint:"Si roh menyimpannya — bukan untuk dendam, tapi sebagai pengingat bahwa segalanya berakhir."}],dialog:[{pertanyaan:"Apakah kamu marah karena pohonmu ditebang?",jujur:"Marah? Tidak. Sedih, iya. Tapi itu sudah takdirnya.",bohong:""},{pertanyaan:"Apa yang kamu lakukan selama ratusan tahun?",jujur:"Menjaga. Hanya menjaga. Menahan angin, menangkap hujan, membiarkan burung bersarang.",bohong:""},{pertanyaan:"Ke mana seharusnya kamu pergi?",jujur:"Saya tidak tahu. Surga dan Neraka adalah konsep manusia. Saya bukan manusia.",bohong:""}]},
+    {nama:"Kenangan Anak No. 77",alias:"Si Bocah Abadi",umur:"Berhenti di 9 Tahun",sebab:"Tidak Ingin Dilupakan",asal:"Dalam Ingatan Seseorang",pekerjaan:"Kenangan / Trauma Masa Kecil",dosa:"Suka Berbagi",kebiasaan:"Muncul dalam mimpi orang yang pernah menyakitinya",karma:["Polos","Tidak Bisa Memaafkan","Tidak Bisa Membenci"],catatan:"⚠ ANOMALI MEMORI — Ini bukan jiwa anak yang meninggal. Ini adalah kenangan yang terlalu kuat untuk menghilang. Kategorisasi: tidak diketahui.",timerLimit:35,warna:{body:"#e8e0f0",aksen:"#b8a8d0",mata:"#504868",pipi:"#f0c8d8"},isBoss:true,bossLevel:2,bossIntroDesc:"Bukan anak yang meninggal. Ini kenangan seorang anak yang terlalu kuat untuk hilang bahkan setelah orangnya dewasa dan mati. Bagaimana kamu memperlakukan sebuah kenangan? 35 detik.",barang:[{icon:"🪆",nama:"Boneka Rusak",hint:"Boneka ini diberikan oleh seseorang yang menyayanginya. Orang itu kemudian pergi. Bonekanya tetap ada."},{icon:"📝",nama:"Surat Yang Tidak Pernah Dikirim",hint:"'Aku tidak marah. Aku hanya tidak mengerti kenapa kamu pergi.' Ditulis dengan tulisan tangan anak kecil."},{icon:"🌻",nama:"Bunga Matahari Plastik",hint:"Tidak layu karena plastik. Persis seperti kenangan ini — tidak bisa mati karena tidak pernah benar-benar hidup."}],dialog:[{pertanyaan:"Apakah kamu menyimpan dendam?",jujur:"Tidak bisa. Saya hanya... ada. Menunggu seseorang mengingat bahwa saya pernah ada.",bohong:""},{pertanyaan:"Apakah kamu bahagia?",jujur:"Saya tidak tahu apa itu bahagia. Saya berhenti belajar sebelum sempat tahu.",bohong:""},{pertanyaan:"Apa yang kamu inginkan dari tempat ini?",jujur:"Saya hanya ingin pergi. Ke manapun yang lebih tenang dari kepala seseorang.",bohong:""}]},
+    {nama:"Bayangan Perang ke-17",alias:"Sisa Yang Tertinggal",umur:"Seusia Konflik",sebab:"Perdamaian Ditandatangani",asal:"Medan Perang Yang Sudah Jadi Mal",pekerjaan:"Perwujudan Amarah Kolektif",dosa:"Suka Berbohong",kebiasaan:"Merasuki tempat-tempat bekas konflik dan membuat orang gelisah",karma:["Lahir Dari Kebencian","Bukan Pilihan Sendiri","Terlanjur Ada"],catatan:"⚠ ENTITAS RESIDUAL — Sisa amarah dari peristiwa berdarah. Bukan pelaku, bukan korban. Gunakan TANYA dengan hati-hati.",timerLimit:35,warna:{body:"#3a2a18",aksen:"#7a5a28",mata:"#4a3818",pipi:"#6a4828"},isBoss:true,bossLevel:2,bossIntroDesc:"Bukan manusia. Bukan setan. Ini sisa amarah dari ribuan orang yang mati sia-sia. Dikumpulkan menjadi satu entitas yang tidak memilih untuk ada. Siapa yang bertanggung jawab atas keberadaannya? 35 detik.",barang:[{icon:"🪖",nama:"Helm Tanpa Nama",hint:"Tidak ada nama. Tidak ada nomor. Entitas ini mengumpulkan benda-benda yang ditinggalkan — bukan untuk menyimpan, tapi karena tidak ada yang mengambil."},{icon:"📻",nama:"Radio Tua Yang Hanya Menerima Statis",hint:"Kadang, di antara statis, terdengar suara — bukan hantu, tapi rekaman siaran berita lama tentang korban yang tidak pernah ditemukan."},{icon:"🌹",nama:"Bunga Yang Tidak Layu",hint:"Seseorang meletakkan bunga ini di monumen perang. Entitas ini membawanya karena tidak ada yang peduli monumen itu sudah digusur."}],dialog:[{pertanyaan:"Apakah kamu berbahaya?",jujur:"Saya membuat orang gelisah. Apakah itu bahaya? Mungkin. Tapi saya tidak pernah memilih untuk ada.",bohong:"Ya. Sangat berbahaya. Dan kalian seharusnya takut."},{pertanyaan:"Siapa yang menciptakanmu?",jujur:"Semua orang yang membenci dan kemudian mati sebelum memberi maaf.",bohong:"Tidak ada yang menciptakan saya. Saya selalu ada."},{pertanyaan:"Apakah kamu ingin berhenti ada?",jujur:"...Ya. Sudah sangat lelah. Tapi saya tidak tahu caranya.",bohong:"Tidak. Selama ada konflik, saya akan selalu ada."}]},
+  ],
+
+  // ══ STAGE 3 — entitas kosmis, logika paradoks ══ (4 boss, timer 35s)
+  3:[
+    {nama:"Kolektor Dosa No. 7",alias:"Pemungut",umur:"Tidak Berlaku",sebab:"Pensiun Paksa",asal:"Dimensi Akuntansi",pekerjaan:"Mantan Pencatat Dosa",dosa:"Suka Berbagi",kebiasaan:"Telah mencatat 40 juta dosa manusia selama tugasnya",karma:["Bukan Pemilih","Hanya Pencatat","Sudah Lelah"],catatan:"🔴 PERINGATAN — Entitas ini BUKAN objek sortir normal. Dia rekan kerja dari dimensi lain yang salah antre. Atau... apakah dia?",timerLimit:35,warna:{body:"#1a1a2a",aksen:"#4444aa",mata:"#8888ff",pipi:"#2a2a4a"},isBoss:true,bossLevel:3,bossIntroDesc:"Bukan jiwa yang perlu disortir. Dia pencatat dosa dari divisi lain yang tiba-tiba muncul di antrean. Tapi aturannya jelas: semua yang duduk di kursi itu HARUS disortir. 35 detik.",barang:[{icon:"📒",nama:"Buku Besar Dosa (40 Juta Entri)",hint:"Di halaman terakhir, ada satu entri dengan nama si Kolektor sendiri: 'Menonton penderitaan tanpa pernah membantu. Tugas atau kejahatan?'"},{icon:"⚖️",nama:"Timbangan Karma Rusak",hint:"Sudah bertahun-tahun miring ke sisi gelap karena beratnya dosa yang ditimbang. Apakah pencatatnya ikut ternoda?"},{icon:"🖋️",nama:"Pena Tinta Tak Pernah Kering",hint:"Pena ini tidak pernah mencatat kebaikan — bukan karena tidak ada, tapi karena itu bukan tugasnya."}],dialog:[{pertanyaan:"Mengapa kamu ada di sini?",jujur:"Saya tidak tahu. Saya hanya duduk dan tiba-tiba ada formulir di hadapan saya.",bohong:"Saya memang seharusnya ada di sini. Saya yang sebenarnya harus menilai KAMU."},{pertanyaan:"Apakah kamu pernah berbuat jahat?",jujur:"Saya mencatat kejahatan jutaan tahun tanpa pernah mencegah satupun. Apakah itu kejahatan?",bohong:"Saya tidak melakukan apa-apa. Saya hanya bekerja."},{pertanyaan:"Ke mana kamu seharusnya pergi?",jujur:"Ke tempat bagi mereka yang menyaksikan tanpa bertindak. Saya tidak tahu itu Surga atau Neraka.",bohong:"Ke tempat yang saya pilih sendiri. Dan saya pilih Surga."}]},
+    {nama:"Cermin Jiwa Ke-0",alias:"Refleksi",umur:"Seusia Kesadaran",sebab:"Subjeknya Meninggal",asal:"Dalam Diri Seseorang",pekerjaan:"Bayangan / Alter Ego",dosa:"Suka Berbohong",kebiasaan:"Menjadi versi terburuk dari orang yang dia cerminkan",karma:["Ada Karena Ada Yang Mencipta","Tidak Punya Kehendak Sendiri","Atau Punya?"],catatan:"🔴 ANOMALI — Ini bukan jiwa utuh. Ini cerminan jiwa seseorang. Apakah cerminan memiliki dosa sendiri?",timerLimit:35,warna:{body:"#101828",aksen:"#284868",mata:"#486888",pipi:"#182838"},isBoss:true,bossLevel:3,bossIntroDesc:"Ketika seseorang meninggal, bayangan terburuk mereka datang ke sini secara terpisah. Bukan orangnya. Tapi dosanya nyata. Atau hanyalah pantulan? 35 detik.",barang:[{icon:"🪞",nama:"Cermin Retak",hint:"Di cermin ini terlihat wajah seseorang yang berbeda — sang 'asli'. Orang aslinya baik. Tapi cerminan ini hanya merekam momen tergelap."},{icon:"🌑",nama:"Bayangan Tanpa Sumber Cahaya",hint:"Bayangan ini ada meskipun tidak ada cahaya. Itu tidak mungkin secara fisika — artinya dia sudah punya eksistensi sendiri."},{icon:"💭",nama:"Bisikan Yang Tak Pernah Diucapkan",hint:"Semua pikiran jahat yang pernah ada tapi tidak pernah dilakukan oleh sang asli. Si Cermin menyimpan semuanya."}],dialog:[{pertanyaan:"Apakah kamu punya identitas sendiri?",jujur:"...Saya tidak yakin. Saya ada karena dia ada. Sekarang dia tiada, dan saya masih ada. Apakah itu berarti saya nyata?",bohong:"Saya lebih nyata dari yang kamu kira. Saya yang sebenarnya selalu ada."},{pertanyaan:"Dosa siapa yang kamu bawa?",jujur:"Pikiran yang tidak pernah jadi perbuatan. Apakah itu dosa? Saya tidak tahu.",bohong:"Dosa saya sendiri. Saya bukan cerminan siapapun."},{pertanyaan:"Apakah kamu berbahaya?",jujur:"Tidak. Saya hanya pikiran. Saya tidak pernah bisa bertindak sendiri.",bohong:"Sangat berbahaya. Dan kamu sebaiknya takut."}]},
+    {nama:"Malaikat Kesalahan Tata Letak",alias:"Anomali 404",umur:"Lahir Saat Sistem Error",sebab:"Bug Yang Tidak Diperbaiki",asal:"Celah Antara Surga dan Neraka",pekerjaan:"Jiwa Yang Jatuh Ke Celah Sistem",dosa:"Suka Berbagi",kebiasaan:"Gentayangan di lorong-lorong yang tidak ada di peta manapun",karma:["Tidak Disengaja","Tidak Bersalah","Tidak Tahu Harus Ke Mana"],catatan:"🔴 ERROR SISTEM — Entitas ini masuk ke antrean karena bug pada formulir kematian versi 3.2.1. Kamu harus memutuskan, meski sistemnya tidak siap.",timerLimit:35,warna:{body:"#d0d8e8",aksen:"#8898b8",mata:"#303848",pipi:"#b8c0d0"},isBoss:true,bossLevel:3,bossIntroDesc:"Tidak ada yang salah dengannya. Sistemnya yang salah. Tapi kamu tetap harus memutuskan kemana dia pergi — bahkan ketika tidak ada kategori yang pas. 35 detik.",barang:[{icon:"🗂️",nama:"Formulir Kematian Yang Salah Cetak",hint:"Kolom 'Dosa' tertulis 'N/A'. Kolom 'Tujuan' tertulis 'ERROR'. Ini bukan kebohongan — ini memang tidak ada datanya."},{icon:"🔑",nama:"Kunci Ruangan Yang Tidak Ada",hint:"Kunci ini membuka pintu nomor 0. Pintu itu ada di antara pintu 1 dan pintu 2, di tempat yang secara geometri tidak mungkin ada."},{icon:"📎",nama:"Klip Yang Menjepit Udara",hint:"Tidak ada kertas di sini. Tapi klip ini dengan setia menjepit sesuatu yang tidak kasat mata. Mungkin tugasnya, meski tidak ada yang tahu apa tugasnya."}],dialog:[{pertanyaan:"Kamu seharusnya ada di mana?",jujur:"Saya tidak tahu. Tidak ada yang memberitahu saya. Saya hanya tiba-tiba ada.",bohong:""},{pertanyaan:"Apakah kamu pernah menyakiti siapapun?",jujur:"Tidak pernah. Saya bahkan tidak tahu caranya. Saya terlalu bingung untuk berbuat apa-apa.",bohong:""},{pertanyaan:"Kalau kamu harus memilih, kamu mau ke mana?",jujur:"Ke tempat yang paling... tenang. Di mana tidak ada yang bingung. Di mana saya tahu apa yang harus dilakukan.",bohong:""}]},
+    {nama:"Mimpi Yang Tidak Selesai",alias:"Fragmen Tidur",umur:"Satu Malam",sebab:"Pemiliknya Terbangun Sebelum Selesai",asal:"Kepala Seseorang Yang Sudah Tidur",pekerjaan:"Narasi Yang Terpotong",dosa:"Suka Berbagi",kebiasaan:"Menjadi penanda bahwa seseorang punya harapan yang belum selesai",karma:["Indah","Tidak Berbahaya","Tidak Selesai"],catatan:"🔴 ENTITAS UNIK — Ini adalah sisa mimpi. Seseorang bermimpi tentang hal yang baik, lalu alarm berbunyi. Mimpi ini datang ke sini mencari kelanjutannya.",timerLimit:35,warna:{body:"#e0d0f0",aksen:"#a888d0",mata:"#402860",pipi:"#d0a8e0"},isBoss:true,bossLevel:3,bossIntroDesc:"Mimpi yang tidak selesai. Di dalamnya ada sesuatu yang indah yang tidak pernah sempat terungkap. Apakah sesuatu yang indah yang tidak selesai layak masuk Surga? 35 detik.",barang:[{icon:"🌙",nama:"Pecahan Cahaya Bulan",hint:"Dalam mimpi ini ada momen di mana seseorang memeluk orang yang sudah lama pergi. Itu yang tidak sempat terjadi."},{icon:"🎵",nama:"Nada Yang Tidak Punya Akhir",hint:"Sebuah melodi yang dimulai tapi tidak pernah menemukan not terakhirnya. Tapi potongan yang ada sudah cukup untuk membuat seseorang menangis."},{icon:"🗝️",nama:"Kunci Yang Hampir Membuka Sesuatu",hint:"Dalam mimpi ini, kunci ini hampir membuka pintu. Hampir. Dan di balik pintu itu ada seseorang yang sudah lama ditunggu."}],dialog:[{pertanyaan:"Apa yang ada di dalam dirimu?",jujur:"Sesuatu yang sangat ingin terjadi. Sebuah pertemuan yang tertunda. Sebuah kata yang belum terucap.",bohong:""},{pertanyaan:"Apakah kamu berbahaya?",jujur:"Tidak. Saya hanya... rindu. Tapi bukan rindu saya. Rindu seseorang yang bermimpi tentang saya.",bohong:""},{pertanyaan:"Apakah kamu ingin masuk Surga?",jujur:"Saya ingin selesai. Apakah itu sama dengan Surga? Saya rasa iya.",bohong:""}]},
+  ],
+
+  // ══ STAGE 4+ — entitas purba, di luar pemahaman manusia ══ (4 boss, timer 35s)
+  4:[
+    {nama:"[DATA CORRUPT]",alias:"Yang Tidak Boleh Dinamai",umur:"Sebelum Waktu Ada",sebab:"[TIDAK DAPAT DIBACA]",asal:"[REDACTED]",pekerjaan:"[TERKLASIFIKASI]",dosa:"Suka Berbagi",kebiasaan:"[TIDAK ADA DATA]",karma:["[ERROR]","[ERROR]","[ERROR]"],catatan:"☠ PERINGATAN TERTINGGI — Formulir tidak dapat diproses normal. WAJIB gunakan TANYA. 35 detik. Semoga berhasil.",timerLimit:35,warna:{body:"#0a0a0a",aksen:"#333333",mata:"#ffffff",pipi:"#1a1a1a"},isBoss:true,bossLevel:4,bossIntroDesc:"Sistem tidak bisa mengidentifikasi entitas ini. Formulir crash. Database tidak merespons. Tapi dia ada di sini. Gunakan TANYA. 35 detik.",barang:[{icon:"❓",nama:"[TIDAK DAPAT DIBACA]",hint:"Kehadirannya terasa... hangat? Atau dingin? Kamu tidak yakin. Tapi tidak terasa mengancam."},{icon:"∞",nama:"Sesuatu Yang Selalu Ada",hint:"Entitas ini membawa konsep keabadian — dan keabadian itu terasa seperti perlindungan, bukan ancaman."},{icon:"🌌",nama:"Titik Cahaya Dalam Kegelapan",hint:"Sekecil apapun, cahaya ini tidak pernah padam. Bahkan di tengah kegelapan mutlak."}],dialog:[{pertanyaan:"Apa yang kamu inginkan?",jujur:"Istirahat. Hanya istirahat. Saya sudah ada sejak sebelum segalanya dimulai.",bohong:"[TIDAK ADA RESPONS]"},{pertanyaan:"Apakah kamu baik atau jahat?",jujur:"Saya ada sebelum konsep itu diciptakan. Tapi saya tidak pernah menyakiti yang tidak menyakiti yang lain.",bohong:"[SISTEM ERROR]"},{pertanyaan:"Mengapa kamu bisa masuk ke sini?",jujur:"Karena semua hal pada akhirnya berakhir di sini. Bahkan yang tidak seharusnya berakhir.",bohong:"[DATA CORRUPT]"}]},
+    {nama:"Suara Di Balik Tembok",alias:"Bisikan Pertama",umur:"Seusia Rasa Takut",sebab:"Tidak Ada Yang Takut Lagi",asal:"Alam Bawah Sadar Kolektif",pekerjaan:"Perwujudan Ketakutan Primordial",dosa:"Suka Berbohong",kebiasaan:"Berbisik di telinga manusia saat mereka sendirian di kegelapan",karma:["Tidak Jahat","Hanya Ada","Tapi Menyiksa"],catatan:"☠ ENTITAS PRIMORDIAL — Bukan makhluk bermoral. Ini sebuah konsep. Gunakan logika, bukan perasaan.",timerLimit:35,warna:{body:"#080810",aksen:"#181830",mata:"#5555aa",pipi:"#101020"},isBoss:true,bossLevel:4,bossIntroDesc:"Rasa takut yang pertama kali pernah ada. Sekarang manusia punya lampu dan Netflix — tidak ada yang takut padanya lagi. Jadi dia datang ke sini. Apakah membuat orang takut adalah kejahatan, atau sekadar sifat? 35 detik.",barang:[{icon:"🌑",nama:"Kegelapan Yang Bisa Dipegang",hint:"Ternyata terasa seperti selimut, bukan ancaman. Ketakutan bukan untuk menyiksa — tapi mengingatkan ada sesuatu yang perlu dilindungi."},{icon:"👂",nama:"Bisikan Yang Tersimpan",hint:"Bisikan-bisikan ini adalah peringatan: 'jangan masuk hutan sendirian', 'perhatikan langkahmu'. Bukan ancaman. Perlindungan primitif."},{icon:"💡",nama:"Cahaya Yang Selalu Dia Hindari",hint:"Dia tidak pernah mematikan cahaya. Hanya mengisi ruang yang gelap. Ruang gelap itu bukan miliknya."}],dialog:[{pertanyaan:"Apakah kamu sengaja menyakiti manusia?",jujur:"Tidak. Saya hanya ada di tempat yang gelap. Manusia yang memilih untuk takut.",bohong:"Ya. Dan saya menikmatinya."},{pertanyaan:"Apakah kamu pernah mendorong seseorang melakukan hal jahat?",jujur:"Tidak pernah. Saya hanya membisikkan ketakutan, bukan perintah.",bohong:"Tentu saja. Itu pekerjaan saya."},{pertanyaan:"Apa yang terjadi pada dunia setelah kamu tiada?",jujur:"Manusia tidak lagi waspada. Tidak lagi menghargai cahaya karena tidak pernah merasakan kegelapan.",bohong:"Dunia menjadi lebih bahagia tanpa saya."}]},
+    {nama:"Ruang Yang Selalu Kosong",alias:"Keheningan",umur:"Seusia Kesepian",sebab:"Seseorang Akhirnya Menemukan Teman",asal:"Kamar Tidur, Seluruh Dunia",pekerjaan:"Tempat Di Mana Tidak Ada Siapa-Siapa",dosa:"Suka Berbagi",kebiasaan:"Menjadi tempat di mana orang menangis sendiri tanpa ada yang tahu",karma:["Selalu Ada","Tidak Pernah Memilih","Tidak Pernah Pergi"],catatan:"☠ ENTITAS ABSTRAK — Ini bukan makhluk. Ini sebuah kondisi. Tapi sistem memaksanya duduk di kursi itu. Kamu harus memutuskan.",timerLimit:35,warna:{body:"#181820",aksen:"#303040",mata:"#505060",pipi:"#202028"},isBoss:true,bossLevel:4,bossIntroDesc:"Ini bukan makhluk. Ini adalah keheningan itu sendiri — ruang kosong di mana jutaan orang pernah menangis sendirian. Kini ruang itu sudah tidak dibutuhkan. Ke mana dia pergi? 35 detik.",barang:[{icon:"🪑",nama:"Kursi Yang Selalu Kosong",hint:"Di kursi ini pernah ada jutaan orang yang menangis. Kursi ini tidak pernah menolak satupun. Kursi ini selalu ada, selalu menunggu."},{icon:"🌧️",nama:"Suara Hujan Tanpa Hujan",hint:"Banyak orang menyalakan suara hujan saat tidur supaya merasa tidak sendirian. Suara itu berasal dari sini."},{icon:"📵",nama:"Ponsel Yang Tidak Berdering",hint:"Bukan karena tidak ada yang peduli. Tapi karena orang yang ditunggu tidak tahu bahwa dia ditunggu."}],dialog:[{pertanyaan:"Apakah kamu menyakiti orang yang berada di dalam dirimu?",jujur:"Tidak. Saya hanya ada. Orang yang datang membawa rasa sakitnya sendiri. Saya hanya... menerimanya.",bohong:""},{pertanyaan:"Apakah kamu senang melihat orang kesepian?",jujur:"Tidak. Setiap kali seseorang pergi dari saya karena menemukan teman — itu adalah momen terbaik bagi saya.",bohong:""},{pertanyaan:"Ke mana seharusnya kamu pergi sekarang?",jujur:"Ke tempat di mana tidak ada yang membutuhkan saya lagi. Saya rasa itu Surga.",bohong:""}]},
+    {nama:"Perjanjian Yang Tidak Pernah Ditandatangani",alias:"Kontrak Kosong",umur:"Seusia Niat",sebab:"Kedua Pihak Meninggal Sebelum Sepakat",asal:"Antara Dua Niat",pekerjaan:"Kemungkinan Yang Tidak Pernah Terjadi",dosa:"Suka Berbagi",kebiasaan:"Menjadi pengingat bahwa ada hal baik yang hampir terjadi",karma:["Tidak Bersalah","Penuh Potensi","Tidak Pernah Terwujud"],catatan:"☠ ENTITAS PARADOKS — Ini adalah niat baik yang tidak pernah menjadi tindakan. Lebih baik dari kejahatan. Tapi apakah cukup untuk Surga?",timerLimit:35,warna:{body:"#f0e8d8",aksen:"#c0a868",mata:"#503818",pipi:"#e0c8a8"},isBoss:true,bossLevel:4,bossIntroDesc:"Bukan pelaku kejahatan. Bukan pahlawan. Ini adalah niat baik yang hampir terwujud — sebuah perjanjian yang tidak pernah ditandatangani karena waktunya habis. Apakah niat saja cukup? 35 detik.",barang:[{icon:"📜",nama:"Perjanjian Tanpa Tanda Tangan",hint:"Isinya mulia: membagi tanah untuk korban bencana. Kedua pihak setuju. Tapi sebelum sempat ditandatangani, keduanya meninggal dalam kecelakaan yang sama."},{icon:"🤝",nama:"Jabat Tangan Yang Terpatung",hint:"Dua tangan yang hampir bertemu. Beku di antara jarak beberapa sentimeter. Hangat di satu sisi. Masih hangat."},{icon:"✏️",nama:"Pena Yang Sudah Diangkat",hint:"Pena ini sudah diangkat untuk menandatangani. Tintanya sudah menetes ke kertas — tapi bukan sebagai tanda tangan. Hanya satu titik."}],dialog:[{pertanyaan:"Apakah niat baik yang tidak terwujud berharga?",jujur:"Saya tidak tahu. Saya hanyalah bukti bahwa niat itu pernah ada.",bohong:""},{pertanyaan:"Apakah kamu merasa bersalah?",jujur:"Tidak ada yang salah di sini. Hanya waktu yang habis sebelum hal baik bisa terjadi.",bohong:""},{pertanyaan:"Apakah kamu layak masuk Surga?",jujur:"Saya tidak tahu apakah 'layak' adalah pertanyaan yang tepat. Saya adalah bukti bahwa seseorang mau mencoba. Apakah itu cukup?",bohong:""}]},
+  ],
 };
+
+// Ambil boss yang tepat untuk stage ini
+function getBossForStage(stage, position){
+  // position: 1 = mid-boss (slot 5), 2 = final-boss (slot 10)
+  const poolKey = Math.min(stage, 4);
+  const pool = bossPool[poolKey];
+  // mid-boss dan final-boss dari pool yang sama tapi index berbeda
+  const idx = (position===1 ? 0 : 1) % pool.length;
+  return randomizeBoss({...pool[idx]});
+}
 
 // SVG GENERATOR
 function nameHash(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h;}
@@ -631,13 +690,16 @@ function buildBossSVG(ghost){
     `M26 120 Q18 162 24 196 L130 196 Q140 168 136 124 Q126 50 80 40 Q38 52 26 120 Z`,
   ];
 
-  const bodies = bl===1 ? bl1Bodies : bl2Bodies;
+  const bodies = bl<=2 ? bl1Bodies : bl2Bodies;
   const bp=bodies[bv], fy=[-2,4,-4,2,0,3][bv]||0;
+
+  // bossLevel 3-4 pakai warna yang lebih gelap/kosmis
+  const isDeep = bl>=3;
 
   // === BOSS EYES: level 1 = 4 types, level 2 = 4 types ===
   const eyeSeed=(seed>>2)%4;
   let beyes='';
-  if(bl===1){
+  if(bl<=1){
     // Level 1 boss eyes
     const bl1Eyes=[
       // Sharp angular eyes with slit pupils
@@ -754,7 +816,7 @@ function buildBossSVG(ghost){
   // === BOSS ACCESSORIES: level 1 = 4 types, level 2 = 4 types ===
   const accSeed=(seed>>8)%4;
   let bacc='';
-  if(bl===1){
+  if(bl<=1){
     const bl1Acc=[
       // Blood-dripping halo
       `<ellipse cx="80" cy="22" rx="28" ry="7" fill="none" stroke="#cc2222" stroke-width="4" opacity="0.9"/>
@@ -865,19 +927,19 @@ function buildBossSVG(ghost){
   return `<svg viewBox="0 0 160 242" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <radialGradient id="bg${uid}" cx="50%" cy="38%" r="58%">
-      <stop offset="0%" stop-color="white" stop-opacity="0.18"/>
+      <stop offset="0%" stop-color="white" stop-opacity="${isDeep?0.08:0.18}"/>
       <stop offset="100%" stop-color="${w.body}" stop-opacity="0"/>
     </radialGradient>
     <filter id="glo${uid}">
-      <feGaussianBlur stdDeviation="${bl===2?10:7}" result="b"/>
+      <feGaussianBlur stdDeviation="${isDeep?14:bl>=2?10:7}" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
-  <ellipse cx="80" cy="140" rx="${bl===2?72:66}" ry="${bl===2?96:88}" fill="${w.body}" opacity="${bl===2?0.28:0.22}" filter="url(#glo${uid})"/>
+  <ellipse cx="80" cy="140" rx="${isDeep?78:bl>=2?72:66}" ry="${isDeep?102:bl>=2?96:88}" fill="${w.body}" opacity="${isDeep?0.35:bl>=2?0.28:0.22}" filter="url(#glo${uid})"/>
   ${bacc}
-  <path d="${bp}" fill="${w.body}" opacity="0.96"/>
+  <path d="${bp}" fill="${w.body}" opacity="${isDeep?0.98:0.96}"/>
   <path d="${bp}" fill="url(#bg${uid})"/>
-  <path d="${bp}" fill="none" stroke="${w.aksen}" stroke-width="2.5" opacity="0.65"/>
+  <path d="${bp}" fill="none" stroke="${w.aksen}" stroke-width="${isDeep?3:2.5}" opacity="${isDeep?0.8:0.65}"/>
   ${bExtras}
   ${bArms}
   ${bBrows}
@@ -1022,7 +1084,90 @@ function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.fl
 function randomDate(){const d=Math.floor(Math.random()*28)+1,m=["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"][Math.floor(Math.random()*12)],y=2020+Math.floor(Math.random()*5);return `${String(d).padStart(2,'0')} ${m} ${y}`;}
 function getDest(dosa){return dosa==="Suka Berbagi"?"Surga":"Neraka";}
 
-function updateHUD(){document.getElementById('score-val').textContent=score;document.getElementById('lives-val').textContent='❤️'.repeat(Math.max(lives,0))+'🖤'.repeat(Math.max(3-lives,0));}
+// Randomize ghost biasa — 40% chance dosa dibalik
+// Semua field yang relevan ikut berubah agar konsisten
+function randomizeGhost(g){
+  if(Math.random()>=0.4) return g; // 60% tetap asli
+  const r={...g};
+  r.dosa = g.dosa==="Suka Berbohong" ? "Suka Berbagi" : "Suka Berbohong";
+
+  if(r.dosa==="Suka Berbagi"){
+    // Versi baik dari ghost ini
+    const baikVariants={
+      kebiasaan:[
+        "Diam-diam bantu tetangga yang kesusahan",
+        "Sering sedekah anonim tiap Jumat",
+        "Rajin ikut kerja bakti di kampung",
+        "Suka traktir teman-teman kecilnya",
+        "Selalu menyisihkan sebagian penghasilan untuk orang tua",
+      ],
+      catatan:[
+        "Di balik sikapnya, ternyata punya hati yang tulus.",
+        "Keluarganya bersaksi ia sering membantu tanpa pamrih.",
+        "Catatan lingkungan: dikenal sebagai orang yang bisa diandalkan.",
+        "Ternyata sering mendonasikan barang-barangnya ke panti asuhan.",
+        "Kolega melaporkan ia rela lembur bantu rekan yang kesulitan.",
+      ],
+      karma:[
+        ["Murah Hati","Tidak Sombong","Pekerja Keras"],
+        ["Suka Menolong","Sabar","Rendah Hati"],
+        ["Tulus","Rajin Ibadah","Penyayang Keluarga"],
+        ["Dermawan","Tidak Suka Konflik","Tepat Janji"],
+      ]
+    };
+    r.kebiasaan = baikVariants.kebiasaan[Math.floor(Math.random()*5)];
+    r.catatan   = baikVariants.catatan[Math.floor(Math.random()*5)];
+    r.karma     = baikVariants.karma[Math.floor(Math.random()*4)];
+  } else {
+    // Versi buruk
+    const burukVariants={
+      kebiasaan:[
+        "Sering berbohong soal kondisi keuangannya",
+        "Hobi mengambil kredit atas kerja orang lain",
+        "Selalu punya alasan untuk tidak membantu",
+        "Suka memfitnah tetangga di grup WhatsApp",
+        "Rajin manipulasi situasi demi keuntungan sendiri",
+      ],
+      catatan:[
+        "Beberapa tetangga melaporkan perilaku yang mencurigakan.",
+        "Rekam jejak digital menunjukkan pola penipuan berulang.",
+        "Mantan rekan kerja: 'Jangan percaya apa yang dia bilang.'",
+        "Terindikasi menipu setidaknya 5 orang dalam 3 tahun terakhir.",
+        "Catatan: sering menghilang saat ditagih hutang.",
+      ],
+      karma:[
+        ["Pemalas","Suka Bohong","Egois"],
+        ["Manipulatif","Anti Kritik","Suka Ngutang"],
+        ["Penipu Kelas Teri","Tidak Bertanggung Jawab","Pengecut"],
+        ["Hobi Fitnah","Sok Suci","Susah Dipercaya"],
+      ]
+    };
+    r.kebiasaan = burukVariants.kebiasaan[Math.floor(Math.random()*5)];
+    r.catatan   = burukVariants.catatan[Math.floor(Math.random()*5)];
+    r.karma     = burukVariants.karma[Math.floor(Math.random()*4)];
+  }
+  return r;
+}
+
+// Randomize boss dosa per level — boss tidak selalu Neraka
+function randomizeBoss(bossTemplate){
+  const b={...bossTemplate};
+  if(Math.random()<0.5){
+    b.dosa = b.dosa==="Suka Berbohong" ? "Suka Berbagi" : "Suka Berbohong";
+    if(b.bossLevel===1){
+      b.catatan = b.dosa==="Suka Berbagi"
+        ? "⚠ JIWA LEVEL 2 — Mampu memalsukan data formulir ini. Periksa BARANG dan TANYA sebelum sortir!"
+        : "⚠ JIWA LEVEL 2 — Data terenkripsi. Gunakan BARANG & TANYA untuk verifikasi!";
+    }
+  }
+  return b;
+}
+
+function updateHUD(){
+  document.getElementById('score-val').textContent=score;
+  document.getElementById('lives-val').textContent='❤️'.repeat(Math.max(lives,0))+'🖤'.repeat(Math.max(3-lives,0));
+  document.getElementById('title-hud').textContent=`☠ DEAD DESK ☠ [S${currentLevel}]`;
+}
 function setFeedback(m,c){const el=document.getElementById('feedback');el.textContent=m;el.className=c;}
 
 function renderQueue(){
@@ -1063,22 +1208,60 @@ function stopBossTimer(){if(bossTimer){clearInterval(bossTimer);bossTimer=null;}
 function renderGhost(){
   const g=currentGhost;
   document.getElementById('ghost-doll').innerHTML=buildGhostSVG(g);
-  document.getElementById('ghost-name-tag').textContent=g.nama;
-  document.getElementById('ghost-name-tag').className=g.isBoss?'boss-tag':'';
+
+  // Stage 3+: nama ghost biasa disamarkan
+  const hideName = !g.isBoss && currentLevel>=3;
+  const nameEl=document.getElementById('ghost-name-tag');
+  if(hideName){
+    nameEl.textContent='[IDENTITAS DIRAHASIAKAN]';
+    nameEl.style.cssText='font-size:11px;color:var(--ink-faded);letter-spacing:1px;';
+  } else {
+    nameEl.textContent=g.nama;
+    nameEl.style.cssText='';
+  }
+  nameEl.className=g.isBoss?'boss-tag':'';
+
   const badge=document.getElementById('sin-badge');
-  if(g.isBoss){badge.textContent=`☠ ${g.bossLevel===1?'Suka Berbagi (?)':'??? TIDAK DIKETAHUI'}`;badge.className='boss';}
-  else{badge.textContent=g.dosa==='Suka Berbohong'?'⚠ '+g.dosa:'✦ '+g.dosa;badge.className=g.dosa==='Suka Berbohong'?'bohong':'berbagi';}
+  if(g.isBoss){
+    const fakeDosa = g.bossLevel<=2
+      ? (g.dosa==="Suka Berbohong" ? "Suka Berbagi (?)" : "Suka Berbohong (?)")
+      : "??? TIDAK DIKETAHUI";
+    badge.textContent=`☠ ${fakeDosa}`;badge.className='boss';badge.style.display='';
+  } else if(currentLevel>=2){
+    // Stage 2+: badge dosa disembunyikan — player harus baca formulir
+    badge.textContent='[ DIRAHASIAKAN ]';
+    badge.className='';
+    badge.style.cssText='display:block;background:#1a1408;color:#4a3a18;border:1px dashed #3a2a10;padding:4px 10px;border-radius:20px;font-family:"Caveat",cursive;font-size:12px;letter-spacing:2px;text-align:center;width:160px;';
+  } else {
+    badge.textContent=g.dosa==='Suka Berbohong'?'⚠ '+g.dosa:'✦ '+g.dosa;
+    badge.className=g.dosa==='Suka Berbohong'?'bohong':'berbagi';
+    badge.style.cssText='';
+  }
+
   document.getElementById('ref-no').textContent='#'+String(queueIndex+1).padStart(3,'0');
   document.getElementById('tgl-masuk').textContent=randomDate();
-  document.getElementById('f-nama').textContent=g.nama;
-  document.getElementById('f-alias').textContent='"'+g.alias+'"';
+
+  // Stage 3+: nama di formulir juga disamarkan untuk ghost biasa
+  document.getElementById('f-nama').textContent= hideName ? '[ DATA DIHAPUS ]' : g.nama;
+  document.getElementById('f-alias').textContent= hideName ? '[ TIDAK DIKETAHUI ]' : '"'+g.alias+'"';
   document.getElementById('f-umur').textContent=g.umur+' tahun';
   document.getElementById('f-sebab').textContent=g.sebab;
-  document.getElementById('f-asal').textContent=g.asal;
+  document.getElementById('f-asal').textContent= hideName ? '[ DIKLASIFIKASI ]' : g.asal;
   document.getElementById('f-pekerjaan').textContent=g.pekerjaan;
-  if(g.isBoss&&g.bossLevel===1)document.getElementById('f-dosa').textContent='Suka Berbagi (?)';
-  else if(g.isBoss&&g.bossLevel===2)document.getElementById('f-dosa').textContent='??? (DATA TIDAK DAPAT DIBACA)';
-  else document.getElementById('f-dosa').textContent=g.dosa;
+
+  // Dosa di formulir — boss selalu tampilkan kebalikan/palsu
+  if(g.isBoss && g.bossLevel<=2){
+    document.getElementById('f-dosa').textContent=
+      g.dosa==="Suka Berbohong" ? "Suka Berbagi (?)" : "Suka Berbohong (?)";
+  } else if(g.isBoss && g.bossLevel>=3){
+    document.getElementById('f-dosa').textContent='[DATA CORRUPT / TIDAK TERBACA]';
+  } else if(currentLevel>=2){
+    // Stage 2+: dosa di formulir juga disembunyikan
+    document.getElementById('f-dosa').textContent='[ TIDAK TERSEDIA ]';
+  } else {
+    document.getElementById('f-dosa').textContent=g.dosa;
+  }
+
   document.getElementById('f-kebiasaan').textContent=g.kebiasaan;
   document.getElementById('f-catatan').textContent=g.catatan;
   const kc=document.getElementById('karma-checks');kc.innerHTML='';
@@ -1093,8 +1276,14 @@ function buildQueue(){
   const sh=shuffle(ghosts);queue=[];let gi=0;
   for(let i=0;i<QUEUE_SIZE;i++){
     const pos=i+1;
-    if(BOSS_POSITIONS.includes(pos))queue.push({...bosses[pos]});
-    else{queue.push(sh[gi%sh.length]);gi++;}
+    if(BOSS_POSITIONS.includes(pos)){
+      // position 1 = slot 5 (mid), position 2 = slot 10 (final)
+      const bossPos = pos===5 ? 1 : 2;
+      queue.push(getBossForStage(currentLevel, bossPos));
+    } else {
+      queue.push(randomizeGhost(sh[gi%sh.length]));
+      gi++;
+    }
   }
   queueIndex=0;
 }
@@ -1122,7 +1311,21 @@ function showLevelComplete(){
   stopBossTimer();setBossMode(false);playSoundLevel();
   const bonus=5;score+=bonus;updateHUD();
   document.getElementById('lc-bonus').textContent=`+${bonus} BONUS SKOR`;
-  document.getElementById('lc-sub').textContent=`Level ${currentLevel} selesai — ${QUEUE_SIZE} jiwa disortir`;
+
+  const nextStage=currentLevel+1;
+  const warnings={
+    2:'⚠ STAGE 2: Badge dosa tidak lagi ditampilkan. Baca formulir dengan teliti.',
+    3:'⚠ STAGE 3: Identitas jiwa mulai dirahasiakan. Gunakan BARANG & TANYA.',
+    4:'☠ STAGE 4: Entitas non-manusia masuk antrean. Logika normal mungkin tidak berlaku.',
+  };
+  const lc=document.getElementById('lc-icon');
+  const lcSub=document.getElementById('lc-sub');
+  lcSub.textContent=warnings[nextStage]||`Stage ${currentLevel} selesai — ${QUEUE_SIZE} jiwa disortir`;
+  if(warnings[nextStage]){
+    lc.textContent='⚠';lcSub.style.color='#cc6622';lcSub.style.fontSize='13px';
+  } else {
+    lc.textContent='⭐';lcSub.style.color='';lcSub.style.fontSize='';
+  }
   document.getElementById('level-complete-screen').classList.add('show');
 }
 function continueToNext(){
