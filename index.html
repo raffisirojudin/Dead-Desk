@@ -3,18 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c1108">
 <title>Dead Desk: Sortir Jiwa</title>
+<!-- Font preload untuk performa lebih baik -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Special+Elite&family=VT323&display=swap">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Special+Elite&family=VT323&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
   --bg:#1c1108;--desk:#2a1a08;--felt:#1a2a12;--paper:#f7f0dc;--paper2:#ede5c8;
   --ink:#1e1205;--ink-faded:#6b5535;--red-line:rgba(180,50,50,0.35);
   --blue-line:rgba(50,80,180,0.18);--stamp-heaven:#1a4a9b;--stamp-hell:#9b1a1a;
   --gold:#c9a84c;--gold-dim:#7a6020;--green:#3a8a3a;--shadow:rgba(0,0,0,0.6);
+  /* Font stacks dengan fallback sistem agar tetap terbaca saat font gagal load */
+  --font-hand:'Caveat','Comic Sans MS','Bradley Hand',cursive;
+  --font-type:'Special Elite','Courier New','Courier',monospace;
+  --font-mono:'VT323','Courier New','Courier',monospace;
 }
 html,body{height:100%;overflow:hidden;}
-body{background:var(--desk);font-family:'Special Elite',cursive;display:flex;align-items:center;justify-content:center;position:relative;}
+body{background:var(--desk);font-family:var(--font-type);display:flex;align-items:center;justify-content:center;position:relative;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 100% 80% at 50% 100%,#0e1a08 0%,transparent 60%),radial-gradient(ellipse 70% 50% at 50% 110%,#1a2a12 0%,transparent 50%);pointer-events:none;}
 body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:900px;height:600px;background:radial-gradient(ellipse,rgba(255,210,80,0.1) 0%,transparent 65%);pointer-events:none;z-index:0;}
 #scene{position:relative;z-index:1;width:100%;max-width:860px;height:100vh;display:grid;grid-template-rows:auto 1fr auto;grid-template-columns:1fr;padding:16px 20px 14px;gap:10px;}
@@ -424,8 +432,459 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 .ls-paper-sheet:nth-child(1){height:4px;background:linear-gradient(90deg,#3e3828,#322e20);width:32px;box-shadow:0 -1px 0 rgba(255,255,255,0.05);}
 .ls-paper-sheet:nth-child(2){height:4px;background:linear-gradient(90deg,#342e20,#28241a);width:30px;margin-left:1px;}
 .ls-paper-sheet:nth-child(3){height:3px;background:#22201a;width:28px;margin-left:2px;}
-/* ══════════════════════════════════════════
-   RESPONSIVE — MULTI DEVICE
+/* ══ LOADING SCREEN — POLISHED ══ */
+#loading-screen{
+  position:fixed;inset:0;z-index:999;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;}
+
+/* Wall — warm dark plaster */
+#loading-screen::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 0%,  #18140c 0%, transparent 55%),
+    radial-gradient(ellipse 80%  50% at 50% 100%, #100e08 0%, transparent 60%),
+    linear-gradient(180deg, #0e0c08 0%, #0c0a06 45%, #141008 100%);
+  pointer-events:none;}
+
+/* Lamp warm cone on wall — conic from top-right */
+#loading-screen::after{
+  content:'';position:absolute;
+  top:-60px;right:calc(50% - 220px);
+  width:300px;height:400px;
+  background:conic-gradient(
+    from 240deg at 30% 5%,
+    transparent 0deg,
+    rgba(201,168,60,0.04) 20deg,
+    rgba(201,168,60,0.09) 38deg,
+    rgba(201,168,60,0.04) 56deg,
+    transparent 70deg);
+  pointer-events:none;z-index:1;}
+
+/* Scanline film grain */
+#ls-scanline-overlay{
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    0deg,rgba(0,0,0,0.045) 0px,rgba(0,0,0,0.045) 1px,
+    transparent 1px,transparent 3px);
+  pointer-events:none;z-index:20;}
+
+/* Subtle vignette */
+#ls-ambient{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 85% 70% at 50% 50%,transparent 40%,rgba(0,0,0,0.55) 100%);
+  pointer-events:none;z-index:2;}
+
+/* ── ROOM ── */
+#ls-room{
+  position:relative;
+  width:480px;height:340px;
+  transform-origin:50% 58%;
+  z-index:3;}
+#ls-room.do-zoom{animation:lsZoomIn 0.85s cubic-bezier(0.55,0,0.9,1) forwards;}
+@keyframes lsZoomIn{0%{transform:scale(1);opacity:1;}100%{transform:scale(16);opacity:0;}}
+
+/* ── WALL DETAIL: calendar/poster stub top-left ── */
+#ls-wall-detail{
+  position:absolute;
+  top:18px;left:24px;
+  width:38px;height:48px;
+  background:linear-gradient(180deg,#1e1c14,#181610);
+  border:1px solid #2a2618;
+  border-radius:2px;
+  box-shadow:2px 2px 6px rgba(0,0,0,0.6);}
+#ls-wall-detail::before{/* spiral binding top */
+  content:'';position:absolute;
+  top:-4px;left:2px;right:2px;height:5px;
+  background:repeating-linear-gradient(90deg,
+    #1a1810 0px,#1a1810 3px,transparent 3px,transparent 6px);
+  border-radius:2px;}
+#ls-wall-detail::after{/* lines on calendar */
+  content:'';position:absolute;
+  top:8px;left:4px;right:4px;bottom:4px;
+  background:repeating-linear-gradient(
+    transparent,transparent 5px,
+    rgba(80,70,40,0.3) 5px,rgba(80,70,40,0.3) 6px);}
+
+/* ── WALL CLOCK ── */
+#ls-clock{
+  position:absolute;
+  top:22px;left:80px;
+  width:28px;height:28px;
+  border-radius:50%;
+  background:radial-gradient(circle,#24201a,#16140e);
+  border:2px solid #2e2818;
+  box-shadow:0 2px 6px rgba(0,0,0,0.7),inset 0 1px 0 rgba(255,255,255,0.04);}
+/* clock hands */
+#ls-clock::before{/* hour hand */
+  content:'';position:absolute;
+  top:50%;left:50%;
+  width:1.5px;height:8px;
+  background:#4a4028;
+  transform-origin:bottom center;
+  transform:translate(-50%,-100%) rotate(120deg);}
+#ls-clock::after{/* minute hand */
+  content:'';position:absolute;
+  top:50%;left:50%;
+  width:1px;height:10px;
+  background:#3a3020;
+  transform-origin:bottom center;
+  transform:translate(-50%,-100%) rotate(210deg);}
+
+/* ── DESK ── */
+#ls-desk-surface{
+  position:absolute;
+  bottom:0;left:-60px;right:-60px;
+  height:56px;
+  background:linear-gradient(180deg,
+    #2e2818 0px,#28221c 2px,#221e16 10px,#1c1a12 42px,
+    #120e0a 42px,#0e0c08 56px);
+  box-shadow:
+    0 -1px 0 rgba(255,255,255,0.07),
+    0 10px 40px rgba(0,0,0,0.9),
+    inset 0 1px 0 rgba(255,255,255,0.04);}
+/* desk edge highlight */
+#ls-desk-surface::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,
+    transparent,rgba(220,185,90,0.12),rgba(220,185,90,0.25),
+    rgba(220,185,90,0.12),transparent);}
+/* lamp warm pool on desk surface */
+#ls-desk-surface::after{
+  content:'';position:absolute;
+  top:0;right:60px;
+  width:110px;height:42px;
+  background:radial-gradient(ellipse 70% 60% at 65% 0%,
+    rgba(201,168,60,0.10) 0%,transparent 70%);
+  pointer-events:none;}
+
+/* ── MONITOR ── */
+#ls-monitor{
+  position:absolute;
+  bottom:56px;
+  left:50%;transform:translateX(-50%);
+  width:222px;}
+#ls-bezel{
+  background:linear-gradient(158deg,#302c1e 0%,#201c12 40%,#141008 100%);
+  border:4px solid #2a2418;
+  border-top-color:#403820;
+  border-left-color:#362e1e;
+  border-right-color:#1e1a10;
+  border-bottom-color:#0e0c06;
+  border-radius:10px 10px 5px 5px;
+  padding:9px 9px 8px;
+  position:relative;
+  box-shadow:
+    0 0 0 1px #060400,
+    inset 0 1px 0 rgba(255,255,255,0.07),
+    inset -1px 0 0 rgba(0,0,0,0.3),
+    0 20px 50px rgba(0,0,0,0.98),
+    0 6px 14px rgba(0,0,0,0.8);}
+/* brand stripe on bezel bottom */
+#ls-bezel::before{
+  content:'';position:absolute;
+  bottom:5px;left:50%;transform:translateX(-50%);
+  width:60px;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.04),transparent);
+  border-radius:1px;}
+/* green LED */
+#ls-bezel::after{
+  content:'';position:absolute;
+  bottom:7px;left:50%;transform:translateX(-16px);
+  width:5px;height:5px;border-radius:50%;
+  background:radial-gradient(circle,#44cc44,#1a6a1a);
+  box-shadow:0 0 6px rgba(50,220,50,0.8),0 0 12px rgba(50,200,50,0.3);}
+#ls-crt{
+  background:#020b02;border-radius:3px;
+  width:196px;height:142px;
+  position:relative;overflow:hidden;
+  box-shadow:
+    inset 0 0 28px rgba(0,0,0,0.9),
+    inset 0 0 4px rgba(0,255,60,0.03);}
+/* CRT phosphor */
+#ls-crt::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 55% at 50% 35%,rgba(0,230,70,0.08) 0%,transparent 65%);
+  pointer-events:none;z-index:3;}
+/* glass shine */
+#ls-crt::after{
+  content:'';position:absolute;
+  top:4px;left:8px;width:42px;height:14px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.055) 0%,transparent 100%);
+  border-radius:3px;pointer-events:none;z-index:4;}
+#ls-scanlines{
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    transparent,transparent 2px,
+    rgba(0,0,0,0.2) 2px,rgba(0,0,0,0.2) 4px);
+  pointer-events:none;z-index:2;}
+#ls-boot-text{
+  position:absolute;inset:0;padding:7px 9px;
+  font-family:var(--font-mono);font-size:11px;color:#00e048;
+  line-height:1.65;z-index:1;white-space:pre;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  text-shadow:0 0 7px rgba(0,230,60,0.85),0 0 18px rgba(0,180,50,0.3);}
+/* neck */
+#ls-neck{
+  width:20px;height:26px;
+  background:linear-gradient(90deg,#1a1810,#2e2c1c,#1a1810);
+  margin:0 auto;clip-path:polygon(20% 0,80% 0,100% 100%,0 100%);}
+/* stand */
+#ls-stand{
+  width:82px;height:9px;
+  background:linear-gradient(180deg,#322a1c,#1e1c10);
+  margin:0 auto;border-radius:5px;
+  box-shadow:0 3px 10px rgba(0,0,0,0.85),0 1px 0 rgba(255,255,255,0.04);}
+/* monitor cable */
+#ls-cable{
+  position:absolute;
+  bottom:0;left:50%;
+  width:3px;height:30px;
+  background:linear-gradient(180deg,#1a1810,#0e0c08);
+  border-radius:0 0 3px 3px;
+  transform:translateX(10px) rotate(8deg);
+  transform-origin:top center;}
+
+/* ── LAMP ── */
+#ls-lamp{position:absolute;right:32px;bottom:56px;}
+#ls-lamp-base{
+  width:32px;height:11px;
+  background:linear-gradient(180deg,#3e3822,#262412,#181608);
+  border-radius:5px 5px 3px 3px;
+  box-shadow:
+    0 2px 0 #0a0800,
+    0 4px 10px rgba(0,0,0,0.8),
+    inset 0 1px 0 rgba(255,255,255,0.07);
+  position:relative;}
+#ls-lamp-base::after{/* base contact shadow */
+  content:'';position:absolute;
+  bottom:-8px;left:4px;right:4px;height:8px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(0,0,0,0.55) 0%,transparent 75%);}
+#ls-lamp-arm{
+  position:absolute;
+  bottom:11px;left:50%;transform:translateX(-50%);
+  width:3px;height:112px;
+  background:linear-gradient(90deg,#28261a,#3c3a24,#28261a);
+  border-radius:2px;
+  box-shadow:1px 0 0 rgba(255,255,255,0.05);}
+#ls-lamp-arm::before{/* elbow */
+  content:'';position:absolute;
+  top:0;left:0;
+  width:3px;height:38px;
+  background:linear-gradient(90deg,#28261a,#3c3a24,#28261a);
+  border-radius:2px;
+  transform-origin:bottom center;
+  transform:rotate(-30deg);}
+#ls-lamp-head{
+  position:absolute;
+  top:-16px;left:-32px;
+  width:44px;height:15px;
+  background:linear-gradient(175deg,#504a2a,#2e2c18,#1c1a0a);
+  border-radius:7px 7px 2px 2px;
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.65),
+    inset 0 -2px 3px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.06);}
+/* bulb warm glow strip */
+#ls-lamp-head::before{
+  content:'';position:absolute;
+  bottom:1px;left:6px;right:6px;height:5px;
+  background:rgba(255,200,50,0.28);border-radius:3px;
+  box-shadow:
+    0 0 8px rgba(255,190,40,0.5),
+    0 0 18px rgba(255,170,30,0.2);}
+/* cone of light downward onto desk */
+#ls-lamp-light{
+  position:absolute;
+  top:15px;left:-22px;
+  width:88px;height:100px;
+  background:radial-gradient(ellipse 72% 72% at 50% 0%,
+    rgba(201,168,60,0.16) 0%,
+    rgba(201,168,60,0.07) 35%,
+    rgba(201,168,60,0.02) 60%,
+    transparent 72%);
+  pointer-events:none;}
+
+/* ── KEYBOARD ── */
+#ls-keyboard{
+  position:absolute;
+  bottom:56px;
+  left:50%;transform:translateX(-32%);
+  background:linear-gradient(175deg,#262018,#161208);
+  border:1.5px solid #2e2818;
+  border-top-color:#3c3222;
+  border-bottom-color:#0a0806;
+  border-radius:5px 5px 7px 7px;
+  padding:5px 8px 8px;
+  display:grid;grid-template-rows:repeat(3,auto);gap:3px;width:138px;
+  box-shadow:
+    0 2px 0 #0a0806,
+    0 4px 0 #080604,
+    0 7px 16px rgba(0,0,0,0.75),
+    0 12px 5px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.04);}
+/* keyboard lamp highlight */
+#ls-keyboard::after{
+  content:'';position:absolute;
+  top:0;right:4px;
+  width:30%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(201,168,60,0.04));
+  border-radius:0 5px 7px 0;pointer-events:none;}
+.ls-key-row{display:flex;gap:2.5px;justify-content:center;}
+.ls-key{
+  height:10px;
+  background:linear-gradient(175deg,#342e1c,#221c0e);
+  border-radius:2px 2px 3px 3px;
+  border:1px solid #1e1a10;border-bottom:2px solid #0a0806;
+  flex:1;min-width:8px;max-width:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);}
+.ls-key.wide{flex:2.5;max-width:38px;}
+.ls-key.space{flex:5;max-width:76px;}
+.ls-key.lit{
+  background:linear-gradient(175deg,#404428,#2e3218);
+  box-shadow:0 0 5px rgba(80,140,40,0.5),inset 0 1px 0 rgba(140,210,60,0.14);}
+
+/* ── MOUSE ── */
+#ls-mouse{
+  position:absolute;
+  bottom:56px;right:48px;
+  width:22px;height:33px;
+  background:linear-gradient(155deg,#2c2818 0%,#18140e 60%,#100e08 100%);
+  border:1.5px solid #262010;
+  border-top-color:#342e1c;
+  border-radius:11px 11px 9px 9px;
+  box-shadow:
+    1px 2px 0 #0a0806,
+    2px 4px 0 #080604,
+    2px 8px 14px rgba(0,0,0,0.85),
+    4px 10px 5px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  overflow:hidden;}
+#ls-mouse::before{/* scroll wheel */
+  content:'';position:absolute;
+  top:7px;left:50%;transform:translateX(-50%);
+  width:4px;height:9px;
+  background:linear-gradient(180deg,#2e2c1a,#1c1a0a);
+  border-radius:2px;border:1px solid #0e0c04;}
+#ls-mouse::after{/* button split line */
+  content:'';position:absolute;
+  top:0;left:50%;
+  width:1px;height:17px;background:rgba(0,0,0,0.5);}
+/* mouse cable */
+#ls-mouse-cable{
+  position:absolute;
+  bottom:80px;right:55px;
+  width:2px;height:28px;
+  background:linear-gradient(180deg,#1a1810,transparent);
+  border-radius:1px;
+  transform:rotate(-12deg);
+  transform-origin:bottom center;}
+
+/* ── COFFEE MUG ── */
+#ls-coffee{
+  position:absolute;
+  bottom:56px;left:32px;
+  width:26px;height:32px;
+  background:linear-gradient(160deg,#723418 0%,#4e2010 55%,#3c1208 100%);
+  border-radius:3px 3px 5px 5px;
+  border:1.5px solid #2e1008;
+  border-top-color:#824020;
+  box-shadow:
+    2px 2px 0 #0c0604,
+    2px 5px 10px rgba(0,0,0,0.7),
+    inset 1px 0 0 rgba(255,255,255,0.08);
+  overflow:hidden;}
+/* coffee liquid */
+#ls-coffee::before{
+  content:'';position:absolute;
+  top:5px;left:2px;right:2px;height:8px;
+  background:radial-gradient(ellipse at 50% 30%,#2e1008,#1a0800);
+  border-radius:1px;}
+/* handle */
+#ls-coffee::after{
+  content:'';position:absolute;
+  top:9px;right:-9px;
+  width:9px;height:13px;
+  border:1.5px solid #3c1208;border-left:none;
+  border-radius:0 6px 6px 0;}
+/* mug lamp highlight */
+#ls-coffee-shine{
+  position:absolute;
+  bottom:67px;left:33px;
+  width:6px;height:14px;
+  background:linear-gradient(180deg,rgba(201,168,60,0.12),transparent);
+  border-radius:3px;pointer-events:none;}
+
+/* ── STEAM ── */
+#ls-steam{
+  position:absolute;
+  bottom:90px;left:37px;
+  display:flex;gap:4px;align-items:flex-end;}
+.ls-steam-puff{
+  width:3px;border-radius:2px;
+  background:linear-gradient(180deg,transparent,rgba(220,190,160,0.32));
+  animation:steamRise 2.2s ease-out infinite;}
+.ls-steam-puff:nth-child(1){height:12px;animation-delay:0s;}
+.ls-steam-puff:nth-child(2){height:16px;animation-delay:0.6s;}
+.ls-steam-puff:nth-child(3){height:9px;animation-delay:1.2s;}
+@keyframes steamRise{
+  0%{transform:translateY(0) scaleX(1);opacity:0.32;}
+  60%{transform:translateY(-12px) scaleX(1.5);opacity:0.16;}
+  100%{transform:translateY(-22px) scaleX(0.5);opacity:0;}}
+
+/* ── PAPER STACK ── */
+#ls-paper-stack{
+  position:absolute;
+  bottom:56px;left:66px;width:34px;}
+.ls-paper-sheet{border-radius:1px;margin-bottom:2px;}
+.ls-paper-sheet:nth-child(1){
+  height:4px;
+  background:linear-gradient(90deg,#3e3828,#30281c);
+  width:34px;
+  box-shadow:0 -1px 0 rgba(255,255,255,0.05);}
+.ls-paper-sheet:nth-child(2){
+  height:4px;
+  background:linear-gradient(90deg,#342e20,#28221a);
+  width:32px;margin-left:1px;}
+.ls-paper-sheet:nth-child(3){
+  height:3px;
+  background:#221e18;width:30px;margin-left:2px;}
+
+/* ── RESPONSIVE adjustments for loading ── */
+@media(max-width:768px){
+  #ls-room{width:300px;height:240px;}
+  #ls-monitor{width:170px;}
+  #ls-crt{width:146px;height:106px;}
+  #ls-boot-text{font-size:9px;padding:5px 7px;}
+  #ls-keyboard{width:110px;bottom:44px;}
+  #ls-mouse{bottom:44px;right:38px;width:18px;height:26px;}
+  #ls-coffee{bottom:44px;left:24px;width:21px;height:26px;}
+  #ls-lamp{right:18px;}
+  #ls-lamp-arm{height:82px;}
+  #ls-desk-surface{height:44px;}
+  #ls-paper-stack{bottom:44px;left:52px;}
+  #ls-steam{bottom:72px;left:28px;}
+  #ls-wall-detail{display:none;}
+  #ls-clock{display:none;}
+  #ls-cable{display:none;}
+  #ls-mouse-cable{display:none;}
+  #ls-coffee-shine{display:none;}
+}
+@media(max-width:480px){
+  #ls-room{width:240px;height:195px;}
+  #ls-monitor{width:138px;}
+  #ls-crt{width:118px;height:86px;}
+  #ls-boot-text{font-size:8px;padding:4px 6px;}
+  #ls-keyboard{width:90px;bottom:38px;}
+  #ls-mouse{bottom:38px;right:28px;width:15px;height:21px;}
+  #ls-coffee{bottom:38px;left:18px;width:17px;height:21px;}
+  #ls-lamp{right:10px;}
+  #ls-lamp-arm{height:64px;}
+  #ls-desk-surface{height:36px;}
+  #ls-paper-stack{bottom:38px;left:42px;width:26px;}
+  #ls-steam{bottom:60px;left:20px;}
+}
    Breakpoints:
    - ≤480px  : small phones (SE, Galaxy A series)
    - ≤600px  : all phones
@@ -656,6 +1115,87 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 @keyframes flashRed{0%{filter:brightness(1);}40%{filter:brightness(1.4) sepia(0.5) saturate(2);}100%{filter:brightness(1);}}
 #form-paper.flash-correct{animation:flashGreen 0.4s ease;}
 #form-paper.flash-wrong-boss{animation:flashRed 0.5s ease;}
+/* ── STAGE INDICATOR di atas queue bar ── */
+#queue-wrap{display:flex;flex-direction:column;gap:4px;}
+#stage-label{
+  font-family:var(--font-mono);
+  font-size:13px;color:var(--ink-faded);
+  letter-spacing:3px;text-align:center;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+#stage-label .stage-num{color:var(--gold);font-size:15px;}
+#stage-label .stage-pip{
+  display:inline-block;width:6px;height:6px;
+  border-radius:50%;background:#3a2a10;border:1px solid #5a4020;
+}
+#stage-label .stage-pip.done{background:#5a4020;}
+#stage-label .stage-pip.active{
+  background:var(--gold);border-color:var(--gold);
+  box-shadow:0 0 4px var(--gold);
+}
+
+/* ── KEYBOARD SHORTCUT HINT (desktop only) ── */
+#key-hint{
+  font-family:var(--font-mono);
+  font-size:11px;color:#3a2808;
+  text-align:center;letter-spacing:1px;
+  opacity:0;transition:opacity 1s;
+}
+#key-hint.show{opacity:1;}
+.key-badge{
+  display:inline-block;
+  padding:1px 5px;border:1px solid #3a2808;
+  border-radius:3px;border-bottom:2px solid #1a1004;
+  font-size:11px;color:#5a4020;
+  background:#1e1408;
+  margin:0 2px;
+}
+@media(pointer:fine){
+  #key-hint{display:block;}
+}
+@media(pointer:coarse){
+  #key-hint{display:none;}
+}
+
+/* ── GHOST SLIDE TRANSITION ── */
+@keyframes ghostSlideIn{
+  from{opacity:0;transform:rotate(0.4deg) translateX(24px);}
+  to{opacity:1;transform:rotate(0.4deg) translateX(0);}
+}
+@keyframes ghostSlideOut{
+  from{opacity:1;transform:rotate(0.4deg) translateX(0);}
+  to{opacity:0;transform:rotate(0.4deg) translateX(-20px);}
+}
+@media(max-width:768px){
+  @keyframes ghostSlideIn{
+    from{opacity:0;transform:translateX(20px);}
+    to{opacity:1;transform:translateX(0);}
+  }
+  @keyframes ghostSlideOut{
+    from{opacity:1;transform:translateX(0);}
+    to{opacity:0;transform:translateX(-16px);}
+  }
+}
+#form-paper.slide-in{animation:ghostSlideIn 0.3s ease forwards;}
+#form-paper.slide-out{animation:ghostSlideOut 0.2s ease forwards;}
+#ghost-doll.slide-in-doll{animation:dollSlideIn 0.3s ease forwards;}
+@keyframes dollSlideIn{
+  from{opacity:0;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* ── PREFERS REDUCED MOTION ── */
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;}
+  #ghost-doll svg{animation:none!important;}
+  #ghost-doll.boss-aura svg{animation:none!important;}
+  .go-skull{animation:none!important;}
+  #title-hud.boss-mode{animation:none!important;}
+  #sin-badge.boss{animation:none!important;}
+  .queue-dot.boss-dot.current{animation:none!important;}
+  .ls-steam-puff{animation:none!important;}
+  #ls-room.do-zoom{animation:none!important;opacity:0;}
+}
 </style>
 </head>
 <body>
@@ -665,6 +1205,8 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
   <div id="ls-ambient"></div>
   <div id="ls-scanline-overlay"></div>
   <div id="ls-room">
+    <div id="ls-wall-detail"></div>
+    <div id="ls-clock"></div>
     <div id="ls-lamp">
       <div id="ls-lamp-arm"><div id="ls-lamp-head"><div id="ls-lamp-light"></div></div></div>
       <div id="ls-lamp-base"></div>
@@ -672,6 +1214,7 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
     <div id="ls-monitor">
       <div id="ls-bezel"><div id="ls-crt"><div id="ls-scanlines"></div><div id="ls-boot-text"></div></div></div>
       <div id="ls-neck"></div><div id="ls-stand"></div>
+      <div id="ls-cable"></div>
     </div>
     <div id="ls-desk-surface"></div>
     <div id="ls-keyboard">
@@ -679,9 +1222,11 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
       <div class="ls-key-row"><div class="ls-key wide"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div><div class="ls-key"></div></div>
       <div class="ls-key-row"><div class="ls-key space"></div><div class="ls-key"></div><div class="ls-key"></div></div>
     </div>
+    <div id="ls-mouse-cable"></div>
     <div id="ls-mouse"></div>
     <div id="ls-steam"><div class="ls-steam-puff"></div><div class="ls-steam-puff"></div><div class="ls-steam-puff"></div></div>
     <div id="ls-coffee"></div>
+    <div id="ls-coffee-shine"></div>
     <div id="ls-paper-stack"><div class="ls-paper-sheet"></div><div class="ls-paper-sheet"></div><div class="ls-paper-sheet"></div></div>
   </div>
 </div>
@@ -748,7 +1293,15 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
       <button class="sort-btn" id="btn-heaven" onclick="sort('Surga')"><span class="btn-icon">☁️</span> SURGA</button>
       <button class="sort-btn" id="btn-hell" onclick="sort('Neraka')"><span class="btn-icon">🔥</span> NERAKA</button>
     </div>
-    <div id="queue-bar"></div>
+    <div id="key-hint">
+      <span class="key-badge">1</span> Surga &nbsp;·&nbsp;
+      <span class="key-badge">2</span> Neraka &nbsp;·&nbsp;
+      <span class="key-badge">Esc</span> Tutup panel
+    </div>
+    <div id="queue-wrap">
+      <div id="stage-label"></div>
+      <div id="queue-bar"></div>
+    </div>
   </div>
 </div>
 <!-- GAME OVER -->
@@ -769,9 +1322,9 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 </div>
 <!-- BOSS INTRO -->
 <div id="boss-intro-screen">
-  <div id="bi-label">⚠ JIWA BERBAHAYA TERDETEKSI ⚠</div>
+  <div id="bi-label">⚠ ENTITAS TERDETEKSI ⚠</div>
   <div id="bi-doll"></div>
-  <div id="bi-title">BOSS ENCOUNTER</div>
+  <div id="bi-title">—</div>
   <div id="bi-name">—</div>
   <div id="bi-desc">—</div>
   <button id="btn-fight" onclick="startBossFight()">⚔ HADAPI ⚔</button>
@@ -1346,7 +1899,11 @@ function randomizeBoss(bossTemplate){
 function updateHUD(){
   document.getElementById('score-val').textContent=score;
   document.getElementById('lives-val').textContent='❤️'.repeat(Math.max(lives,0))+'🖤'.repeat(Math.max(3-lives,0));
-  document.getElementById('title-hud').textContent=`☠ DEAD DESK ☠ [S${currentLevel}]`;
+  const tierLabel=currentLevel===1?'☠ DEAD DESK ☠':
+                  currentLevel===2?'☠ DEAD DESK ☠':
+                  currentLevel===3?'☠ DEAD DESK ☠':
+                  currentLevel>=4?'☠ DEAD DESK ☠':'☠ DEAD DESK ☠';
+  document.getElementById('title-hud').textContent=`☠ DEAD DESK ☠  [S${currentLevel}]`;
 }
 function setFeedback(m,c){const el=document.getElementById('feedback');el.textContent=m;el.className=c;}
 
@@ -1355,8 +1912,21 @@ function renderQueue(){
   for(let i=0;i<QUEUE_SIZE;i++){
     const isB=BOSS_POSITIONS.includes(i+1),dot=document.createElement('div');
     let c='queue-dot';if(isB)c+=' boss-dot';if(i<queueIndex)c+=' done';else if(i===queueIndex)c+=' current';else c+=' pending';
-    dot.className=c;dot.title=isB?`Level ${i+1}: BOSS`:`Level ${i+1}`;bar.appendChild(dot);
+    dot.className=c;dot.title=isB?`Slot ${i+1}: BOSS`:`Slot ${i+1}`;bar.appendChild(dot);
   }
+
+  // Stage label — tampilkan nomor stage + progress jiwa dalam stage
+  const sl=document.getElementById('stage-label');
+  if(!sl) return;
+  const jiwaSelesai=queueIndex;
+  const bossPool4=currentLevel>=4;
+  const tierLabel=currentLevel===1?'PEMULA':currentLevel===2?'MENENGAH':currentLevel===3?'MAHIR':currentLevel===4?'BERBAHAYA':'EKSTREM';
+  sl.innerHTML=`
+    <span style="color:#5a4020">STAGE</span>
+    <span class="stage-num">${currentLevel}</span>
+    <span style="color:#3a2808;font-size:11px;letter-spacing:1px;">[${tierLabel}]</span>
+    <span style="color:#3a2808;margin-left:4px;font-size:11px">${jiwaSelesai}/${QUEUE_SIZE} jiwa</span>
+  `;
 }
 
 function setBossMode(on){
@@ -1471,11 +2041,53 @@ function buildQueue(){
 function nextGhost(){
   if(queueIndex>=QUEUE_SIZE){showLevelComplete();return;}
   currentGhost=queue[queueIndex];inBossFight=currentGhost.isBoss||false;
-  if(inBossFight)showBossIntro(currentGhost);else{setBossMode(false);renderGhost();}
+  if(inBossFight){
+    showBossIntro(currentGhost);
+  } else {
+    setBossMode(false);
+    // Slide out lama, slide in baru
+    const paper=document.getElementById('form-paper');
+    const doll=document.getElementById('ghost-doll');
+    paper.classList.remove('slide-in','slide-out','flash-correct','flash-wrong-boss','shake');
+    doll.classList.remove('slide-in-doll');
+    // Hanya animate jika prefers-reduced-motion tidak aktif
+    const noAnim=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(noAnim){
+      renderGhost();
+    } else {
+      paper.classList.add('slide-out');
+      setTimeout(()=>{
+        paper.classList.remove('slide-out');
+        renderGhost();
+        paper.classList.add('slide-in');
+        doll.classList.add('slide-in-doll');
+        setTimeout(()=>{
+          paper.classList.remove('slide-in');
+          doll.classList.remove('slide-in-doll');
+        },320);
+      },180);
+    }
+  }
 }
 
 function showBossIntro(boss){
   playSoundBoss();
+  // Label dan title disesuaikan per bossLevel
+  const labels={
+    1:'⚠ JIWA BERBAHAYA TERDETEKSI ⚠',
+    2:'⛔ ENTITAS ANOMALI TERDETEKSI ⛔',
+    3:'🔴 PERINGATAN SISTEM TINGKAT 3 🔴',
+    4:'☠ BAHAYA MAKSIMUM — PROSEDUR DARURAT ☠',
+  };
+  const titles={
+    1:'BOSS ENCOUNTER',
+    2:'ANOMALI ENCOUNTER',
+    3:'KRISIS KOSMIS',
+    4:'[SISTEM TIDAK DAPAT MENGKATEGORIKAN]',
+  };
+  const bl=boss.bossLevel||1;
+  document.getElementById('bi-label').textContent=labels[bl]||labels[1];
+  document.getElementById('bi-title').textContent=titles[bl]||titles[1];
   document.getElementById('bi-name').textContent=`"${boss.alias}"`;
   document.getElementById('bi-desc').textContent=boss.bossIntroDesc;
   document.getElementById('bi-doll').innerHTML=buildGhostSVG(boss);
@@ -1588,6 +2200,38 @@ function resetTabs(){activeTab='biodata';document.querySelectorAll('.ghost-tab')
   document.getElementById('loading-screen').style.transition='none';
   setTimeout(go,200);
 })();
+
+// ── KEYBOARD SHORTCUTS ──
+document.addEventListener('keydown',e=>{
+  if(e.repeat) return;
+  const overlayOpen=
+    document.getElementById('game-over-screen').classList.contains('show')||
+    document.getElementById('level-complete-screen').classList.contains('show')||
+    document.getElementById('boss-intro-screen').classList.contains('show');
+
+  // Esc: tutup side panel / dismiss overlay utama
+  if(e.key==='Escape'){
+    if(activeTab!=='biodata'){switchTab('biodata');return;}
+    return;
+  }
+  if(overlayOpen) return;
+  if(!currentGhost) return;
+
+  // Sort
+  if(e.key==='1'||e.key==='ArrowLeft') sort('Surga');
+  if(e.key==='2'||e.key==='ArrowRight') sort('Neraka');
+
+  // Tab switching
+  if(e.key==='q'||e.key==='Q') switchTab('biodata');
+  if(e.key==='w'||e.key==='W') switchTab('barang');
+  if(e.key==='e'||e.key==='E') switchTab('tanya');
+});
+
+// Tampilkan hint keyboard setelah 2 detik (hanya muncul di pointer:fine / desktop)
+setTimeout(()=>{
+  const hint=document.getElementById('key-hint');
+  if(hint) hint.classList.add('show');
+},2000);
 
 updateHUD();buildQueue();nextGhost();
 </script>
