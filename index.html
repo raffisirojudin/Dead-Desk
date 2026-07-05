@@ -1236,6 +1236,17 @@ body::after{content:'';position:fixed;top:-160px;left:50%;transform:translateX(-
 }
 body.jumpscare-shake{animation:jumpscareScreenShake 0.6s ease;}
 
+/* ── MUTE BUTTON ── */
+#mute-btn{
+  font-family:var(--font-mono);font-size:15px;
+  background:none;border:1px solid #3a2808;
+  border-radius:3px;padding:3px 8px;cursor:pointer;
+  color:#5a4020;transition:color 0.2s,border-color 0.2s;
+  line-height:1;touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;}
+#mute-btn:hover{color:var(--gold);border-color:var(--gold);}
+#mute-btn.muted{color:#cc4444;border-color:#cc4444;}
+
 /* ── COMBO DISPLAY ── */
 #combo-display{
   font-family:var(--font-mono);font-size:16px;letter-spacing:2px;
@@ -1401,7 +1412,11 @@ body.jumpscare-shake{animation:jumpscareScreenShake 0.6s ease;}
   <div id="topbar">
     <div class="hud-item">SKOR: <span id="score-val">0</span></div>
     <div class="hud-item" id="title-hud">☠ DEAD DESK ☠</div>
-    <div class="hud-item">NYAWA: <span id="lives-val">❤️❤️❤️</span></div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="hud-item">NYAWA: <span id="lives-val">❤️❤️❤️</span></div>
+      <button id="mute-btn" onclick="toggleMute()" title="Mute/Unmute">🔊</button>
+      <button id="pause-btn" onclick="togglePause()" title="Pause (P)" style="font-family:var(--font-mono);font-size:15px;background:none;border:1px solid #3a2808;border-radius:3px;padding:3px 8px;cursor:pointer;color:#5a4020;transition:color 0.2s,border-color 0.2s;line-height:1;touch-action:manipulation;-webkit-tap-highlight-color:transparent;">⏸</button>
+    </div>
   </div>
   <div id="main">
     <div id="ghost-panel">
@@ -1520,6 +1535,16 @@ const ghosts=[
   {nama:"Wiyono Kopral",alias:"Pak Wiyono Tegas",umur:58,sebab:"Luka Lama Perang",asal:"Lampung",pekerjaan:"Mantan Tentara / Debt Collector",dosa:"Suka Berbohong",kebiasaan:"Mengintimidasi warga dengan jabatan palsu",karma:["Pemberani (untuk hal salah)","Perokok","Suka Tinju"],catatan:"Pensiun lalu jadi preman berseragam tidak resmi.",warna:{body:"#b8b0a8",aksen:"#504840",mata:"#201808",pipi:"#c0a080"},barang:[{icon:"🎖️",nama:"Medali Militer (Palsu)",hint:"Logamnya terlalu ringan. Cat emasnya mengelupas. Bukan dari dinas resmi."},{icon:"📣",nama:"Megafon Kecil",hint:"Dipakai untuk teriak di depan rumah orang yang dianggap berutang."},{icon:"👊",nama:"Sarung Tinju Usang",hint:"Ada noda cokelat tua yang bukan dari latihan tinju biasa."}],dialog:[{pertanyaan:"Kamu masih pakai seragam militer setelah pensiun?",jujur:"Iya. Itu cara saya supaya orang takut. Lebih mudah kerja kalau orang takut.",bohong:"Saya menggunakannya dengan bangga sebagai veteran!"},{pertanyaan:"Debt collector — kamu pernah menyakiti orang?",jujur:"Pernah. Terlalu sering. Saya tidak bangga dengan itu.",bohong:"Saya hanya menjalankan tugas! Tidak ada yang tersakiti!"}]},
   {nama:"Mbok Jamu",alias:"Simbah Jamu Ajaib",umur:82,sebab:"Usia Tua (Damai)",asal:"Salatiga, Jawa Tengah",pekerjaan:"Penjual Jamu Gendong",dosa:"Suka Berbagi",kebiasaan:"Bagi jamu gratis ke yang sakit tidak mampu",karma:["Bijak","Kuat Fisik","Hafal Ratusan Ramuan"],catatan:"Tidak pernah absen berjualan 50 tahun, hujan maupun terik.",warna:{body:"#e0c8a0",aksen:"#907830",mata:"#302010",pipi:"#f0b888"},barang:[{icon:"🫙",nama:"Botol Jamu Kunyit Asam",hint:"Masih ada sisa jamu. Harum. Label kecil: 'gratis kalau sakit'."},{icon:"🎒",nama:"Bakul Gendong Bambu",hint:"Retak di beberapa sudut tapi diperkuat tali rafia. Menemani 50 tahun."},{icon:"🌺",nama:"Bunga Kamboja Kering",hint:"Diselipkan di sela bakul. Kata Mbok Jamu sebagai pengingat akan kematian."}],dialog:[{pertanyaan:"50 tahun jualan jamu — tidak pernah absen?",jujur:"Tidak pernah. Hujan ya tetap berangkat. Panas ya tetap berangkat.",bohong:""},{pertanyaan:"Apa rahasiamu panjang umur?",jujur:"Jamu saya sendiri. Dan tidak pernah menyimpan dendam. Itu yang paling manjur.",bohong:""}]},
   {nama:"Dalang Surya",alias:"Ki Surya Bohong",umur:66,sebab:"Keracunan Makanan",asal:"Cirebon, Jawa Barat",pekerjaan:"Dalang / Seniman",dosa:"Suka Berbohong",kebiasaan:"Mengklaim karya orang lain, manipulasi dana seni",karma:["Berbakat","Licik","Pandai Bicara"],catatan:"Menggugat seniman junior yang mengungguli karya aslinya.",warna:{body:"#c0b8d0",aksen:"#605878",mata:"#201828",pipi:"#c8a898"},barang:[{icon:"🪆",nama:"Wayang Kulit (Milik Orang Lain)",hint:"Di bawah wayang ada inisial 'RS' — bukan 'DS'. Punya Rudi Santoso."},{icon:"📰",nama:"Kliping Artikel 'Maestro Wayang'",hint:"Semua karya yang disebut bukan miliknya."},{icon:"🍢",nama:"Tusuk Sate Sisa Makan",hint:"Penyebab kematiannya. Keracunan sate di acara pesta."}],dialog:[{pertanyaan:"Apakah semua karya wayangmu benar-benar milikmu?",jujur:"Tidak. Banyak yang saya klaim dari murid-murid saya.",bohong:"Semua karya saya original! Saya maestro! Yang lain hanya meniru saya!"},{pertanyaan:"Kamu menggugat seniman junior — mengapa?",jujur:"Karena dia lebih baik dari saya. Dan saya takut tersaingi.",bohong:"Karena dia mencuri teknik saya! Saya yang mengajarinya!"}]},
+  // ── GHOST TAMBAHAN ──
+  {nama:"Reza Kurniawan",alias:"Bang Reza Peminjam",umur:41,sebab:"Jantung Mendadak",asal:"Depok, Jawa Barat",pekerjaan:"Makelar Properti",dosa:"Suka Berbohong",kebiasaan:"Meminjam uang dengan janji palsu lalu menghilang",karma:["Suka Pesta","Berlidah Manis","HP Selalu Mati"],catatan:"Tercatat meminjam uang dari 31 orang berbeda tanpa berniat mengembalikan.",warna:{body:"#c8d0c0",aksen:"#687858",mata:"#283018",pipi:"#d0b8a0"},barang:[{icon:"📵",nama:"HP Mati Kehabisan Baterai",hint:"Ini sengaja. Log panggilan terakhir: 47 missed call dari orang yang sama dalam seminggu."},{icon:"🤝",nama:"Kontrak Pinjaman Bermaterai",hint:"Kontrak ini valid secara hukum. Tapi tanggal jatuh tempo sudah lewat 3 tahun yang lalu. Tidak pernah dibayar."},{icon:"🎭",nama:"Foto Pesta Mewah",hint:"Foto ini diambil seminggu sebelum meninggal. Lokasi: resort bintang 5. Dibayar dari uang pinjaman terakhir."}],dialog:[{pertanyaan:"Berapa orang yang masih menunggu uang mereka kembali?",jujur:"...Banyak. Saya tidak berani hitung.",bohong:"Semua sudah saya kembalikan! Mereka yang salah ingat!"},{pertanyaan:"Mengapa HP-mu selalu mati?",jujur:"Supaya tidak perlu angkat telepon dari yang nagih.",bohong:"Baterai saya memang cepat habis. Mau bagaimana lagi?"}]},
+  {nama:"Suster Margaretha",alias:"Suster Baik Hati",umur:63,sebab:"Usia Tua",asal:"Flores, NTT",pekerjaan:"Biarawati / Perawat Rumah Sakit Swasta",dosa:"Suka Berbagi",kebiasaan:"Merawat pasien tidak mampu secara gratis selama 35 tahun",karma:["Sabar Luar Biasa","Pantang Menyerah","Tidak Pernah Cuti"],catatan:"Tidak pernah mengambil gaji penuh — sisanya selalu disumbangkan ke pasien miskin.",warna:{body:"#e8e0d8",aksen:"#a89888",mata:"#302820",pipi:"#f0c8b0"},barang:[{icon:"📿",nama:"Rosario Tua",hint:"Dipakai setiap hari selama 40 tahun. Sudah aus di beberapa bagian. Masih dipakai sampai hari terakhir."},{icon:"💊",nama:"Obat-Obatan Pribadi Yang Tak Pernah Diambil",hint:"Dokter meresepkan obat untuk dirinya sendiri. Tapi uangnya dipakai untuk pasien lain. Dia memilih tidak minum obat."},{icon:"📋",nama:"Daftar Nama Pasien Sembuh",hint:"Lebih dari 800 nama. Semua ditulis tangan. Di bawah setiap nama ada catatan kecil tentang keluarganya."}],dialog:[{pertanyaan:"Kamu tidak pernah mengambil gaji penuh — mengapa?",jujur:"Saya tidak butuh banyak. Yang butuh adalah mereka.",bohong:""},{pertanyaan:"Apakah kamu menyesal tidak menjaga kesehatanmu sendiri?",jujur:"Sedikit. Tapi kalau diulang, saya akan lakukan hal yang sama.",bohong:""}]},
+  {nama:"Pak Ujang",alias:"Ujang Si Tukang Fitnah",umur:55,sebab:"Tersengat Lebah Satu Sarang",asal:"Ciamis, Jawa Barat",pekerjaan:"Pengangguran / Tukang Gosip RT",dosa:"Suka Berbohong",kebiasaan:"Menyebarkan fitnah ke seluruh RT sampai beberapa keluarga hancur",karma:["Rajin ke Warung","Malas Kerja","Mulut Ember"],catatan:"Bertanggung jawab atas perceraian 3 pasangan dan perkelahian antar tetangga yang belum selesai sampai sekarang.",warna:{body:"#c0c8b8",aksen:"#607050",mata:"#202810",pipi:"#c8b090"},barang:[{icon:"☕",nama:"Gelas Kopi Warung Langganan",hint:"Di gelas ini sudah tertinggal 'kesan' dari ribuan jam bergosip. Pengelola warung bersaksi dia duduk dari pagi sampai sore setiap hari."},{icon:"📱",nama:"HP Penuh Screenshot",hint:"Semua screenshot percakapan orang lain yang dia dapatkan secara tidak sah. Digunakan sebagai 'bukti' fitnah."},{icon:"🗞️",nama:"Koran Lama Dengan Coretan",hint:"Koran ini penuh coretan — bukan karena dibaca, tapi karena dia coret nama-nama tetangga yang sudah 'berhasil' dia adu domba."}],dialog:[{pertanyaan:"Berapa keluarga yang rusak karena mulutmu?",jujur:"...Saya tidak pernah hitung. Tapi saya tahu itu salah saya.",bohong:"Tidak ada! Saya hanya menyampaikan kebenaran!"},{pertanyaan:"Mengapa kamu suka bergosip?",jujur:"Karena hidup saya membosankan dan saya tidak punya keberanian untuk memperbaikinya.",bohong:"Saya ini informan RT! Menjaga ketertiban lingkungan!"}]},
+  {nama:"Ibu Ratnasari",alias:"Bu Ratna Guru Sejati",umur:58,sebab:"Kecelakaan Saat Mengajar di Daerah Terpencil",asal:"Toraja, Sulawesi Selatan",pekerjaan:"Guru SD Terpencil",dosa:"Suka Berbagi",kebiasaan:"Mengajar di daerah tanpa listrik dan jalan aspal selama 28 tahun",karma:["Tangguh","Tidak Pernah Mengeluh","Dicintai Murid"],catatan:"Meninggal saat perjalanan kembali dari sekolah — jalan longsor. Murid-muridnya yang menemukan.",warna:{body:"#d8c8b8",aksen:"#987850",mata:"#3a2818",pipi:"#e8c0a0"},barang:[{icon:"📚",nama:"Buku Pelajaran Usang",hint:"Buku ini sudah dipakai bergantian oleh 6 angkatan murid. Sampulnya sudah hilang. Masih dipakai karena tidak ada yang baru."},{icon:"🕯️",nama:"Lilin Cadangan",hint:"Guru ini membawa lilin sendiri karena sekolahnya tidak punya listrik. Kadang mengajar sampai larut malam."},{icon:"🖼️",nama:"Foto Kelas Bersama Murid",hint:"Foto ini diambil dari kamera disposable yang dikumpulkan murid-muridnya dari uang jajan selama sebulan sebagai hadiah ulang tahun."}],dialog:[{pertanyaan:"28 tahun di daerah terpencil — tidak pernah minta pindah?",jujur:"Pernah diajak pindah. Saya tolak. Kalau saya pergi, siapa yang mengajar mereka?",bohong:""},{pertanyaan:"Apakah kamu bahagia dengan pilihanmu?",jujur:"Sangat. Melihat murid bisa membaca dan berhitung — itu tidak bisa dibeli dengan apapun.",bohong:""}]},
+  {nama:"Febri Ananta",alias:"Febri Si Ghostwriter",umur:33,sebab:"Overdosis Kopi dan Deadline",asal:"Yogyakarta",pekerjaan:"Penulis Hantu / Ghostwriter",dosa:"Suka Berbohong",kebiasaan:"Menulis buku orang lain lalu merahasiakan identitasnya seumur hidup",karma:["Berbakat Tersembunyi","Hidup dalam Bayang","Tidak Pernah Diakui"],catatan:"Menulis 47 buku bestseller atas nama orang lain. Tidak pernah satu pun atas namanya sendiri.",warna:{body:"#c8d8e8",aksen:"#5878a8",mata:"#182840",pipi:"#c0b0a8"},barang:[{icon:"✍️",nama:"Pena Favorit",hint:"Di pena ini terukir nama bukan 'Febri' — tapi nama kliennya. Hadiah dari klien pertama. Ironis."},{icon:"📖",nama:"Buku Bestseller Tanpa Namanya",hint:"Buku ini terjual 200.000 eksemplar. Di halaman acknowledgement hanya tertulis: 'terima kasih kepada tim kreatif kami'."},{icon:"📝",nama:"Naskah Yang Tidak Pernah Dikirim",hint:"Ini satu-satunya naskah yang Febri tulis untuk dirinya sendiri. Tidak pernah dikirim ke penerbit. Terlalu takut."}],dialog:[{pertanyaan:"Apakah kamu menyesal tidak pernah menulis atas namamu sendiri?",jujur:"Setiap hari. Tapi saya terlalu takut untuk mencoba.",bohong:"Tidak! Saya bangga bisa membantu orang lain berkarya!"},{pertanyaan:"Apakah pekerjaan ghostwriter adalah kebohongan?",jujur:"Iya. Saya membantu orang lain berbohong kepada pembaca mereka. Dan saya juga berbohong pada diri sendiri.",bohong:"Tidak! Ini profesi yang mulia! Saya tidak berbohong siapapun!"}]},
+  {nama:"Kakek Slamet",alias:"Mbah Slamet Pejuang",umur:89,sebab:"Usia Tua — Tidur Tidak Bangun",asal:"Solo, Jawa Tengah",pekerjaan:"Pejuang Kemerdekaan (Purn.)",dosa:"Suka Berbagi",kebiasaan:"Mengajarkan sejarah kemerdekaan kepada anak cucu secara gratis",karma:["Veteran Sejati","Rendah Hati","Penuh Luka Lama"],catatan:"Pernah menolak tunjangan veteran karena merasa rekan-rekannya yang gugur lebih berhak.",warna:{body:"#d0c8b8",aksen:"#888070",mata:"#302820",pipi:"#d8b898"},barang:[{icon:"🎖️",nama:"Medali Asli",hint:"Ini medali asli, bukan palsu. Diverifikasi dari arsip negara. Tapi Mbah Slamet menyimpannya di laci, bukan dipajang."},{icon:"📸",nama:"Foto Hitam Putih Bersama Kawan",hint:"Foto ini diambil 1945. Dari 12 orang di foto, hanya Mbah Slamet yang masih hidup lebih dari 10 tahun setelah kemerdekaan."},{icon:"🍃",nama:"Daun Pisang Kering",hint:"Ini bukan artefak bersejarah. Ini bekal nasi yang dia simpan dari hari terakhir sebelum pertempuran. Disimpan 70 tahun sebagai pengingat bahwa dulu mereka berjuang dengan perut lapar."}],dialog:[{pertanyaan:"Kenapa kamu menolak tunjangan veteran?",jujur:"Teman-teman saya mati di sana. Mereka tidak bisa menikmati kemerdekaan. Saya tidak pantas menerima lebih dari mereka.",bohong:""},{pertanyaan:"Apa yang paling kamu sesali?",jujur:"Tidak bisa hadir di pemakaman semua rekan saya satu per satu. Ada yang pergi saat saya sakit. Ada yang pergi tanpa kabar.",bohong:""}]},
+  {nama:"Drs. Bambang Koruptor",alias:"Pak Bambang Yang Terhormat",umur:66,sebab:"Serangan Jantung Saat Sidang",asal:"Jakarta Pusat",pekerjaan:"Anggota Dewan / Koruptor",dosa:"Suka Berbohong",kebiasaan:"Korupsi dana infrastruktur dan bansos selama 20 tahun",karma:["Berdasi Mahal","Rajin Berpidato","Jarang di Kantor"],catatan:"Dana bantuan sosial senilai 47 miliar diselewengkan. Sidang baru dimulai saat meninggal mendadak.",warna:{body:"#c8c0b0",aksen:"#706858",mata:"#282010",pipi:"#d0a880"},barang:[{icon:"💼",nama:"Tas Hermes Asli",hint:"Dibeli dari uang 'honorarium rapat' yang fiktif. Nota pembelian masih ada di dalam tasnya."},{icon:"🏠",nama:"Sertifikat 9 Rumah",hint:"Semua atas nama anggota keluarga. Tapi sumbernya ada di laporan keuangan yang sudah dicairkan Pak Bambang."},{icon:"🖊️",nama:"Pena Emas Bermeterai DPR",hint:"Pena resmi DPR. Dipakai untuk menandatangani persetujuan dana yang kemudian dikorupsi. Masih ada sidik jarinya."}],dialog:[{pertanyaan:"Dana bansos yang kamu korupsi — kamu tahu itu untuk siapa?",jujur:"...Untuk rakyat miskin. Saya tahu. Dan saya tetap ambil.",bohong:"Dana itu digunakan sesuai peruntukannya! Ada oknum lain yang memalsukan laporannya!"},{pertanyaan:"Apakah kamu menyesal?",jujur:"Sekarang iya. Tapi dulu tidak. Dan itu yang paling mengerikan.",bohong:"Saya tidak bersalah! Pengadilan belum memutuskan!"}]},
+  {nama:"Nyi Kasih",alias:"Emak Kasih Warung Nasi",umur:74,sebab:"Kelelahan",asal:"Indramayu, Jawa Barat",pekerjaan:"Penjual Nasi Murah",dosa:"Suka Berbagi",kebiasaan:"Menjual nasi dengan harga seikhlasnya — yang tidak punya uang boleh makan gratis",karma:["Tidak Pernah Menolak","Tidur Selalu Terakhir","Bangun Selalu Pertama"],catatan:"Warungnya buka 50 tahun tanpa tutup satu hari pun kecuali saat banjir. Bangkrut berkali-kali tapi selalu buka lagi.",warna:{body:"#e0c8a8",aksen:"#a88050",mata:"#382810",pipi:"#f0b888"},barang:[{icon:"🍚",nama:"Centong Nasi Plastik Retak",hint:"Centong ini sudah retak di gagangnya tapi masih dipakai karena 'masih bisa dipakai'. Filosofi hidup Nyi Kasih dalam satu benda."},{icon:"📓",nama:"Buku Catatan 'Seikhlasnya'",hint:"Bukan buku hutang. Ini catatan berapa banyak orang yang makan gratis setiap hari. Total: lebih dari 90.000 porsi dalam 50 tahun."},{icon:"🔑",nama:"Kunci Warung Yang Tidak Pernah Dikunci",hint:"Kunci ini tidak pernah dipakai karena warungnya tidak pernah dikunci. 'Siapa tahu ada yang lapar malam-malam,' kata Nyi Kasih."}],dialog:[{pertanyaan:"Warungmu sering rugi — mengapa terus buka?",jujur:"Karena kalau saya tutup, ada yang tidak makan. Saya tidak bisa tidur kalau tahu ada yang lapar.",bohong:""},{pertanyaan:"Kamu punya tabungan?",jujur:"Tidak. Tapi saya punya banyak teman. Itu lebih berharga.",bohong:""}]},
+  {nama:"Hermawan Susilo",alias:"Pak Herwanto Makelar Ijazah",umur:49,sebab:"Ditabrak Motor Saat Kabur dari KPK",asal:"Surabaya, Jawa Timur",pekerjaan:"Calo Ijazah Palsu",dosa:"Suka Berbohong",kebiasaan:"Menjual ijazah palsu dari SD sampai S3 kepada siapapun yang bayar",karma:["Cerdas Dipakai Salah","Jaringan Luas","Harga Bisa Nego"],catatan:"Lebih dari 2.000 ijazah palsu beredar atas jasanya. Termasuk ijazah dokter dan insinyur.",warna:{body:"#c0c8d0",aksen:"#5870a0",mata:"#182038",pipi:"#c8a898"},barang:[{icon:"🖨️",nama:"Printer Khusus Dokumen",hint:"Printer ini menggunakan tinta yang persis sama dengan tinta dokumen resmi pemerintah. Seharga motor."},{icon:"🎓",nama:"Sampel Ijazah Dari 47 Universitas",hint:"Semua palsu tapi sangat meyakinkan. Termasuk satu universitas yang tidak pernah ada."},{icon:"💳",nama:"Rekening Atas 12 Nama Berbeda",hint:"Semua aktif. Semua atas namanya dengan KTP berbeda. Berisi total pendapatan dari 12 tahun bisnis ijazah palsu."}],dialog:[{pertanyaan:"Ijazah dokter palsu — kamu tahu risikonya?",jujur:"Tahu. Saya pernah dapat kabar salah satu 'dokter' saya membuat pasien salah diagnosis. Saya tidak tidur 3 hari.",bohong:"Itu tanggung jawab mereka sendiri! Saya hanya penjual dokumen!"},{pertanyaan:"Berapa orang yang merasa punya keahlian yang sebenarnya tidak mereka miliki karena jasamu?",jujur:"...Lebih dari yang saya mau ingat.",bohong:"Mereka semua kompeten! Ijazah hanya formalitas!"}]},
 ];
 
 // ── BOSS POOL: dikelompokkan per stage, makin dalam makin mencekam ──
@@ -1974,7 +1999,7 @@ function buildGhostSVG(ghost){
 
 // STATE
 let score=0,lives=3,maxLives=3,currentGhost=null,queue=[],queueIndex=0,currentLevel=1,inBossFight=false,bossTimer=null,bossTimeLeft=0;
-let combo=0,hintCharges=2,tutorialDone=false,ambientNode=null,ambientGain=null;
+let combo=0,hintCharges=2,tutorialDone=false,ambientNode=null,ambientGain=null;let isMuted=false,isPaused=false,bestCombo=0;
 const QUEUE_SIZE=10,BOSS_POSITIONS=[5,10];
 
 // AUDIO
@@ -2102,7 +2127,8 @@ function triggerJumpscare(boss, onDone){
   // Suara jumpscare — distorsi keras
   playSoundJumpscare(bl);
 
-  // Screen shake
+  // Screen shake + haptic
+  hapticJumpscare();
   document.body.classList.add('jumpscare-shake');
   setTimeout(()=>document.body.classList.remove('jumpscare-shake'),650);
 
@@ -2117,6 +2143,22 @@ function triggerJumpscare(boss, onDone){
     onDone();
   }, 1200);
 }
+
+// ── HAPTIC FEEDBACK ──
+function haptic(pattern){
+  if(!isMuted && navigator.vibrate){
+    try { navigator.vibrate(pattern); } catch(e){}
+  }
+}
+// Pattern: benar=pendek, salah=panjang, combo=berulang, boss=dramatis, jumpscare=panjang kuat
+function hapticCorrect(){ haptic(60); }
+function hapticWrong(){ haptic([100,50,100]); }
+function hapticCombo(n){ haptic(Array.from({length:Math.min(n,5)},(_,i)=>[40,20]).flat().slice(0,-1)); }
+function hapticBossWin(){ haptic([80,40,80,40,160]); }
+function hapticLifeUp(){ haptic([60,30,60,30,200]); }
+function hapticJumpscare(){ haptic([200,50,200,50,400]); }
+function hapticHint(){ haptic([30,20,30]); }
+function hapticTimer(){ haptic(20); } // tick saat 5 detik terakhir
 
 function playSoundJumpscare(level){
   if(actx.state==='suspended') actx.resume();
@@ -2317,6 +2359,7 @@ function startBossTimer(s){
       });
     } else {
       fb.textContent=`⏱ ${bossTimeLeft}s tersisa${bossTimeLeft<=5?' — CEPAT!':''}`;fb.className='wrong';
+      if(bossTimeLeft<=5) hapticTimer();
     }
   },1000);
 }
@@ -2498,12 +2541,13 @@ function continueToNext(){
 }
 
 function sort(pilihan){
-  if(!currentGhost)return;if(actx.state==='suspended'){actx.resume();startAmbient();}stopBossTimer();
+  if(!currentGhost)return;
+  if(isPaused)return;if(actx.state==='suspended'){actx.resume();startAmbient();}stopBossTimer();
   const seharusnya=getDest(currentGhost.dosa),stamp=document.getElementById('stamp'),paper=document.getElementById('form-paper');
   if(pilihan==='Surga'){stamp.className='show-heaven';document.getElementById('stamp-icon').textContent='☁️';document.getElementById('stamp-text').textContent='SURGA\nAPPROVED';}
   else{stamp.className='show-hell';document.getElementById('stamp-icon').textContent='🔥';document.getElementById('stamp-text').textContent='NERAKA\nAPPROVED';}
   if(pilihan===seharusnya){
-    combo++;
+    combo++;if(combo>bestCombo)bestCombo=combo;
     const pts=currentGhost.isBoss?3:1;
     let bonusPts=0;
     // Combo bonus: x3=+1, x5=+2, x7=+3, dst
@@ -2517,22 +2561,22 @@ function sort(pilihan){
     else msg+=` — Jiwa tersortir tepat.`;
     setFeedback(msg,'correct');
 
-    if(combo>=3) playSoundCombo(combo);
-    else if(currentGhost.isBoss) playSoundBossWin();
-    else playSoundCorrect();
+    if(combo>=3){ playSoundCombo(combo); hapticCombo(combo); }
+    else if(currentGhost.isBoss){ playSoundBossWin(); hapticBossWin(); }
+    else{ playSoundCorrect(); hapticCorrect(); }
 
     // Life-up: setiap boss dikalahkan atau combo kelipatan 5
     if(currentGhost.isBoss && lives<5){
       lives++;maxLives=Math.max(maxLives,lives);
       hintCharges=Math.min(hintCharges+1,3); // boss win = +1 hint juga
       updateHUD();
-      setTimeout(()=>{playSoundLifeUp();showFloatingText('+1 ❤️  +1 💡','#ff9999');},400);
+      setTimeout(()=>{playSoundLifeUp();hapticLifeUp();showFloatingText('+1 ❤️  +1 💡','#ff9999');},400);
     } else if(combo>0 && combo%5===0){
       // Combo x5: pilih antara nyawa atau hint tergantung kondisi
       if(lives<5){
         lives++;maxLives=Math.max(maxLives,lives);
         updateHUD();
-        setTimeout(()=>{playSoundLifeUp();showFloatingText(`COMBO x${combo} → +1 ❤️`,'#ff9999');},300);
+        setTimeout(()=>{playSoundLifeUp();hapticLifeUp();showFloatingText(`COMBO x${combo} → +1 ❤️`,'#ff9999');},300);
       } else if(hintCharges<3){
         hintCharges++;
         updateHUD();
@@ -2558,7 +2602,7 @@ function sort(pilihan){
     lives--;updateHUD();
     const bossHint=currentGhost.isBoss?' [Cek BARANG & TANYA!]':'';
     setFeedback(`❌ SALAH — Seharusnya: ${seharusnya}.${bossHint}`,'wrong');
-    playSoundWrong();
+    playSoundWrong(); hapticWrong();
     paper.classList.remove('flash-correct','shake','flash-wrong-boss');void paper.offsetWidth;
     paper.classList.add(currentGhost.isBoss?'flash-wrong-boss':'shake');
     if(lives<=0){setTimeout(triggerGameOver,700);return;}
@@ -2570,16 +2614,18 @@ function sort(pilihan){
 function triggerGameOver(){
   playSoundGameOver();stopBossTimer();setBossMode(false);stopAmbient();
   document.getElementById('go-score-val').textContent=score;
+  bestCombo=Math.max(bestCombo,combo);
   const statsEl=document.getElementById('go-stats');
   if(statsEl){
     statsEl.innerHTML=
-      `Stage Tertinggi: <span style="color:var(--gold)">${currentLevel}</span> &nbsp;·&nbsp; `+
-      `Nyawa Maks: <span style="color:#ff9999">${maxLives}</span>`;
+      `Stage: <span style="color:var(--gold)">${currentLevel}</span> &nbsp;·&nbsp; `+
+      `Nyawa Maks: <span style="color:#ff9999">${maxLives}</span> &nbsp;·&nbsp; `+
+      `Combo Terbaik: <span style="color:#ff9944">${bestCombo}x</span>`;
   }
   document.getElementById('game-over-screen').classList.add('show');
 }
 function restartGame(){
-  score=0;lives=3;maxLives=3;combo=0;hintCharges=2;currentLevel=1;inBossFight=false;tutorialDone=false;
+  score=0;lives=3;maxLives=3;combo=0;bestCombo=0;hintCharges=2;currentLevel=1;inBossFight=false;tutorialDone=false;isPaused=false;
   stopBossTimer();setBossMode(false);stopAmbient();
   document.getElementById('game-over-screen').classList.remove('show');
   updateHUD();buildQueue();nextGhost();
@@ -2644,7 +2690,7 @@ function useHint(){
     return;
   }
   hintCharges--;updateHUD();
-  playSoundHint();
+  playSoundHint(); hapticHint();
   const dest=getDest(currentGhost.dosa);
   const icon=dest==='Surga'?'☁️':'🔥';
   showFloatingText(`💡 ${icon} → ${dest.toUpperCase()}`,'#c9a84c');
@@ -2707,6 +2753,96 @@ function showTutorial(){
   document.body.appendChild(el);
 }
 
+// ── MUTE ──
+function toggleMute(){
+  isMuted=!isMuted;
+  const btn=document.getElementById('mute-btn');
+  if(btn){btn.textContent=isMuted?'🔇':'🔊';btn.classList.toggle('muted',isMuted);}
+  if(isMuted){
+    if(ambientGain) ambientGain.gain.linearRampToValueAtTime(0,actx.currentTime+0.3);
+  } else {
+    if(ambientGain) ambientGain.gain.linearRampToValueAtTime(0.04,actx.currentTime+0.5);
+  }
+}
+
+// Override tone() agar mute dihormati
+const _origTone=tone;
+function toneM(f,t,d,v=0.3,dl=0){if(!isMuted)_origTone(f,t,d,v,dl);}
+
+// ── PAUSE ──
+let pauseTimer=null;
+function togglePause(){
+  if(document.getElementById('game-over-screen').classList.contains('show')) return;
+  if(document.getElementById('level-complete-screen').classList.contains('show')) return;
+  if(document.getElementById('boss-intro-screen').classList.contains('show')) return;
+  isPaused=!isPaused;
+  const btn=document.getElementById('pause-btn');
+  if(isPaused){
+    // Simpan sisa timer boss
+    if(bossTimer){clearInterval(bossTimer);bossTimer=null;pauseTimer=bossTimeLeft;}
+    if(ambientGain) ambientGain.gain.linearRampToValueAtTime(0,actx.currentTime+0.5);
+    // Tampilkan overlay pause
+    showPauseOverlay();
+    if(btn){btn.textContent='▶';btn.style.color='#c9a84c';btn.style.borderColor='#c9a84c';}
+  } else {
+    // Lanjutkan
+    hidePauseOverlay();
+    if(pauseTimer!==null && inBossFight){
+      bossTimeLeft=pauseTimer;
+      pauseTimer=null;
+      // Restart timer dari sisa
+      const fb=document.getElementById('feedback');
+      fb.textContent=`⏱ ${bossTimeLeft}s tersisa — lanjut!`;fb.className='wrong';
+      bossTimer=setInterval(()=>{
+        bossTimeLeft--;
+        if(bossTimeLeft<=0){
+          stopBossTimer();
+          const bossSnap=currentGhost;
+          triggerJumpscare(bossSnap,()=>{
+            lives--;updateHUD();
+            setFeedback('⏰ WAKTU HABIS! Jiwa lolos ke tempat yang salah!','wrong');
+            document.getElementById('form-paper').classList.add('shake');
+            if(lives<=0){triggerGameOver();return;}
+            queueIndex++;inBossFight=false;setBossMode(false);setTimeout(nextGhost,800);
+          });
+        } else {
+          const fb2=document.getElementById('feedback');
+          fb2.textContent=`⏱ ${bossTimeLeft}s tersisa${bossTimeLeft<=5?' — CEPAT!':''}`;fb2.className='wrong';
+        if(bossTimeLeft<=5) hapticTimer();
+        }
+      },1000);
+    }
+    if(!isMuted && ambientGain) ambientGain.gain.linearRampToValueAtTime(0.04,actx.currentTime+0.5);
+    if(btn){btn.textContent='⏸';btn.style.color='';btn.style.borderColor='';}
+  }
+}
+
+function showPauseOverlay(){
+  if(document.getElementById('pause-overlay')) return;
+  const el=document.createElement('div');
+  el.id='pause-overlay';
+  el.innerHTML=`
+    <div style="background:rgba(10,7,2,0.97);border:1px solid #4a3010;border-top-color:#5a3e18;border-radius:6px;padding:28px 36px;text-align:center;box-shadow:0 0 40px rgba(0,0,0,0.9);">
+      <div style="font-family:var(--font-mono);font-size:32px;color:var(--gold);letter-spacing:6px;margin-bottom:8px;">⏸ JEDA</div>
+      <p style="font-family:var(--font-type);font-size:13px;color:#6a5030;letter-spacing:1px;margin-bottom:20px;">Departemen Sortir Alam Baka sedang menunggu...</p>
+      <button onclick="togglePause()"
+        style="font-family:var(--font-mono);font-size:20px;letter-spacing:3px;padding:10px 32px;background:linear-gradient(170deg,#c9a84c,#7a6020);color:#1a0f00;border:none;border-radius:3px;cursor:pointer;box-shadow:0 4px 0 #3a2808;min-height:48px;touch-action:manipulation;">
+        ▶ LANJUTKAN
+      </button>
+      <p style="font-family:var(--font-mono);font-size:10px;color:#3a2808;margin-top:10px;letter-spacing:2px;">tekan P untuk lanjut</p>
+    </div>`;
+  Object.assign(el.style,{
+    position:'fixed',inset:'0',zIndex:'9980',
+    display:'flex',alignItems:'center',justifyContent:'center',
+    background:'rgba(5,3,0,0.88)',animation:'fadeIn 0.25s ease',
+  });
+  document.body.appendChild(el);
+}
+function hidePauseOverlay(){
+  const el=document.getElementById('pause-overlay');
+  if(el) el.remove();
+}
+
 // ── KEYBOARD SHORTCUTS ──
 document.addEventListener('keydown',e=>{
   if(e.repeat) return;
@@ -2729,6 +2865,8 @@ document.addEventListener('keydown',e=>{
 
   // Tab switching
   if(e.key==='h'||e.key==='H') useHint();
+  if(e.key==='p'||e.key==='P'){togglePause();return;}
+  if(isPaused) return; // block semua input saat pause kecuali P
   if(e.key==='q'||e.key==='Q') switchTab('biodata');
   if(e.key==='w'||e.key==='W') switchTab('barang');
   if(e.key==='e'||e.key==='E') switchTab('tanya');
