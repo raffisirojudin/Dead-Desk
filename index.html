@@ -9,6 +9,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Special+Elite&family=VT323&display=swap">
+<link rel="manifest" href="data:application/manifest+json,{
+  %22name%22:%22Dead%20Desk:%20Sortir%20Jiwa%22,
+  %22short_name%22:%22Dead%20Desk%22,
+  %22description%22:%22Game%20sortir%20arwah%20-%20tentukan%20nasib%20jiwa%20yang%20datang%22,
+  %22start_url%22:%22.%22,
+  %22display%22:%22standalone%22,
+  %22background_color%22:%22%231c1108%22,
+  %22theme_color%22:%22%231c1108%22,
+  %22orientation%22:%22any%22,
+  %22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%20512%20512'%3E%3Crect%20width%3D'512'%20height%3D'512'%20fill%3D'%231c1108'/%3E%3Ctext%20x%3D'50%25'%20y%3D'55%25'%20text-anchor%3D'middle'%20dominant-baseline%3D'middle'%20font-size%3D'320'%3E%E2%98%A0%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22512x512%22,%22type%22:%22image/svg+xml%22,%22purpose%22:%22any%20maskable%22}]
+}">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dead Desk">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -936,95 +951,16 @@ body::after{content:'';position:fixed;top:-160px;left:50%;transform:translateX(-
 }
 
 /* ── TABLET PORTRAIT / LARGE PHONE ── */
+/* ══════════════════════════════════════════
+   RESPONSIVE MOBILE — REDESIGN MENYELURUH
+   Fokus: compact, tidak sempit, mudah dibaca
+   ══════════════════════════════════════════ */
+
+/* ── TABLET (≤768px) ── */
 @media(max-width:768px){
   html,body{overflow:auto;height:auto;}
-  #scene{
-    height:auto;min-height:100dvh;
-    padding:8px 10px 14px;gap:8px;
-    grid-template-rows:auto auto auto;
-  }
-  #topbar{padding:6px 10px;}
-  .hud-item{font-size:17px;letter-spacing:1px;}
-  #title-hud{font-size:14px;letter-spacing:2px;}
-  #main{grid-template-columns:1fr;gap:10px;}
 
-  /* Ghost panel → horizontal row */
-  #ghost-panel{
-    flex-direction:row;flex-wrap:nowrap;
-    align-items:center;justify-content:flex-start;
-    gap:10px;padding:10px;
-    background:rgba(0,0,0,0.25);
-    border:1px solid #3a2808;border-radius:4px;
-  }
-  #ghost-doll{width:100px;height:138px;flex-shrink:0;}
-  #ghost-info-col{flex:1;min-width:0;gap:6px;}
-  #ghost-name-tag{width:100%;font-size:15px;padding:4px 8px;box-sizing:border-box;}
-  #sin-badge{width:100%;font-size:12px;}
-  #ghost-tabs{width:100%;margin-top:2px;}
-  .ghost-tab{font-size:13px;padding:5px 3px;}
-
-  /* Form */
-  #form-paper{
-    padding:12px 12px 14px 36px;
-    max-height:none;transform:none;animation:none;
-  }
-  #form-paper::after{left:28px;}
-  .hole{width:12px;height:12px;left:9px;}
-  .form-header-left h2{font-size:15px;letter-spacing:1px;}
-  .form-header-left p{font-size:8px;}
-  .ref-box{font-size:11px;}
-  .section-title{font-size:8px;letter-spacing:2px;}
-  .form-grid{grid-template-columns:1fr 1fr;gap:3px 10px;}
-  .field-label{font-size:8px;letter-spacing:1px;}
-  .field-value{font-size:14px;}
-  .field-value.highlight{font-size:16px;}
-  .check-row{gap:8px;}
-  .check-item{font-size:13px;}
-  #stamp{width:62px;height:62px;font-size:10px;top:10px;right:10px;}
-
-  /* Buttons */
-  #sort-buttons{gap:8px;}
-  .sort-btn{font-size:22px;padding:13px 8px;letter-spacing:2px;}
-  .btn-icon{font-size:20px;}
-  #feedback{font-size:15px;height:22px;}
-  .queue-dot{width:7px;height:7px;}
-
-  /* Overlay screens */
-  #go-title{font-size:48px;letter-spacing:4px;}
-  #go-score{font-size:28px;}
-  .go-skull{font-size:64px;}
-  .go-flavour{font-size:12px;max-width:300px;}
-  #btn-restart{font-size:22px;padding:12px 28px;}
-  #lc-icon{font-size:56px;}
-  #lc-title{font-size:40px;letter-spacing:4px;}
-  #lc-sub{font-size:16px;letter-spacing:2px;padding:0 12px;}
-  #lc-bonus{font-size:22px;}
-  #btn-continue{font-size:22px;padding:10px 28px;}
-  #bi-label{font-size:14px;letter-spacing:4px;}
-  #bi-title{font-size:38px;letter-spacing:3px;}
-  #bi-name{font-size:22px;}
-  #bi-desc{font-size:12px;max-width:90vw;padding:0 16px;}
-  #bi-doll{width:90px;height:120px;}
-  #btn-fight{font-size:22px;padding:10px 28px;}
-
-  /* Boss warning */
-  #boss-warning{font-size:18px;letter-spacing:3px;padding:8px;}
-
-  /* Side panel */
-  #side-panel-title{font-size:15px;}
-  .item-icon{font-size:22px;}
-  .item-name{font-size:14px;}
-  .item-hint{font-size:13px;}
-  .dialog-question-btn{font-size:14px;padding:7px 8px;}
-  .dialog-answer-box{font-size:13px;}
-  /* Combo & hint */
-  #combo-display{font-size:14px;height:18px;}
-  #hint-btn{font-size:12px;padding:5px 10px;}
-  /* Jumpscare */
-  #jumpscare-svg{width:min(90vw,380px);height:min(90vw,380px);}
-  #jumpscare-text{font-size:clamp(14px,4vw,28px);letter-spacing:3px;}
-
-  /* Loading screen */
+  /* Loading */
   #ls-room{width:300px;height:240px;}
   #ls-monitor{width:168px;}
   #ls-crt{width:144px;height:104px;}
@@ -1037,122 +973,241 @@ body::after{content:'';position:fixed;top:-160px;left:50%;transform:translateX(-
   #ls-desk-surface{height:44px;}
   #ls-paper-stack{bottom:44px;left:52px;}
   #ls-steam{bottom:75px;left:28px;}
+  #ls-wall-detail,#ls-clock,#ls-cable,#ls-mouse-cable{display:none;}
 }
 
-/* ── SMALL PHONES (≤480px) ── */
-@media(max-width:480px){
-  #scene{padding:6px 8px 12px;gap:6px;}
-  .hud-item{font-size:14px;}
-  #title-hud{font-size:11px;letter-spacing:1px;}
+/* ── PHONE (≤600px) — layout utama ── */
+@media(max-width:600px){
+  html,body{overflow:auto;height:auto;}
 
-  #ghost-doll{width:80px;height:110px;}
-  #ghost-name-tag{font-size:13px;}
-  .ghost-tab{font-size:11px;padding:4px 2px;letter-spacing:0;}
+  #scene{
+    height:auto;
+    min-height:100dvh;
+    padding:6px 8px 10px;
+    gap:5px;
+    grid-template-rows:auto auto auto;
+  }
 
-  #form-paper{padding:10px 10px 12px 30px;}
-  #form-paper::after{left:24px;}
+  /* TOPBAR — compact, sembunyikan title di tengah */
+  #topbar{
+    padding:5px 8px;
+    border-radius:3px;
+  }
+  .hud-item{font-size:14px;letter-spacing:1px;}
+  #title-hud{display:none;} /* ganti dengan stage di queue bar */
+  #mute-btn,#pause-btn,#arsip-btn{
+    font-size:14px;padding:3px 6px;
+  }
+
+  /* MAIN — 1 kolom */
+  #main{grid-template-columns:1fr;gap:6px;}
+
+  /* GHOST PANEL — strip horizontal compact */
+  #ghost-panel{
+    flex-direction:row;
+    align-items:center;
+    gap:8px;
+    padding:6px 8px;
+    background:rgba(0,0,0,0.3);
+    border:1px solid #3a2808;
+    border-radius:3px;
+  }
+  #ghost-doll{width:72px;height:98px;flex-shrink:0;}
+  #ghost-doll svg{animation:none;} /* hemat CPU di mobile */
+  #ghost-info-col{flex:1;min-width:0;gap:4px;align-items:flex-start;}
+  #ghost-name-tag{
+    width:100%;font-size:13px;padding:3px 8px;
+    box-sizing:border-box;
+    box-shadow:1px 1px 0 #e0d0a0,2px 2px 0 rgba(0,0,0,0.2);
+    margin-top:0;
+  }
+  #sin-badge{width:100%;font-size:11px;padding:3px 8px;}
+  #ghost-tabs{width:100%;margin-top:2px;}
+  .ghost-tab{font-size:11px;padding:5px 2px;letter-spacing:0;}
+
+  /* FORM PAPER — compact, no rotation */
+  #form-paper{
+    padding:10px 10px 12px 30px;
+    max-height:none;
+    transform:none !important;
+    animation:none !important;
+    /* shadow lebih ringan */
+    box-shadow:2px 2px 0 #ede0b8,3px 3px 0 rgba(0,0,0,0.15),0 6px 16px rgba(0,0,0,0.4);
+  }
+  #form-paper::after{left:22px;}
   .hole{width:10px;height:10px;left:7px;}
-  .form-header-left h2{font-size:13px;}
-  .form-grid{grid-template-columns:1fr;gap:3px;}
-  .field-label{font-size:7px;}
-  .field-value{font-size:13px;}
-  .field-value.highlight{font-size:14px;}
-  .section-title{font-size:7px;}
-  .check-item{font-size:12px;}
 
-  .sort-btn{font-size:19px;padding:11px 6px;letter-spacing:1px;}
-  .btn-icon{font-size:17px;}
-  #feedback{font-size:13px;}
+  /* Form header compact */
+  .form-header{padding-bottom:5px;margin-bottom:6px;}
+  .form-header-left h2{font-size:12px;letter-spacing:1px;}
+  .form-header-left p{display:none;} /* sembunyikan subtitle */
+  .ref-box{font-size:10px;}
+
+  /* Form sections */
+  .section-title{font-size:7px;letter-spacing:1px;margin-bottom:4px;}
+  .form-section{margin-bottom:6px;}
+
+  /* Grid 2 kolom tetap tapi lebih rapat */
+  .form-grid{grid-template-columns:1fr 1fr;gap:2px 8px;}
+  .form-grid.full{grid-template-columns:1fr;}
+  .field-label{font-size:7px;letter-spacing:1px;}
+  .field-value{font-size:13px;min-height:18px;}
+  .field-value.highlight{font-size:14px;}
+  .check-row{gap:6px;}
+  .check-item{font-size:11px;gap:3px;}
+  .checkbox{width:12px;height:12px;font-size:9px;}
+
+  /* Stamp lebih kecil */
+  #stamp{width:52px;height:52px;font-size:9px;top:8px;right:8px;}
+  #stamp .stamp-icon{font-size:16px;}
+
+  /* BOTTOM — compact, sembunyikan key hint */
+  #key-hint{display:none;}
+  #combo-display{font-size:12px;height:16px;}
+  #feedback{font-size:13px;height:18px;}
+
+  /* Tombol sort — penuh dan proporsional */
+  #sort-buttons{gap:6px;}
+  .sort-btn{
+    font-size:20px;padding:12px 8px;
+    letter-spacing:2px;border-radius:3px;
+  }
+  .btn-icon{font-size:18px;}
+
+  /* Hint button lebih compact */
+  #hint-btn{font-size:11px;padding:4px 10px;letter-spacing:0;}
+
+  /* Queue dots + stage label */
+  #queue-wrap{gap:3px;}
+  #stage-label{font-size:11px;letter-spacing:1px;}
+  #stage-label .stage-num{font-size:12px;}
   .queue-dot{width:6px;height:6px;}
   .queue-dot.boss-dot{width:8px;height:8px;}
 
-  #go-title{font-size:38px;letter-spacing:3px;}
-  #go-score{font-size:22px;}
-  .go-skull{font-size:52px;}
-  .go-flavour{font-size:11px;}
-  #btn-restart{font-size:20px;padding:10px 20px;}
-  #lc-icon{font-size:44px;}
-  #lc-title{font-size:30px;letter-spacing:2px;}
-  #lc-sub{font-size:13px;padding:0 10px;}
-  #lc-bonus{font-size:18px;}
-  #btn-continue{font-size:18px;padding:9px 20px;}
-  #bi-title{font-size:30px;}
+  /* Side panel full height */
+  #side-panel-title{font-size:14px;letter-spacing:1px;}
+  #side-panel-close{font-size:13px;padding:3px 8px;}
+  .item-icon{font-size:20px;}
+  .item-name{font-size:14px;}
+  .item-hint{font-size:12px;}
+  .dialog-question-btn{font-size:13px;padding:7px 8px;}
+  .dialog-answer-box{font-size:12px;}
+
+  /* Overlay screens */
+  #go-title{font-size:40px;letter-spacing:3px;}
+  #go-score{font-size:24px;}
+  .go-skull{font-size:56px;}
+  .go-flavour{font-size:11px;max-width:280px;}
+  #btn-restart{font-size:20px;padding:11px 24px;}
+  #lc-icon{font-size:48px;}
+  #lc-title{font-size:34px;letter-spacing:3px;}
+  #lc-sub{font-size:13px;letter-spacing:1px;padding:0 10px;}
+  #lc-bonus{font-size:20px;}
+  #btn-continue{font-size:20px;padding:10px 24px;}
+  #bi-label{font-size:12px;letter-spacing:3px;}
+  #bi-title{font-size:30px;letter-spacing:2px;}
   #bi-name{font-size:18px;}
-  #bi-desc{font-size:11px;}
-  #bi-doll{width:70px;height:94px;}
-  #btn-fight{font-size:18px;padding:9px 20px;}
-  #boss-warning{font-size:14px;letter-spacing:2px;}
-  #combo-display{font-size:12px;}
-  #hint-btn{font-size:11px;padding:4px 8px;letter-spacing:0;}
-  #jumpscare-svg{width:min(95vw,320px);height:min(95vw,320px);}
-  #jumpscare-text{font-size:clamp(12px,3.5vw,22px);letter-spacing:2px;bottom:10%;}
+  #bi-desc{font-size:11px;max-width:92vw;padding:0 12px;}
+  #bi-doll{width:80px;height:106px;}
+  #btn-fight{font-size:20px;padding:10px 24px;}
+  #boss-warning{font-size:14px;letter-spacing:2px;padding:7px;}
+
+  /* Jumpscare */
+  #jumpscare-svg{width:min(92vw,340px);height:min(92vw,340px);}
+  #jumpscare-text{font-size:clamp(13px,4vw,26px);letter-spacing:2px;}
+
+  /* Arsip */
+  #arsip-body{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;padding:10px 12px;}
+  #arsip-title{font-size:16px;letter-spacing:2px;}
+  #arsip-header{padding:10px 12px;}
 
   /* Loading */
-  #ls-room{width:240px;height:195px;}
-  #ls-monitor{width:136px;}
-  #ls-crt{width:116px;height:84px;}
-  #ls-boot-text{font-size:8px;}
-  #ls-keyboard{width:88px;bottom:38px;}
-  #ls-mouse{bottom:38px;right:28px;width:14px;height:20px;}
-  #ls-coffee{bottom:38px;left:18px;width:16px;height:20px;}
-  #ls-lamp{right:12px;}
-  #ls-lamp-arm{height:64px;}
-  #ls-desk-surface{height:36px;}
-  #ls-paper-stack{bottom:38px;left:42px;width:24px;}
-  #ls-steam{bottom:60px;left:22px;}
+  #ls-room{width:260px;height:210px;}
+  #ls-monitor{width:148px;}
+  #ls-crt{width:128px;height:92px;}
+  #ls-boot-text{font-size:8.5px;}
+  #ls-keyboard{width:96px;bottom:38px;}
+  #ls-mouse{bottom:38px;right:30px;width:15px;height:22px;}
+  #ls-coffee{bottom:38px;left:20px;width:18px;height:22px;}
+  #ls-lamp{right:14px;}
+  #ls-lamp-arm{height:70px;}
+  #ls-desk-surface{height:38px;}
+  #ls-paper-stack{bottom:38px;left:46px;width:26px;}
+  #ls-steam{bottom:63px;left:24px;}
+  #ls-wall-detail,#ls-clock,#ls-cable,#ls-mouse-cable{display:none;}
 }
 
-/* ── VERY SMALL (≤360px, Galaxy A01 etc) ── */
-@media(max-width:360px){
+/* ── SMALL PHONES (≤400px) ── */
+@media(max-width:400px){
+  #scene{padding:4px 6px 8px;gap:4px;}
   .hud-item{font-size:12px;}
-  #title-hud{display:none;} /* hide title on tiny screens */
-  #ghost-doll{width:68px;height:94px;}
-  .ghost-tab{font-size:10px;}
-  .sort-btn{font-size:17px;padding:10px 4px;}
-  .btn-icon{font-size:15px;}
+  #ghost-doll{width:62px;height:84px;}
+  #ghost-name-tag{font-size:12px;}
+  .ghost-tab{font-size:10px;padding:4px 1px;}
+  #form-paper{padding:8px 8px 10px 26px;}
+  #form-paper::after{left:19px;}
+  .hole{width:8px;height:8px;left:6px;}
+  .form-header-left h2{font-size:11px;}
+  .field-label{font-size:6.5px;}
+  .field-value{font-size:12px;}
+  .field-value.highlight{font-size:13px;}
+  .sort-btn{font-size:18px;padding:11px 6px;}
+  .btn-icon{font-size:16px;}
+  #hint-btn{font-size:10px;padding:3px 8px;}
   .queue-dot{width:5px;height:5px;}
   .queue-dot.boss-dot{width:7px;height:7px;}
   #go-title{font-size:32px;}
-  #bi-title{font-size:26px;}
+  #bi-title{font-size:24px;}
+
+  /* Loading */
+  #ls-room{width:220px;height:178px;}
+  #ls-monitor{width:126px;}
+  #ls-crt{width:108px;height:78px;}
+  #ls-boot-text{font-size:7.5px;}
+  #ls-keyboard{width:80px;bottom:32px;}
+  #ls-mouse{bottom:32px;right:24px;width:13px;height:18px;}
+  #ls-coffee{bottom:32px;left:16px;width:15px;height:18px;}
+  #ls-lamp-arm{height:56px;}
+  #ls-desk-surface{height:32px;}
 }
 
-/* ── SHAKE ANIMATION per breakpoint ── */
-@media(max-width:768px){
+/* ── SHAKE ANIMATION mobile ── */
+@media(max-width:600px){
   @keyframes shake{
     0%,100%{transform:translateX(0);}
-    20%{transform:translateX(-6px);}
-    40%{transform:translateX(6px);}
-    60%{transform:translateX(-4px);}
-    80%{transform:translateX(4px);}
+    20%{transform:translateX(-5px);}
+    40%{transform:translateX(5px);}
+    60%{transform:translateX(-3px);}
+    80%{transform:translateX(3px);}
   }
-  #form-paper.shake{animation:shake 0.4s ease;}
+  #form-paper.shake{animation:shake 0.35s ease;}
 }
 
-/* ── TOUCH TARGET: semua tombol min 44px ── */
+/* ── TOUCH TARGETS ── */
 @media(pointer:coarse){
-  .sort-btn{min-height:52px;}
+  .sort-btn{min-height:50px;}
   .ghost-tab{min-height:36px;}
-  #btn-restart,#btn-continue,#btn-fight{min-height:48px;}
-  #side-panel-close{min-height:36px;min-width:44px;}
+  #btn-restart,#btn-continue,#btn-fight{min-height:46px;}
+  #side-panel-close{min-height:34px;min-width:44px;}
   .item-card{min-height:44px;padding:10px 0;}
-  .dialog-question-btn{min-height:44px;}
+  .dialog-question-btn{min-height:42px;}
+  #hint-btn{min-height:34px;}
+  #mute-btn,#pause-btn,#arsip-btn{min-height:34px;min-width:34px;}
 }
 
-/* ── LANDSCAPE PHONE khusus ── */
+/* ── LANDSCAPE PHONE ── */
 @media(max-height:500px) and (orientation:landscape){
   html,body{overflow:auto;height:auto;}
-  #scene{
-    height:auto;min-height:100dvh;
-    grid-template-rows:auto auto auto;
-    padding:6px 12px 10px;gap:6px;
-  }
-  #main{grid-template-columns:160px 1fr;gap:10px;}
+  #scene{height:auto;min-height:100dvh;grid-template-rows:auto auto auto;padding:4px 10px 8px;gap:4px;}
+  #main{grid-template-columns:140px 1fr;gap:8px;}
   #ghost-panel{flex-direction:column;background:none;border:none;padding:0;}
-  #ghost-doll{width:90px;height:124px;}
-  #form-paper{max-height:none;transform:none;}
-  .sort-btn{padding:8px;font-size:18px;}
-  #feedback{height:18px;font-size:13px;}
-  .queue-dot{width:6px;height:6px;}
+  #ghost-doll{width:80px;height:110px;}
+  #ghost-doll svg{animation:none;}
+  #form-paper{max-height:none;transform:none;animation:none;}
+  .sort-btn{padding:7px;font-size:17px;}
+  #feedback{height:16px;font-size:12px;}
+  .queue-dot{width:5px;height:5px;}
+  #key-hint{display:none;}
 }
 #form-paper.shake{animation:shake 0.4s ease;}
 @keyframes flashGreen{0%{filter:brightness(1);}40%{filter:brightness(1.3) saturate(1.5);}100%{filter:brightness(1);}}
@@ -1278,6 +1333,155 @@ body.jumpscare-shake{animation:jumpscareScreenShake 0.6s ease;}
 }
 
 /* ── STAMP BOUNCE ── */
+/* ══ ARSIP JIWA ══ */
+#arsip-btn{
+  font-family:var(--font-mono);font-size:13px;letter-spacing:1px;
+  background:linear-gradient(180deg,#1a1408,#100e04);
+  color:#6a5030;border:1px solid #3a2808;border-top-color:#4a3412;
+  border-radius:3px;padding:5px 10px;cursor:pointer;
+  box-shadow:0 2px 0 #1a1004,0 3px 8px rgba(0,0,0,0.4);
+  transition:color 0.2s,border-color 0.2s;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+#arsip-btn:hover{color:var(--gold);border-color:var(--gold);}
+
+#arsip-screen{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(5,3,0,0.96);
+  flex-direction:column;align-items:center;
+  animation:fadeIn 0.3s ease;
+  overflow:hidden;}
+#arsip-screen.show{display:flex;}
+
+#arsip-header{
+  width:100%;max-width:860px;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 20px;
+  border-bottom:1px solid #3a2808;
+  flex-shrink:0;}
+#arsip-title{
+  font-family:var(--font-mono);font-size:22px;
+  color:var(--gold);letter-spacing:4px;
+  text-shadow:0 0 10px rgba(201,168,76,0.4);}
+#arsip-count{
+  font-family:var(--font-mono);font-size:13px;
+  color:#5a4020;letter-spacing:2px;}
+#arsip-close{
+  font-family:var(--font-mono);font-size:16px;color:#6a5030;
+  background:none;border:1px solid #3a2808;border-radius:3px;
+  padding:4px 12px;cursor:pointer;
+  transition:color 0.2s,border-color 0.2s;
+  touch-action:manipulation;}
+#arsip-close:hover{color:var(--gold);border-color:var(--gold);}
+
+#arsip-body{
+  width:100%;max-width:860px;
+  flex:1;overflow-y:auto;
+  padding:16px 20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:12px;
+  align-content:start;}
+
+/* Kartu arsip */
+.arsip-card{
+  background:linear-gradient(180deg,#faf2dc,#f0e8c8);
+  border:1px solid #c0a060;border-bottom-color:#a08040;
+  border-radius:3px;
+  padding:10px 8px;
+  cursor:pointer;
+  transition:transform 0.15s,box-shadow 0.15s;
+  box-shadow:2px 2px 0 #c8a860,4px 4px 0 rgba(0,0,0,0.2);
+  position:relative;overflow:hidden;}
+.arsip-card:hover{transform:translateY(-2px);box-shadow:2px 4px 0 #c8a860,4px 8px 8px rgba(0,0,0,0.3);}
+.arsip-card.neraka{background:linear-gradient(180deg,#f5e0dc,#ead0cc);border-color:#c09080;}
+.arsip-card.surga{background:linear-gradient(180deg,#e0eaf5,#ccdde8);border-color:#80a0c0;}
+
+/* Stamp kecil di kartu */
+.arsip-stamp{
+  position:absolute;top:6px;right:6px;
+  font-size:10px;font-family:var(--font-mono);
+  letter-spacing:1px;padding:2px 5px;
+  border:1.5px solid;border-radius:2px;
+  transform:rotate(8deg);opacity:0.85;}
+.arsip-stamp.surga{color:var(--stamp-heaven);border-color:var(--stamp-heaven);}
+.arsip-stamp.neraka{color:var(--stamp-hell);border-color:var(--stamp-hell);}
+
+.arsip-doll{
+  width:80px;height:100px;
+  margin:0 auto 6px;
+  display:block;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,0.25));}
+.arsip-nama{
+  font-family:var(--font-hand);font-size:13px;font-weight:700;
+  color:#1a1008;text-align:center;line-height:1.3;
+  margin-bottom:3px;}
+.arsip-dosa{
+  font-size:9px;letter-spacing:1px;text-transform:uppercase;
+  color:#9a7a4a;text-align:center;}
+.arsip-pekerjaan{
+  font-size:10px;font-family:var(--font-hand);
+  color:#6a5030;text-align:center;margin-top:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* Kartu kosong — jiwa belum ditemukan */
+.arsip-card-empty{
+  background:rgba(0,0,0,0.2);
+  border:1px dashed #3a2808;
+  border-radius:3px;padding:10px 8px;
+  display:flex;align-items:center;justify-content:center;
+  min-height:160px;}
+.arsip-empty-icon{
+  font-family:var(--font-mono);font-size:28px;color:#2a1a08;
+  text-align:center;}
+
+/* Detail popup saat kartu diklik */
+#arsip-detail{
+  display:none;position:fixed;inset:0;z-index:600;
+  align-items:center;justify-content:center;
+  background:rgba(5,3,0,0.92);
+  animation:fadeIn 0.2s ease;}
+#arsip-detail.show{display:flex;}
+#arsip-detail-inner{
+  background:linear-gradient(180deg,#faf2dc,#f5ead0);
+  border-radius:3px;width:min(440px,90vw);
+  max-height:85vh;overflow-y:auto;
+  box-shadow:4px 4px 0 #c8a860,8px 8px 0 rgba(0,0,0,0.3),0 20px 50px rgba(0,0,0,0.8);
+  position:relative;}
+#arsip-detail-close{
+  position:sticky;top:0;right:0;
+  float:right;margin:8px 8px 0 0;
+  font-family:var(--font-mono);font-size:13px;
+  background:rgba(200,168,76,0.15);
+  border:1px solid #c0a060;border-radius:3px;
+  padding:3px 10px;cursor:pointer;color:#8a6030;
+  z-index:1;}
+#arsip-detail-close:hover{color:#1a1008;}
+#arsip-detail-body{padding:16px 20px 20px;}
+
+/* Filter bar */
+#arsip-filter{
+  width:100%;max-width:860px;
+  display:flex;gap:8px;padding:10px 20px;
+  flex-shrink:0;border-bottom:1px solid #2a1808;}
+.arsip-filter-btn{
+  font-family:var(--font-mono);font-size:12px;letter-spacing:1px;
+  background:rgba(0,0,0,0.3);border:1px solid #3a2808;
+  border-radius:20px;padding:4px 12px;cursor:pointer;
+  color:#5a4020;transition:all 0.15s;
+  touch-action:manipulation;}
+.arsip-filter-btn:hover,.arsip-filter-btn.active{
+  color:var(--gold);border-color:var(--gold);
+  background:rgba(201,168,76,0.1);}
+
+@media(max-width:480px){
+  #arsip-body{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;padding:10px 12px;}
+  #arsip-header{padding:10px 12px;}
+  #arsip-title{font-size:16px;letter-spacing:2px;}
+  .arsip-card{padding:8px 6px;}
+  .arsip-doll{width:64px;height:80px;}
+  .arsip-nama{font-size:12px;}
+}
+
 @keyframes stampBounce{
   0%{transform:rotate(12deg) scale(1);}
   30%{transform:rotate(14deg) scale(1.18);}
@@ -1416,8 +1620,36 @@ body.jumpscare-shake{animation:jumpscareScreenShake 0.6s ease;}
       <div class="hud-item">NYAWA: <span id="lives-val">❤️❤️❤️</span></div>
       <button id="mute-btn" onclick="toggleMute()" title="Mute/Unmute">🔊</button>
       <button id="pause-btn" onclick="togglePause()" title="Pause (P)" style="font-family:var(--font-mono);font-size:15px;background:none;border:1px solid #3a2808;border-radius:3px;padding:3px 8px;cursor:pointer;color:#5a4020;transition:color 0.2s,border-color 0.2s;line-height:1;touch-action:manipulation;-webkit-tap-highlight-color:transparent;">⏸</button>
+      <button id="arsip-btn" onclick="openArsip()" title="Arsip Jiwa">📜</button>
     </div>
   </div>
+
+  <!-- ARSIP JIWA SCREEN -->
+  <div id="arsip-screen">
+    <div id="arsip-header">
+      <div>
+        <div id="arsip-title">📜 ARSIP JIWA</div>
+        <div id="arsip-count">0 jiwa tercatat</div>
+      </div>
+      <button id="arsip-close" onclick="closeArsip()">✕ TUTUP</button>
+    </div>
+    <div id="arsip-filter">
+      <button class="arsip-filter-btn active" onclick="filterArsip('semua')">Semua</button>
+      <button class="arsip-filter-btn" onclick="filterArsip('surga')">☁️ Surga</button>
+      <button class="arsip-filter-btn" onclick="filterArsip('neraka')">🔥 Neraka</button>
+      <button class="arsip-filter-btn" onclick="filterArsip('boss')">☠ Boss</button>
+    </div>
+    <div id="arsip-body"></div>
+  </div>
+
+  <!-- ARSIP DETAIL POPUP -->
+  <div id="arsip-detail">
+    <div id="arsip-detail-inner">
+      <button id="arsip-detail-close" onclick="closeArsipDetail()">✕ TUTUP</button>
+      <div id="arsip-detail-body"></div>
+    </div>
+  </div>
+
   <div id="main">
     <div id="ghost-panel">
       <div id="ghost-doll"><svg id="ghost-svg" viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg"></svg></div>
@@ -1481,6 +1713,7 @@ body.jumpscare-shake{animation:jumpscareScreenShake 0.6s ease;}
         <span class="key-badge">1</span> Surga &nbsp;·&nbsp;
         <span class="key-badge">2</span> Neraka &nbsp;·&nbsp;
         <span class="key-badge">H</span> Hint &nbsp;·&nbsp;
+        <span class="key-badge">A</span> Arsip &nbsp;·&nbsp;
         <span class="key-badge">Esc</span> Tutup
       </div>
       <button id="hint-btn" onclick="useHint()">💡 HINT (2)</button>
@@ -2000,6 +2233,7 @@ function buildGhostSVG(ghost){
 // STATE
 let score=0,lives=3,maxLives=3,currentGhost=null,queue=[],queueIndex=0,currentLevel=1,inBossFight=false,bossTimer=null,bossTimeLeft=0;
 let combo=0,hintCharges=2,tutorialDone=false,ambientNode=null,ambientGain=null;let isMuted=false,isPaused=false,bestCombo=0;
+let isProcessing=false; // lock tombol sort saat transisi
 const QUEUE_SIZE=10,BOSS_POSITIONS=[5,10];
 
 // AUDIO
@@ -2293,6 +2527,21 @@ function randomizeBoss(bossTemplate){
   return b;
 }
 
+// ── LOCK/UNLOCK TOMBOL SORT ──
+function setSortBtnsDisabled(disabled){
+  const bh=document.getElementById('btn-heaven');
+  const bk=document.getElementById('btn-hell');
+  if(!bh||!bk)return;
+  bh.disabled=disabled;
+  bk.disabled=disabled;
+  // Visual feedback — tombol memudar saat terkunci
+  const op=disabled?'0.5':'1';
+  bh.style.opacity=op;
+  bk.style.opacity=op;
+  bh.style.pointerEvents=disabled?'none':'';
+  bk.style.pointerEvents=disabled?'none':'';
+}
+
 function updateHUD(){
   document.getElementById('score-val').textContent=score;
   // Nyawa bisa lebih dari 3 (max 5 dari life-up)
@@ -2351,6 +2600,7 @@ function startBossTimer(s){
       // Jumpscare dulu, baru proses hasil
       const bossSnap = currentGhost;
       triggerJumpscare(bossSnap, ()=>{
+        isProcessing=false;setSortBtnsDisabled(false);
         lives--;updateHUD();
         setFeedback('⏰ WAKTU HABIS! Jiwa lolos ke tempat yang salah!','wrong');
         document.getElementById('form-paper').classList.add('shake');
@@ -2449,7 +2699,10 @@ function buildQueue(){
 }
 
 function nextGhost(){
-  if(queueIndex>=QUEUE_SIZE){showLevelComplete();return;}
+  if(queueIndex>=QUEUE_SIZE){
+    isProcessing=false;setSortBtnsDisabled(false);
+    showLevelComplete();return;
+  }
   currentGhost=queue[queueIndex];inBossFight=currentGhost.isBoss||false;
   if(inBossFight){
     showBossIntro(currentGhost);
@@ -2505,6 +2758,7 @@ function showBossIntro(boss){
 }
 function startBossFight(){
   document.getElementById('boss-intro-screen').classList.remove('show');
+  isProcessing=false;setSortBtnsDisabled(false); // unlock setelah intro selesai
   setBossMode(true);renderGhost();
   if(currentGhost.timerLimit>0)startBossTimer(currentGhost.timerLimit);
 }
@@ -2532,6 +2786,7 @@ function showLevelComplete(){
 }
 function continueToNext(){
   document.getElementById('level-complete-screen').classList.remove('show');
+  isProcessing=false;setSortBtnsDisabled(false); // unlock untuk stage baru
   combo=0;hintCharges=Math.min(hintCharges+1,3); // Dapat +1 hint charge per stage
   currentLevel++;
   stopAmbient();
@@ -2542,7 +2797,12 @@ function continueToNext(){
 
 function sort(pilihan){
   if(!currentGhost)return;
-  if(isPaused)return;if(actx.state==='suspended'){actx.resume();startAmbient();}stopBossTimer();
+  if(isPaused)return;
+  if(isProcessing)return; // cegah spam klik
+  if(actx.state==='suspended'){actx.resume();startAmbient();}stopBossTimer();
+  // Lock tombol seketika
+  isProcessing=true;
+  setSortBtnsDisabled(true);
   const seharusnya=getDest(currentGhost.dosa),stamp=document.getElementById('stamp'),paper=document.getElementById('form-paper');
   if(pilihan==='Surga'){stamp.className='show-heaven';document.getElementById('stamp-icon').textContent='☁️';document.getElementById('stamp-text').textContent='SURGA\nAPPROVED';}
   else{stamp.className='show-hell';document.getElementById('stamp-icon').textContent='🔥';document.getElementById('stamp-text').textContent='NERAKA\nAPPROVED';}
@@ -2595,8 +2855,11 @@ function sort(pilihan){
     stamp.style.animation='stampBounce 0.4s cubic-bezier(0.36,0.07,0.19,0.97)';
 
     paper.classList.remove('flash-correct','shake','flash-wrong-boss');void paper.offsetWidth;paper.classList.add('flash-correct');
+    // Catat ke arsip
+    recordToArsip(currentGhost, pilihan);
     if(inBossFight){inBossFight=false;setBossMode(false);}
-    queueIndex++;setTimeout(nextGhost,950);
+    queueIndex++;
+    setTimeout(()=>{isProcessing=false;setSortBtnsDisabled(false);nextGhost();},950);
   } else {
     combo=0; // reset combo
     lives--;updateHUD();
@@ -2606,12 +2869,24 @@ function sort(pilihan){
     paper.classList.remove('flash-correct','shake','flash-wrong-boss');void paper.offsetWidth;
     paper.classList.add(currentGhost.isBoss?'flash-wrong-boss':'shake');
     if(lives<=0){setTimeout(triggerGameOver,700);return;}
-    if(currentGhost.isBoss){setTimeout(()=>{if(currentGhost.timerLimit>0)startBossTimer(currentGhost.timerLimit);},600);}
-    else{queueIndex++;setTimeout(nextGhost,950);}
+    if(currentGhost.isBoss){
+      // Boss salah: unlock tombol setelah animasi shake selesai
+      setTimeout(()=>{
+        isProcessing=false;setSortBtnsDisabled(false);
+        if(currentGhost.timerLimit>0)startBossTimer(currentGhost.timerLimit);
+      },600);
+    }
+    else{
+      // Catat ke arsip meskipun salah — dengan dest yang benar
+      recordToArsip(currentGhost, seharusnya);
+      queueIndex++;
+      setTimeout(()=>{isProcessing=false;setSortBtnsDisabled(false);nextGhost();},950);
+    }
   }
 }
 
 function triggerGameOver(){
+  isProcessing=false;setSortBtnsDisabled(false);
   playSoundGameOver();stopBossTimer();setBossMode(false);stopAmbient();
   document.getElementById('go-score-val').textContent=score;
   bestCombo=Math.max(bestCombo,combo);
@@ -2625,7 +2900,7 @@ function triggerGameOver(){
   document.getElementById('game-over-screen').classList.add('show');
 }
 function restartGame(){
-  score=0;lives=3;maxLives=3;combo=0;bestCombo=0;hintCharges=2;currentLevel=1;inBossFight=false;tutorialDone=false;isPaused=false;
+  score=0;lives=3;maxLives=3;combo=0;bestCombo=0;hintCharges=2;currentLevel=1;inBossFight=false;tutorialDone=false;isPaused=false;isProcessing=false;arsipData=[];updateArsipBtn();
   stopBossTimer();setBossMode(false);stopAmbient();
   document.getElementById('game-over-screen').classList.remove('show');
   updateHUD();buildQueue();nextGhost();
@@ -2753,6 +3028,144 @@ function showTutorial(){
   document.body.appendChild(el);
 }
 
+// ── ARSIP JIWA ──
+let arsipData = []; // [{ghost, dest, stage, timestamp}]
+let arsipFilter = 'semua';
+
+function recordToArsip(ghost, dest){
+  // Simpan ke arsip — cegah duplikat nama di run yang sama
+  const exists = arsipData.find(a => a.ghost.nama === ghost.nama && a.ghost.isBoss === ghost.isBoss);
+  if(!exists){
+    arsipData.push({
+      ghost: {...ghost},
+      dest,
+      stage: currentLevel,
+      timestamp: new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}),
+    });
+    // Update badge count di btn
+    updateArsipBtn();
+  }
+}
+
+function updateArsipBtn(){
+  const btn = document.getElementById('arsip-btn');
+  if(btn){
+    const n = arsipData.length;
+    btn.textContent = n > 0 ? `📜${n}` : '📜';
+  }
+}
+
+function openArsip(){
+  if(inBossFight && !isPaused) togglePause();
+  renderArsip();
+  document.getElementById('arsip-screen').classList.add('show');
+}
+
+function closeArsip(){
+  document.getElementById('arsip-screen').classList.remove('show');
+  if(isPaused) togglePause();
+}
+
+function closeArsipDetail(){
+  document.getElementById('arsip-detail').classList.remove('show');
+}
+
+function filterArsip(f){
+  arsipFilter = f;
+  document.querySelectorAll('.arsip-filter-btn').forEach(b=>{
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(f) || (f==='semua' && b.textContent.includes('Semua')));
+  });
+  renderArsip();
+}
+
+function renderArsip(){
+  const body = document.getElementById('arsip-body');
+  const countEl = document.getElementById('arsip-count');
+  body.innerHTML = '';
+
+  let filtered = arsipData;
+  if(arsipFilter === 'surga') filtered = arsipData.filter(a=>a.dest==='Surga');
+  else if(arsipFilter === 'neraka') filtered = arsipData.filter(a=>a.dest==='Neraka');
+  else if(arsipFilter === 'boss') filtered = arsipData.filter(a=>a.ghost.isBoss);
+
+  countEl.textContent = `${arsipData.length} jiwa tercatat${filtered.length !== arsipData.length ? ` · ${filtered.length} ditampilkan` : ''}`;
+
+  if(filtered.length === 0){
+    body.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;font-family:var(--font-mono);color:#3a2808;font-size:14px;letter-spacing:2px;">
+      ${arsipData.length === 0 ? '☠ BELUM ADA JIWA TERCATAT<br><span style="font-size:11px;margin-top:8px;display:block;color:#2a1808">Sortir jiwa untuk mengisi arsip ini</span>' : '☠ TIDAK ADA JIWA DENGAN FILTER INI'}
+    </div>`;
+    return;
+  }
+
+  filtered.forEach(entry => {
+    const card = document.createElement('div');
+    const destClass = entry.dest === 'Surga' ? 'surga' : 'neraka';
+    card.className = `arsip-card ${destClass}${entry.ghost.isBoss?' boss-card':''}`;
+
+    const svgStr = buildGhostSVG(entry.ghost);
+    card.innerHTML = `
+      <div class="arsip-stamp ${destClass}">${entry.dest==='Surga'?'☁️ SURGA':'🔥 NERAKA'}</div>
+      <div class="arsip-doll">${svgStr}</div>
+      <div class="arsip-nama">${entry.ghost.isBoss?'☠ ':''}"${entry.ghost.alias || entry.ghost.nama}"</div>
+      <div class="arsip-pekerjaan">${entry.ghost.pekerjaan}</div>
+      <div class="arsip-dosa" style="margin-top:4px;color:${entry.dest==='Surga'?'#4a6a9a':'#8a3a3a'}">
+        Stage ${entry.stage} · ${entry.timestamp}
+      </div>`;
+
+    card.addEventListener('click', ()=>showArsipDetail(entry));
+    body.appendChild(card);
+  });
+}
+
+function showArsipDetail(entry){
+  const g = entry.ghost;
+  const destColor = entry.dest==='Surga' ? '#4a6a9a' : '#8a3a3a';
+  const destIcon = entry.dest==='Surga' ? '☁️' : '🔥';
+  const svgStr = buildGhostSVG(g);
+
+  document.getElementById('arsip-detail-body').innerHTML = `
+    <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:14px;padding-top:8px;">
+      <div style="width:90px;height:115px;flex-shrink:0;">${svgStr}</div>
+      <div>
+        <div style="font-family:var(--font-hand);font-size:20px;font-weight:700;color:#1a1008;margin-bottom:4px;">${g.nama}</div>
+        <div style="font-family:var(--font-hand);font-size:14px;color:#6a5030;margin-bottom:6px;">"${g.alias}"</div>
+        <div style="font-family:var(--font-mono);font-size:12px;color:${destColor};letter-spacing:2px;border:1px solid ${destColor};border-radius:2px;padding:2px 8px;display:inline-block;">${destIcon} ${entry.dest.toUpperCase()}</div>
+        ${g.isBoss?`<div style="font-family:var(--font-mono);font-size:11px;color:#cc2222;letter-spacing:1px;margin-top:4px;">☠ BOSS STAGE ${entry.stage}</div>`:''}
+      </div>
+    </div>
+    <div style="border-top:1px solid #c0a060;padding-top:10px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin-bottom:8px;">
+        <div><div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#9a7a4a;">Pekerjaan</div><div style="font-family:var(--font-hand);font-size:14px;color:#1a1008;">${g.pekerjaan}</div></div>
+        <div><div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#9a7a4a;">Sebab Meninggal</div><div style="font-family:var(--font-hand);font-size:14px;color:#1a1008;">${g.sebab}</div></div>
+        <div><div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#9a7a4a;">Asal</div><div style="font-family:var(--font-hand);font-size:14px;color:#1a1008;">${g.asal}</div></div>
+        <div><div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#9a7a4a;">Umur</div><div style="font-family:var(--font-hand);font-size:14px;color:#1a1008;">${g.umur} tahun</div></div>
+      </div>
+      <div style="margin-bottom:8px;">
+        <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#9a7a4a;margin-bottom:3px;">Dosa Utama</div>
+        <div style="font-family:var(--font-hand);font-size:16px;font-weight:700;color:#1a1008;">${g.dosa}</div>
+      </div>
+      <div style="margin-bottom:8px;">
+        <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#9a7a4a;margin-bottom:3px;">Kebiasaan</div>
+        <div style="font-family:var(--font-hand);font-size:13px;color:#3a2010;">${g.kebiasaan}</div>
+      </div>
+      <div>
+        <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#9a7a4a;margin-bottom:3px;">Karma</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          ${g.karma.map(k=>`<span style="font-family:var(--font-hand);font-size:12px;background:rgba(0,0,0,0.08);border:1px solid #c0a060;border-radius:3px;padding:2px 6px;color:#3a2010;">✓ ${k}</span>`).join('')}
+        </div>
+      </div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px dashed #c0a860;">
+        <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#9a7a4a;margin-bottom:3px;">Catatan Petugas</div>
+        <div style="font-family:var(--font-hand);font-size:13px;color:#4a3010;font-style:italic;">${g.catatan}</div>
+      </div>
+      <div style="margin-top:10px;font-family:var(--font-mono);font-size:11px;color:#6a5030;letter-spacing:1px;text-align:right;">
+        Disortir: Stage ${entry.stage} · ${entry.timestamp}
+      </div>
+    </div>`;
+
+  document.getElementById('arsip-detail').classList.add('show');
+}
+
 // ── MUTE ──
 function toggleMute(){
   isMuted=!isMuted;
@@ -2853,6 +3266,8 @@ document.addEventListener('keydown',e=>{
 
   // Esc: tutup side panel / dismiss overlay utama
   if(e.key==='Escape'){
+    if(document.getElementById('arsip-detail').classList.contains('show')){closeArsipDetail();return;}
+    if(document.getElementById('arsip-screen').classList.contains('show')){closeArsip();return;}
     if(activeTab!=='biodata'){switchTab('biodata');return;}
     return;
   }
@@ -2860,11 +3275,14 @@ document.addEventListener('keydown',e=>{
   if(!currentGhost) return;
 
   // Sort
-  if(e.key==='1'||e.key==='ArrowLeft') sort('Surga');
-  if(e.key==='2'||e.key==='ArrowRight') sort('Neraka');
+  if(!isProcessing){
+    if(e.key==='1'||e.key==='ArrowLeft') sort('Surga');
+    if(e.key==='2'||e.key==='ArrowRight') sort('Neraka');
+  }
 
   // Tab switching
   if(e.key==='h'||e.key==='H') useHint();
+  if(e.key==='a'||e.key==='A') openArsip();
   if(e.key==='p'||e.key==='P'){togglePause();return;}
   if(isPaused) return; // block semua input saat pause kecuali P
   if(e.key==='q'||e.key==='Q') switchTab('biodata');
