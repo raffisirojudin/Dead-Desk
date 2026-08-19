@@ -1,13 +1,14 @@
-self.addEventListener('install', (e) => {
-  console.log('[Service Worker] Installed');
+self.addEventListener('install', (event) => {
+  self.skipWaiting();
 });
 
-self.addEventListener('activate', (e) => {
-  console.log('[Service Worker] Activated');
+self.addEventListener('activate', (event) => {
+  event.waitUntil(clients.claim());
 });
 
-self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    fetch(e.request).catch(() => caches.match(e.request))
+// Syarat wajib Chrome Android agar WebAPK mau terpasang
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    fetch(event.request).catch(() => caches.match(event.request))
   );
 });
