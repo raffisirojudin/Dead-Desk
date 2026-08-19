@@ -1,0 +1,21 @@
+{
+  "name": "Dead Desk: Sortir Jiwa",
+  "short_name": "Dead Desk",
+  "description": "Game sortir arwah - tentukan nasib jiwa yang datang",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1c1108",
+  "theme_color": "#1c1108",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
