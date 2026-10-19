@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.raffisirojudin.twa",
+        "sha256_cert_fingerprints": ["00:25:B5:64:88:E1:C5:DC:69:71:2B:84:A9:59:63:C2:2D:60:2D:E9:81:C8:33:40:61:FA:98:01:1F:0A:06:C8"]
+      }
+    }]
