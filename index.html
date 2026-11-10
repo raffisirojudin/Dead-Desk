@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1c1108" />
+    <title>Dead Desk: HRD Alam Baka</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Special+Elite&family=VT323&display=swap"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div id="boss-warning">☠ PERINGATAN: KANDIDAT ANOMALI / VIP TERDETEKSI ☠</div>
+
+    <!-- LOADING SCREEN -->
+    <div id="loading-screen">
+      <div id="ls-room">
+        <div id="ls-monitor">
+          <div id="ls-bezel">
+            <div id="ls-crt">
+              <div id="ls-boot-text"></div>
+            </div>
+          </div>
+          <div id="ls-neck"></div>
+          <div id="ls-stand"></div>
+        </div>
+        <div id="ls-desk-surface"></div>
+      </div>
+    </div>
+
+    <!-- MAIN SCENE: MEJA INTERVIEW HRD ALAM BAKA -->
+    <div id="scene">
+      <!-- TOPBAR HUD -->
+      <div id="topbar">
+        <div class="hud-left-group">
+          <div class="hud-item">SKOR: <span id="score-val">0</span></div>
+          <div id="rank-badge">🪽 Lv.1 Magang HRD Alam Baka</div>
+        </div>
+        <div class="hud-item" id="title-hud">⚖️ HRD ALAM BAKA · SHIFT 1</div>
+        <div style="display: flex; align-items: center; gap: 8px">
+          <div class="hud-item">NYAWA: <span id="lives-val">❤️❤️❤️</span></div>
+          <button
+            class="hud-btn"
+            id="sop-btn"
+            onclick="openSOP()"
+            title="Buku Panduan SOP (S)"
+          >
+            📘 SOP
+          </button>
+          <button
+            class="hud-btn"
+            id="arsip-btn"
+            onclick="openArsip()"
+            title="Arsip Pelamar (A)"
+          >
+            📜
+          </button>
+          <button
+            class="hud-btn"
+            id="mute-btn"
+            onclick="toggleMute()"
+            title="Mute/Unmute"
+          >
+            🔊
+          </button>
+          <button
+            class="hud-btn"
+            id="pause-btn"
+            onclick="togglePause()"
+            title="Jeda Shift (P)"
+          >
+            ⏸
+          </button>
+        </div>
+      </div>
+
+      <!-- ARSIP PELAMAR SCREEN -->
+      <div id="arsip-screen">
+        <div id="arsip-header">
+          <div>
+            <div id="arsip-title">📜 ARSIP REKRUTMEN JIWA</div>
+            <div id="arsip-count">0 pelamar tercatat</div>
+          </div>
+          <button id="arsip-close" onclick="closeArsip()">✕ TUTUP</button>
+        </div>
+        <div id="arsip-filter">
+          <button
+            class="arsip-filter-btn active"
+            onclick="filterArsip('semua')"
+          >
+            Semua
+          </button>
+          <button class="arsip-filter-btn" onclick="filterArsip('surga')">
+            ☁️ Diterima (Surga)
+          </button>
+          <button class="arsip-filter-btn" onclick="filterArsip('neraka')">
+            🔥 Ditolak (Neraka)
+          </button>
+          <button class="arsip-filter-btn" onclick="filterArsip('boss')">
+            ☠ VIP / Anomali
+          </button>
+        </div>
+        <div id="arsip-body"></div>
+      </div>
+
+      <!-- ARSIP DETAIL POPUP -->
+      <div id="arsip-detail">
+        <div id="arsip-detail-inner">
+          <button id="arsip-detail-close" onclick="closeArsipDetail()">
+            ✕ TUTUP
+          </button>
+          <div id="arsip-detail-body"></div>
+        </div>
+      </div>
+
+      <!-- WORKSPACE UTAMA: KURSI KANDIDAT (KIRI) & BERKAS CV (KANAN) -->
+      <div id="main">
+        <!-- PANEL KIRI: KURSI INTERVIEW, SPEECH BUBBLE & POLYGRAPH -->
+        <div id="ghost-panel">
+          <div id="interview-booth">
+            <span class="booth-label">🪑 KURSI PELAMAR</span>
+            <div id="ghost-doll"></div>
+            <div id="speech-bubble" class="speech-bubble mood-normal">
+              <span id="speech-text">—</span>
+            </div>
+          </div>
+
+          <div id="ghost-info-col">
+            <div id="ghost-name-tag">—</div>
+            <div id="sin-badge" class="bohong">—</div>
+
+            <!-- MONITOR POLYGRAPH DETAK ROH -->
+            <div id="polygraph-box" title="Monitor Frekuensi Kejujuran Roh">
+              <div class="poly-header">
+                <span>📈 POLYGRAPH: <strong id="poly-status-text">STABIL</strong></span>
+                <span id="poly-bpm">68 Hz</span>
+              </div>
+              <canvas id="poly-canvas" width="210" height="36"></canvas>
+            </div>
+
+            <!-- NAVIGATION TABS -->
+            <div id="ghost-tabs">
+              <button class="ghost-tab active" onclick="switchTab('biodata')">
+                📋 CV
+              </button>
+              <button class="ghost-tab" onclick="switchTab('barang')">
+                🎒 Barang
+              </button>
+              <button class="ghost-tab" onclick="switchTab('tanya')">
+                💬 Wawancara
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL KANAN: BERKAS LAMARAN & CV ALMARHUM -->
+        <div id="form-wrap">
+          <div id="form-paper">
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+
+            <!-- HEADER CV + PASFOTO 3x4 DENGAN PAPERCLIP -->
+            <div class="form-header">
+              <div class="form-header-left">
+                <h2>CURRICULUM VITAE & LAMARAN ARWAH</h2>
+                <p>Divisi Rekrutmen Penghuni Surga — Departemen HRD Alam Baka</p>
+              </div>
+              <div class="header-right-cluster">
+                <div class="ref-box">
+                  Berkas <strong id="ref-no">#HRD-101</strong><br />
+                  Tgl. Wawancara: <span id="tgl-masuk">—</span>
+                </div>
+                <div id="cv-photo-wrap" title="Pasfoto 3x4 Pelamar">
+                  <div id="cv-paperclip"></div>
+                  <div id="cv-photo-box"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BANNER RAHASIA SAAT MATA MALAIKAT (UV) AKTIF -->
+            <div id="uv-secret-banner"></div>
+
+            <!-- POSISI YANG DILAMAR & KLAIM DIRI -->
+            <div class="cv-application-banner">
+              <div class="cv-pos-row">
+                <span class="field-label">Posisi Surga yang Dilamar:</span>
+                <strong
+                  style="font-family: var(--font-mono); font-size: 14px; color: #5a3810"
+                  id="f-posisi"
+                  >—</strong
+                >
+              </div>
+              <div
+                class="cv-claim-quote flaggable"
+                id="f-klaim"
+                onclick="toggleRedFlag('f-klaim')"
+                title="Klik untuk menandai Red Flag jika klaim ini mencurigakan"
+              >
+                —
+              </div>
+            </div>
+
+            <!-- § 1 — IDENTITAS PELAMAR -->
+            <div class="form-section">
+              <div class="section-title">
+                <span>§ 1 — Biodata & Riwayat Kematian Pelamar</span>
+                <span>Form-A1</span>
+              </div>
+              <div class="form-grid">
+                <div class="field">
+                  <span class="field-label">Nama Lengkap</span>
+                  <span class="field-value highlight" id="f-nama">—</span>
+                </div>
+                <div class="field">
+                  <span class="field-label">Nama Panggilan / Julukan</span>
+                  <span class="field-value" id="f-alias">—</span>
+                </div>
+                <div class="field">
+                  <span class="field-label">Usia Saat Tutup Usia</span>
+                  <span class="field-value" id="f-umur">—</span>
+                </div>
+                <div class="field">
+                  <span class="field-label">Alasan Berhenti Hidup (Wafat)</span>
+                  <span class="field-value" id="f-sebab">—</span>
+                </div>
+                <div class="field">
+                  <span class="field-label">Domisili Terakhir</span>
+                  <span class="field-value" id="f-asal">—</span>
+                </div>
+                <div class="field">
+                  <span class="field-label">Profesi Semasa Hidup</span>
+                  <span class="field-value" id="f-pekerjaan">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- § 2 — REKAM JEJAK & KOMPETENSI MORAL -->
+            <div class="form-section">
+              <div class="section-title">
+                <span>§ 2 — Rekam Jejak Moral & Kebiasaan Kerja</span>
+                <span>Klik kolom untuk 🚩 Red Flag</span>
+              </div>
+              <div class="form-grid">
+                <div class="field">
+                  <span class="field-label">Indeks Dosa / Sifat Utama</span>
+                  <span
+                    class="field-value highlight flaggable"
+                    id="f-dosa"
+                    onclick="toggleRedFlag('f-dosa')"
+                    >—</span
+                  >
+                </div>
+                <div class="field">
+                  <span class="field-label">Kebiasaan Harian di Dunia</span>
+                  <span
+                    class="field-value flaggable"
+                    id="f-kebiasaan"
+                    onclick="toggleRedFlag('f-kebiasaan')"
+                    >—</span
+                  >
+                </div>
+              </div>
+              <div style="margin-top: 5px">
+                <div class="field-label" style="margin-bottom: 3px">
+                  Sertifikasi & Karakter Karma
+                </div>
+                <div class="check-row" id="karma-checks"></div>
+              </div>
+            </div>
+
+            <!-- § 3 — REFERENSI & CATATAN BACKGROUND CHECK -->
+            <div class="form-section">
+              <div class="section-title">
+                <span>§ 3 — Catatan Background Check & Referensi Lingkungan</span>
+                <span>Verifikasi HRD</span>
+              </div>
+              <div class="form-grid full">
+                <div class="field">
+                  <span class="field-label">Laporan Malaikat Pencatat / Saksi</span>
+                  <span
+                    class="field-value flaggable"
+                    id="f-catatan"
+                    onclick="toggleRedFlag('f-catatan')"
+                    style="font-size: 14.5px; line-height: 1.35"
+                    >—</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- OVERLAY PANEL PORTOFOLIO BARANG & WAWANCARA -->
+            <div id="side-panel">
+              <div id="side-panel-header">
+                <span id="side-panel-title">—</span>
+                <button id="side-panel-close" onclick="switchTab('biodata')">
+                  ✕ KEMBALI KE CV
+                </button>
+              </div>
+              <div id="side-panel-body"></div>
+            </div>
+
+            <!-- STEMPEL KEPUTUSAN HRD -->
+            <div id="stamp">
+              <span class="stamp-icon" id="stamp-icon"></span>
+              <span id="stamp-text"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM CONTROLS: STEMPEL KEPUTUSAN & ALAT BANTU MEJA -->
+      <div id="bottom-bar">
+        <div class="status-strip">
+          <div id="combo-display"></div>
+          <div id="feedback"></div>
+        </div>
+
+        <div id="sort-buttons">
+          <button class="sort-btn" id="btn-heaven" onclick="sort('Surga')">
+            <span class="btn-icon">☁️</span> TERIMA KE SURGA
+          </button>
+          <button class="sort-btn" id="btn-hell" onclick="sort('Neraka')">
+            <span class="btn-icon">🔥</span> TOLAK KE NERAKA
+          </button>
+        </div>
+
+        <div class="tools-queue-row">
+          <div class="desk-tools-group">
+            <button
+              class="tool-action-btn"
+              id="uv-btn"
+              onclick="toggleUVScanner()"
+              title="Pindai watermark gaib & residu aura (U)"
+            >
+              👁️ MATA MALAIKAT (3)
+            </button>
+            <button
+              class="tool-action-btn"
+              id="hint-btn"
+              onclick="useHint()"
+              title="Minta bocoran dari HRD Pusat (H)"
+            >
+              💡 HINT (2)
+            </button>
+          </div>
+
+          <div id="key-hint">
+            <span class="key-badge">1</span> Surga ·
+            <span class="key-badge">2</span> Neraka ·
+            <span class="key-badge">Q/W/E</span> Tab ·
+            <span class="key-badge">U</span> UV ·
+            <span class="key-badge">S</span> SOP
+          </div>
+
+          <div id="queue-wrap">
+            <div id="stage-label"></div>
+            <div id="queue-bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME OVER -->
+    <div id="game-over-screen">
+      <div class="go-skull">💀</div>
+      <div id="go-title">DIPECAT DARI HRD</div>
+      <div id="go-score">Skor Audit Akhir: <span id="go-score-val">0</span></div>
+      <div
+        id="go-stats"
+        style="
+          font-family: var(--font-mono);
+          font-size: 15px;
+          color: #8a6838;
+          letter-spacing: 2px;
+          text-align: center;
+          line-height: 1.8;
+        "
+      ></div>
+      <p class="go-flavour">
+        Terlalu banyak salah penempatan kandidat membuat Surga dan Neraka kacau
+        balau.<br />Manajemen Pusat Alam Baka mencabut wewenang stempelmu.
+      </p>
+      <button id="btn-restart" onclick="restartGame()">
+        🔄 LAMAR ULANG JADI HRD
+      </button>
+    </div>
+
+    <!-- LEVEL COMPLETE -->
+    <div id="level-complete-screen">
+      <div id="lc-icon">⭐</div>
+      <div id="lc-title">SHIFT SELESAI</div>
+      <div id="lc-sub">Kuota pelamar shift ini berhasil diaudit</div>
+      <div id="lc-bonus">+5 BONUS SKOR</div>
+      <button id="btn-continue" onclick="continueToNext()">
+        ▶ MULAI SHIFT BERIKUTNYA
+      </button>
+    </div>
+
+    <!-- BOSS INTRO -->
+    <div id="boss-intro-screen">
+      <div id="bi-label">⚠ KANDIDAT KHUSUS TERDETEKSI ⚠</div>
+      <div id="bi-doll"></div>
+      <div id="bi-title">—</div>
+      <div id="bi-name">—</div>
+      <div id="bi-desc">—</div>
+      <button id="btn-fight" onclick="startBossFight()">
+        ⚔ BUKA SESI INTERVIEW ⚔
+      </button>
+    </div>
+
+    <!-- JUMPSCARE -->
+    <div id="jumpscare">
+      <div id="jumpscare-bg"></div>
+      <div id="jumpscare-face">
+        <svg
+          id="jumpscare-svg"
+          viewBox="0 0 400 400"
+          xmlns="http://www.w3.org/2000/svg"
+        ></svg>
+      </div>
+      <div id="jumpscare-text"></div>
+    </div>
+
+    <!-- SCRIPTS MODULAR (Kompatibel dengan file:// maupun Web Server) -->
+    <script src="./js/data.js"></script>
+    <script src="./js/audio.js"></script>
+    <script src="./js/graphics.js"></script>
+    <script src="./js/game.js"></script>
+  </body>
+</html>
